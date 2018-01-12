@@ -6,18 +6,19 @@ public class ArcadeGUI extends GUIApplication{
 
 	public ArcadeGUI(int width, int height) {
 		super(width, height);
-		// TODO Auto-generated constructor stub
+		setVisible(true);
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		ArcadeGUI hyperArcade = new ArcadeGUI(1024,764);
+		Thread runner = new Thread(hyperArcade);
+		runner.start();
 	}
 
 	@Override
 	public void initScreen() {
-		// TODO Auto-generated method stub
-		
+		ArcadeMain Screen1 = new ArcadeMain(getWidth(),getHeight());
+		setScreen(Screen1);
 	}
 
 }
