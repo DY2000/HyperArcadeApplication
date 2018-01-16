@@ -10,7 +10,7 @@ public class AliceArrayListGhost {
 //each ghost has a:
 	//speed
 	//determined corner
-	
+	//
 	public static void main(String args[]){  
 		  ArrayList<AliceGhost> listOfGhosts=new ArrayList<AliceGhost>();//Creating arraylist  
 		  listOfGhosts.add("Blinky");//Adding object in arraylist  
