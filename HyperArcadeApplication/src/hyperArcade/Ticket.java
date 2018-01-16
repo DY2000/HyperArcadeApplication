@@ -1,4 +1,4 @@
-package HyperArcade;
+package hyperArcade;
 
 public interface Ticket {
 

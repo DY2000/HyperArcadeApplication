@@ -1,4 +1,4 @@
-package HyperArcade;
+package hyperArcade;
 
 import java.awt.Color;
 import java.util.List;
