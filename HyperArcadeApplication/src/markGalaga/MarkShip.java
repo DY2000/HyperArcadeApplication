@@ -1,4 +1,4 @@
-package HyperArcade;
+package markGalaga;
 
 import guiTeacher.components.AnimatedComponent;
 

@@ -1,4 +1,4 @@
-package WilliamArcade;
+package willTetris;
 
 public interface Collidable {
 
