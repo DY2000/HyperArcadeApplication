@@ -1,4 +1,4 @@
-package HyperArcade;
+package AliceDanPacman;
 
 public class DanielPowerup extends DanielPickup {
 
