@@ -1,4 +1,4 @@
-package HyperArcade;
+package theoDevinSnake;
 
 import java.awt.Graphics2D;
 

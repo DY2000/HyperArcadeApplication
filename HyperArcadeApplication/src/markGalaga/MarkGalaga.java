@@ -1,4 +1,4 @@
-package HyperArcade;
+package markGalaga;
 
 import java.util.List;
 
@@ -13,13 +13,11 @@ public class MarkGalaga extends FullFunctionScreen implements MarkPlayerMovement
 	}
 
 	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+		
 	}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		// TODO Auto-generated method stub
 		
 	}
 
