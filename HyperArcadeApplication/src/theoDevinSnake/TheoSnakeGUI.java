@@ -16,7 +16,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		private TextArea time;
 		private ArrayList<SnakePart> snakeBody;
 		private int userscore;
-		
+		private SnakePoint point;
 	public TheoSnakeGUI(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -24,8 +24,8 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		// TODO Auto-generated method stub
-
+		snakeBody.add(new SnakePart(50,50,0,0));
+		
 	}
 
 	@Override
