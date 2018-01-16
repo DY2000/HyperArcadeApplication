@@ -1,5 +1,11 @@
 package markGalaga;
 
-public interface MarkPlayerMovement extends Collidable{
+import java.awt.event.KeyListener;
 
+import willTetris.Collidable;
+
+public interface MarkPlayerMovement extends Collidable, KeyListener{
+
+	
+	
 }
