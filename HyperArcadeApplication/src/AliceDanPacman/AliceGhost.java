@@ -1,11 +1,14 @@
 package AliceDanPacman;
 
+import java.util.List;
+
 import guiTeacher.components.AnimatedComponent;
+import guiTeacher.interfaces.Visible;
 import willTetris.Collidable;
 
 public class AliceGhost extends AnimatedComponent implements Collidable{
 	
-	//there are 4 main ghosts named blinky (red), pinky, clyde, inky
+	//there are 4 main ghosts named blinky (red), pinky, clyde (orange), inky (blue)
 	//scatter mode-each ghost has a predefined corner of the grid that they follow
 	//The red ghost starts outside of the ghost house, and is usually the first one to be seen as a threat
 	//http://gameinternals.com/post/2072558330/understanding-pac-man-ghost-behavior	
@@ -25,6 +28,14 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 
 	public AliceGhost(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		
 	}
 
+	public void initAllObjects(List<Visible> viewObjects) {
+	//	PacmanBackground Image = new PacmanBackground(0,0,getWidth(),getHeight());
+		//viewObjects.add(Image);
+	}
+	
+	
+	
 }
