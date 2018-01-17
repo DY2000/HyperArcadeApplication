@@ -1,6 +1,7 @@
 package hyperArcade;
 
 import guiTeacher.GUIApplication;
+import markGalaga.MarkGalaga;
 
 public class ArcadeGUI extends GUIApplication{
 
@@ -18,7 +19,8 @@ public class ArcadeGUI extends GUIApplication{
 	@Override
 	public void initScreen() {
 		ArcadeMain Screen1 = new ArcadeMain(getWidth(),getHeight());
-		setScreen(Screen1);
+		MarkGalaga Screen2 = new MarkGalaga(getWidth(),getHeight());
+		setScreen(Screen2);
 	}
 
 }
