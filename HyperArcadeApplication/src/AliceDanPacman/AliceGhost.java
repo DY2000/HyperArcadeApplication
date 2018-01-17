@@ -24,6 +24,8 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 	//Frightened mode is unique because the ghosts do not have a specific target tile while in this mode. 
 	//A ghost in Frightened mode also turns dark blue, moves much more slowly and can be eaten by Pac-Man.
 	
+	//if ghost goes over dot, setvisible of dots to false
+	
 	
 
 	public AliceGhost(int x, int y, int w, int h) {
