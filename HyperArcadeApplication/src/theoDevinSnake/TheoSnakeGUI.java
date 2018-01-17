@@ -24,8 +24,17 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		snakeBody.add(new SnakePart(50,50,0,0));
-		
+		snakeBody = new ArrayList<SnakePart>();
+		snakeBody.add(new SnakePart(0,0,50,50));
+		point = new SnakePoint(getRandomX(),getRandomY(),50,50);
+		viewObjects.add(point);
+	}
+
+	public int getRandomX() {
+		return (int)(Math.random()*1024);
+	}
+	public int getRandomY() {
+		return (int)(Math.random()*764);
 	}
 
 	@Override

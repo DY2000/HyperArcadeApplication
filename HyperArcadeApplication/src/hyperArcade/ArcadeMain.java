@@ -8,6 +8,7 @@ import guiTeacher.components.Button;
 import guiTeacher.components.Graphic;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import theoDevinSnake.TheoSnakeGUI;
 
 public class ArcadeMain extends FullFunctionScreen {
 
@@ -19,7 +20,7 @@ public class ArcadeMain extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/homescreen.png"));
-		Button tetris = new Button(200,500,100,30,"",new Action() {
+		/*Button tetris = new Button(200,500,100,30,"",new Action() {
 			@Override
 			public void act() {
 			//	HolidayCard.card.setScreen(HolidayCard.inside);
@@ -27,12 +28,17 @@ public class ArcadeMain extends FullFunctionScreen {
 		});
 		tetris.setBackground(Color.black);
 		tetris.setForeground(Color.black);
-		viewObjects.add(tetris);
+		*/
+		//viewObjects.add(tetris);
+		Button snake = new Button(400,500,100,30,"",new Action() {
+			@Override
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(new TheoSnakeGUI(getWidth(),getHeight()));
+			}
+		});
+		snake.setBackground(Color.black);
+		snake.setForeground(Color.black);
+		viewObjects.add(snake);
 	}
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
-	}
-
+	
 }
