@@ -1,12 +1,15 @@
 package markGalaga;
 
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
+import hyperArcade.ArcadeGUI;
+import willTetris.Collidable;
 
-public class MarkShip extends AnimatedComponent implements MarkPlayerMovement {
+public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
 	private BufferedImage img;
 	
@@ -16,6 +19,42 @@ public class MarkShip extends AnimatedComponent implements MarkPlayerMovement {
 		update();
 		Thread t = new Thread(this);
 		t.start();
+	}
+	
+	@Override
+	public void keyPressed(KeyEvent e) {
+		switch(e.getKeyCode()) {
+			case KeyEvent.VK_SPACE :
+				fireShot();
+				System.out.println("Pew");
+				break;
+			case KeyEvent.VK_LEFT :
+				moveLeft();
+				System.out.println("Left");
+				break;
+			case KeyEvent.VK_RIGHT : 
+				moveRight();
+				System.out.println("Right");
+				break;
+		}
+	}
+	
+	@Override
+	public void keyReleased(KeyEvent e) {
+		switch(e.getKeyCode()) {
+			case KeyEvent.VK_LEFT :
+				moveStop();
+				System.out.print("stop");
+			case KeyEvent.VK_RIGHT : 
+				moveStop();
+				System.out.print("stop");
+		}
+	}
+
+	@Override
+	public void keyTyped(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 	public void run() {
@@ -41,7 +80,7 @@ public class MarkShip extends AnimatedComponent implements MarkPlayerMovement {
 	}
 
 	public void fireShot() {
-		MarkProjectile shot = new MarkProjectile(getX()+getWidth()/2,getY(),40,40);
+		
 	}
 	
 }
