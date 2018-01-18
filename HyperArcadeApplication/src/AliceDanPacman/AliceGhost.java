@@ -1,5 +1,6 @@
 package AliceDanPacman;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import guiTeacher.components.AnimatedComponent;
@@ -31,12 +32,53 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 	public AliceGhost(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		
+		ArrayList<String> ghosts = new ArrayList<String>();
+		ArrayList<String> redGhost = new ArrayList<String>();
+		ArrayList<String> blueGhost = new ArrayList<String>();
+		ArrayList<String> orangeGhost = new ArrayList<String>();
+		ArrayList<String>pinkGhost = new ArrayList<String>();
+
+
+	;
+		
+		ArrayList<String> redArray = new ArrayList<String>();
+		ArrayList<String> blue = new ArrayList<String>();
+		ArrayList<String> pink = new ArrayList<String>();
+		ArrayList<String> orange = new ArrayList<String>();
+		
+		//first is speed, then is location
+			redArray.add(20);		
+			redArray.add();	
+			
+			orangeArray.add(20);		
+			orangeArray.add();	
+			
+			blueArray.add(20);		
+			blueArray.add();	
+			
+			pinkArray.add(20);		
+			pinkArray.add();	
+
+		
+		  ArrayList<ArrayList<AliceGhost>> ghost = new ArrayList<ArrayList<AliceGhost>>();
+          AliceGhost.add(redGhost);
+          AliceGhost.add(blueGhost);
+          AliceGhost.add(pinkGhost);
+          AliceGhost.add(orangeGhost);
+
+		
 	}
+
+	
 
 	public void initAllObjects(List<Visible> viewObjects) {
 	//	PacmanBackground Image = new PacmanBackground(0,0,getWidth(),getHeight());
 		//viewObjects.add(Image);
 	}
+	
+	
+	}
+	
 	
 	
 	
