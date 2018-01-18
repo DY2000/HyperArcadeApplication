@@ -14,41 +14,33 @@ import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class TetrisMain extends FullFunctionScreen {
 
-	private Tetromino[] partsOnBoard;
-	private Graphics g;
+	private boolean[][] board;
+	private Color[][] boardColors;
+	private Color emptyColor;
+
 	public TetrisMain(int width, int height) {
 		super(width, height);
-		partsOnBoard = new Tetromino[0];
-	}
-	
-	@Override
-	public void initAllObjects(List<Visible> viewObjects) {
-		
-		viewObjects.add(new TetrisBoard())
-	
-	}
-	public void drawBoard()
-	{
-		Graphics2D g = new Graphics2D();
-		for (int w = 0; w < 10; w++) {
-			for (int h = 0; h < 24; h++) {
-				g.fillRect(26 * w, 26 * h, 25, 25);
+		boardColors = new Color[10][20];
+		for (int w = 0; w < boardColors.length; w++) {
+			for (int h = 0; h < boardColors.length; h++) {
+				boardColors[w][h] = emptyColor;
 			}
 		}
 	}
-//	public void getColors() {
-//		for(int w = 0; w < 10; w++) {
-//			for(int h = 0; h < 24; h++) {
-//			}
-//		}
-//		
-//		for(Tetromino t: partsOnBoard) {
-//			colors[t.getPart(0).xPos()][t.getPart(0).xPos()] = t.getColor();
-//			colors[t.getPart(1).xPos()][t.getPart(1).xPos()] = t.getColor();
-//			colors[t.getPart(2).xPos()][t.getPart(2).xPos()] = t.getColor();
-//			colors[t.getPart(3).xPos()][t.getPart(3).xPos()] = t.getColor();
-//		}
-//	}
+
+	@Override
+	public void initAllObjects(List<Visible> viewObjects) {
+
+	}
+
+	public void paint(Graphics2D g) {
+		g.setColor(Color.blue);
+		for (int w = 0; w < boardColors.length; w++) {
+			for (int h = 0; h < boardColors.length; h++) {
+				g.drawRect(w * 6, h * 6, 5, 5);
+			}
+		}
+	}
 
 	public void drawImage(Graphics2D g, int x, int y, int w, int h) {
 		g.drawRect(x, y, w, h);
