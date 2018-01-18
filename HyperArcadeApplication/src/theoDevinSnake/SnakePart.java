@@ -21,27 +21,52 @@ public class SnakePart extends MovingComponent implements MarkPlayerMovement{
 	}
 
 
+	public void update(Graphics2D g) {
+//		if(point!=null) {
+			g.drawImage(img,0,0,null);
+//		}
+	}
+	
+
 	@Override
 	public void drawImage(Graphics2D g) {
-		if(img!=null) {
+		//if(img!=null) {
 			g.drawImage(img,0,0,null);
-		}
+		//}
 		
 	}
 	public void moveUp() {
 		direction=1;
+		setVx(0);
 		setVy(15);
 	}
 	public void moveDown() {
 		direction=3;
+		setVx(0);
 		setVy(-15);
 	}
 	public void moveLeft() {
 		direction=4;
+		setVy(0);
 		setVx(-15);
 	}
 	public void moveRight() {
 		direction =2;
+		setVy(0);
 		setVx(15);
+	}
+	public void move(int dir) {
+		if(dir==1) {
+			moveUp();
+		}
+		if(dir==2) {
+			moveRight();
+		}
+		if(dir==3) {
+			moveDown();
+		}
+		if(dir==4) {
+			moveLeft();
+		}
 	}
 }
