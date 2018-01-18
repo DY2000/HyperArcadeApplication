@@ -21,7 +21,7 @@ public class AliceGhostArrayList {
 		//take away lives from pacman
 		//main pacman-timer, 10 seconds for ghost turning blue and pacman being big, fruits?
 		//some ghosts are scared, others are angry
-		//replaceeaten ghsots during blue ghost round with other ghosts
+		//replaceeaten ghsots during blue ghost round with other ghosts/
 	}
 
 }
