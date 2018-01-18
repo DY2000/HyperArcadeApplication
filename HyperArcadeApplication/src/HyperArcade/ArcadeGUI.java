@@ -1,4 +1,4 @@
-package hyperArcade;
+package HyperArcade;
 
 import guiTeacher.GUIApplication;
 import markGalaga.MarkGalaga;

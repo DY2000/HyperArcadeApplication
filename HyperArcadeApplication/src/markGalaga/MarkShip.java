@@ -5,9 +5,9 @@ import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import HyperArcade.ArcadeGUI;
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
-import hyperArcade.ArcadeGUI;
 import willTetris.Collidable;
 
 public class MarkShip extends MarkPlayerMovement implements Collidable{
