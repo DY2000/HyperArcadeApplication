@@ -5,19 +5,22 @@ import java.util.ArrayList;
 public class AliceArrayListGhost {
 
 	public AliceArrayListGhost() {
-		// TODO Auto-generated constructor stub
+		
+		ArrayList<String> ghosts = new ArrayList<String>();
+		ghosts.add("Blue");
+		ghosts.add("pink");
+		ghosts.add("orange");
+		ghosts.add("red");
+
+
+		
 	}
 //each ghost has a:
 	//speed
 	//determined corner
 	//
 	public static void main(String args[]){  
-		  ArrayList<AliceGhost> listOfGhosts=new ArrayList<AliceGhost>();//Creating arraylist  
-		  listOfGhosts.add("Blinky");//Adding object in arraylist  
-		  listOfGhosts.add("Pinky");  
-		  listOfGhosts.add("Inky");  
-		  listOfGhosts.add("Clyde");  
-		  //Traversing list through Iterator  
+		  
 		 
 		 }  
 		
