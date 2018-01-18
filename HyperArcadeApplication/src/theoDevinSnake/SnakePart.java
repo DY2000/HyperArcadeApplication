@@ -2,29 +2,71 @@ package theoDevinSnake;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-import guiTeacher.components.Component;
+import guiTeacher.components.Graphic;
+import guiTeacher.components.MovingComponent;
+import markGalaga.MarkPlayerMovement;
 
-public class SnakePart extends Component {
-	private int x; 
-	private int y;
-	private int w;
-	private int h;
+public class SnakePart extends MovingComponent implements MarkPlayerMovement{
 	private int direction;
+	private BufferedImage img;
 
 	public SnakePart(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		this.x=x;
-		this.y=y;
-		this.w=w;
-		this.h=h;
+		img=new Graphic(0,0,50,50,"resources/snakeBody.png").getImage();
+		update();
+		Thread t = new Thread(this);
+		t.start();
 	}
+
+
+	public void update(Graphics2D g) {
+//		if(point!=null) {
+			g.drawImage(img,0,0,null);
+//		}
+	}
+	
 
 	@Override
-	public void update(Graphics2D g) {
-		g.setColor(Color.GREEN);
-		g.drawRect(x,y,w,h);
-		g.fillRect(x, y,w,h);
+	public void drawImage(Graphics2D g) {
+		//if(img!=null) {
+			g.drawImage(img,0,0,null);
+		//}
+		
 	}
-
+	public void moveUp() {
+		direction=1;
+		setVx(0);
+		setVy(15);
+	}
+	public void moveDown() {
+		direction=3;
+		setVx(0);
+		setVy(-15);
+	}
+	public void moveLeft() {
+		direction=4;
+		setVy(0);
+		setVx(-15);
+	}
+	public void moveRight() {
+		direction =2;
+		setVy(0);
+		setVx(15);
+	}
+	public void move(int dir) {
+		if(dir==1) {
+			moveUp();
+		}
+		if(dir==2) {
+			moveRight();
+		}
+		if(dir==3) {
+			moveDown();
+		}
+		if(dir==4) {
+			moveLeft();
+		}
+	}
 }

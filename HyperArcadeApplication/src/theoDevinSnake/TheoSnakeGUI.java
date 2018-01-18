@@ -24,8 +24,20 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		snakeBody.add(new SnakePart(50,50,0,0));
-		
+		snakeBody = new ArrayList<SnakePart>();
+		snakeBody.add(new SnakePart(100,100,50,50));
+		point = new SnakePoint(getRandomX(),getRandomY(),50,50);
+		viewObjects.add(point);
+		for(int i=0;i<snakeBody.size();i++) {
+			viewObjects.add(snakeBody.get(i));
+		}
+	}
+
+	public int getRandomX() {
+		return (int)(Math.random()*1024);
+	}
+	public int getRandomY() {
+		return (int)(Math.random()*764);
 	}
 
 	@Override
@@ -33,5 +45,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		// TODO Auto-generated method stub
 		
 	}
-
+	public void gameOver() {
+		//if()
+	}
 }

@@ -28,6 +28,15 @@ public class ArcadeMain extends FullFunctionScreen {
 		tetris.setBackground(Color.black);
 		tetris.setForeground(Color.black);
 		viewObjects.add(tetris);
+		Button snake = new Button(400,500,100,30,"",new Action() {
+			@Override
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(new TheoSnakeGUI(getWidth(),getHeight()));
+			}
+		});
+		snake.setBackground(Color.black);
+		snake.setForeground(Color.black);
+		viewObjects.add(snake);
 	}
 
 	public static void main(String[] args) {
