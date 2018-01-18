@@ -1,6 +1,7 @@
 package markGalaga;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 import java.awt.event.KeyEvent;
 
 import guiTeacher.components.AnimatedComponent;
@@ -43,6 +44,8 @@ public class MarkPlayerMovement extends AnimatedComponent implements KeyedCompon
 		
 	}
 =======
+=======
+>>>>>>> refs/heads/dandanalice
 import willTetris.Collidable;
 
 public interface MarkPlayerMovement extends Collidable{

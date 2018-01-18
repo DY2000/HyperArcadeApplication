@@ -1,5 +1,7 @@
 package hyperArcade;
 
+import AliceDanPacman.PacmanBackground;
+import AliceDanPacman.PacmanScreen;
 import guiTeacher.GUIApplication;
 
 public class ArcadeGUI extends GUIApplication{
@@ -28,6 +30,8 @@ public class ArcadeGUI extends GUIApplication{
 		}
 		ArcadeMain Screen1 = new ArcadeMain(getWidth(),getHeight());
 		setScreen(Screen1);
+		PacmanScreen Screen3 = new PacmanScreen(getWidth(),getHeight());
+		setScreen(Screen3);
 	}
 
 }
