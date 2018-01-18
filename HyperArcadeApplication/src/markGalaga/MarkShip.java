@@ -3,6 +3,7 @@ package markGalaga;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
@@ -12,10 +13,17 @@ import willTetris.Collidable;
 public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
 	private BufferedImage img;
+	private ArrayList<MarkProjectile> shots;
 	
 	public MarkShip(int x, int y, int w, int h) {
 		super(x, y, w, h);
-		img = new Graphic(0,0,128,128,"resources/Galaga_ship.png").getImage();
+		setX(x);
+		setY(y);
+		shots = new ArrayList<MarkProjectile>(32);
+		for(int i = 0; i < 64; i++) {
+			shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
+		}
+		img = new Graphic(0,0,.5,"resources/Galaga_ship.png").getImage();
 		update();
 		Thread t = new Thread(this);
 		t.start();
@@ -25,16 +33,22 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
-				fireShot();
-				System.out.println("Pew");
+				if(shots.size() < 64) {
+					for(int i = shots.size(); i < 64; i++) {
+						shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
+					}
+				}
+				fireShot(shots,getX()+(getWidth()/2)-(shots.get(63).getWidth()/2),getY());
 				break;
 			case KeyEvent.VK_LEFT :
-				moveLeft();
-				System.out.println("Left");
+				if(getX() > 0)
+					moveLeft();
+				else moveStop();
 				break;
 			case KeyEvent.VK_RIGHT : 
-				moveRight();
-				System.out.println("Right");
+				if(getX() < 1024-getWidth())
+					moveRight();
+				else moveStop();
 				break;
 		}
 	}
@@ -44,10 +58,8 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_LEFT :
 				moveStop();
-				System.out.print("stop");
 			case KeyEvent.VK_RIGHT : 
 				moveStop();
-				System.out.print("stop");
 		}
 	}
 
@@ -55,10 +67,6 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-	}
-	
-	public void run() {
-		super.run();
 	}
 
 	public void drawImage(Graphics2D g) {
@@ -72,15 +80,26 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	}
 	
 	public void moveRight() {
-		 setVx(15);
+		setVx(10);
 	}
 	
 	public void moveLeft() {
-		setVx(-15);
+		setVx(-10);
 	}
 
-	public void fireShot() {
-		
+	public void fireShot(ArrayList<MarkProjectile> arl, int x, int y) {
+		for(int i = 0; i<arl.size();i++) {
+			if(arl.get(i).getVy() == 0) {
+				arl.get(i).setX(x);
+				arl.get(i).setY(y);
+				arl.get(i).setVy(-10);
+				break;
+			}
+		}	
+	}
+	
+	public ArrayList<MarkProjectile> getShots() {
+		return shots;
 	}
 	
 }
