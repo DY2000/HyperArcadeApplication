@@ -7,7 +7,7 @@ import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
 import markGalaga.MarkPlayerMovement;
 
-public class PacmanBackground extends AnimatedComponent implements MarkPlayerMovement {
+public class PacmanBackground extends MarkPlayerMovement {
 	private BufferedImage img;
 	public PacmanBackground(int x, int y, int w, int h) {
 		super(x, y, w, h);

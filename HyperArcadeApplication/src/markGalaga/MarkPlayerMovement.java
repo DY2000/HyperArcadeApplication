@@ -1,7 +1,4 @@
 package markGalaga;
-
-<<<<<<< HEAD
-<<<<<<< HEAD
 import java.awt.event.KeyEvent;
 
 import guiTeacher.components.AnimatedComponent;
@@ -43,12 +40,4 @@ public class MarkPlayerMovement extends AnimatedComponent implements KeyedCompon
 		// TODO Auto-generated method stub
 		
 	}
-=======
-=======
->>>>>>> refs/heads/dandanalice
-import willTetris.Collidable;
-
-public interface MarkPlayerMovement extends Collidable{
->>>>>>> refs/heads/theodevin
-
 }

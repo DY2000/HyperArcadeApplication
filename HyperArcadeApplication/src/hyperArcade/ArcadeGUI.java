@@ -1,11 +1,17 @@
 package hyperArcade;
 
+import java.awt.Font;
+import java.io.File;
+
 import AliceDanPacman.PacmanBackground;
 import AliceDanPacman.PacmanScreen;
 import guiTeacher.GUIApplication;
+import guiTeacher.components.StyledComponent;
+import markGalaga.MarkGalaga;
 
 public class ArcadeGUI extends GUIApplication{
 	public static ArcadeGUI hyperArcade;
+	public static Font themeFont;
 	
 	public ArcadeGUI(int width, int height) {
 		super(width, height);
@@ -30,8 +36,9 @@ public class ArcadeGUI extends GUIApplication{
 		}
 		ArcadeMain Screen1 = new ArcadeMain(getWidth(),getHeight());
 		setScreen(Screen1);
+		MarkGalaga Screen2 = new MarkGalaga(getWidth(),getHeight());
+		
 		PacmanScreen Screen3 = new PacmanScreen(getWidth(),getHeight());
-		setScreen(Screen3);
 	}
 
 }

@@ -77,9 +77,4 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 	}
 	
 	
-	}
-	
-	
-	
-	
 }

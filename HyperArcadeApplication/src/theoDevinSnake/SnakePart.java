@@ -7,8 +7,9 @@ import java.awt.image.BufferedImage;
 import guiTeacher.components.Graphic;
 import guiTeacher.components.MovingComponent;
 import markGalaga.MarkPlayerMovement;
+import willTetris.Collidable;
 
-public class SnakePart extends MovingComponent implements MarkPlayerMovement{
+public class SnakePart extends MarkPlayerMovement implements Collidable{
 	private int direction;
 	private BufferedImage img;
 

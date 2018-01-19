@@ -12,6 +12,7 @@ import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.DrawInstructions;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import theoDevinSnake.TheoSnakeGUI;
 
 public class ArcadeMain extends FullFunctionScreen {
 
@@ -56,7 +57,6 @@ public class ArcadeMain extends FullFunctionScreen {
 		tetris.setBackground(Color.black);
 		tetris.setForeground(Color.white);
 		viewObjects.add(tetris);
-<<<<<<< HEAD
 		Button snake = new Button(400,500,100,30,"",new Action() {
 			@Override
 			public void act() {
@@ -66,9 +66,6 @@ public class ArcadeMain extends FullFunctionScreen {
 		snake.setBackground(Color.black);
 		snake.setForeground(Color.black);
 		viewObjects.add(snake);
-=======
-		
->>>>>>> refs/heads/william
 	}
 
 	public static void main(String[] args) {

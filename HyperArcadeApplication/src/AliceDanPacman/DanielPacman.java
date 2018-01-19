@@ -6,8 +6,9 @@ import java.awt.image.BufferedImage;
 
 import guiTeacher.components.AnimatedComponent;
 import markGalaga.MarkPlayerMovement;
+import willTetris.Collidable;
 
-public class DanielPacman extends AnimatedComponent implements MarkPlayerMovement{
+public class DanielPacman extends MarkPlayerMovement implements Collidable{
 
 	public DanielPacman(int x, int y, int w, int h) {
 		super(x, y, w, h);
