@@ -17,4 +17,8 @@ public class DanielPacman extends AnimatedComponent implements MarkPlayerMovemen
 		 g.setColor(Color.yellow);
 		  g.fillArc(0,0,100,100,20,270);
 	}
+	public static boolean ateBlue() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }
