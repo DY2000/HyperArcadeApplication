@@ -92,7 +92,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 			if(arl.get(i).getVy() == 0) {
 				arl.get(i).setX(x);
 				arl.get(i).setY(y);
-				arl.get(i).setVy(-10);
+				arl.get(i).setVy(-10);			
 				break;
 			}
 		}	

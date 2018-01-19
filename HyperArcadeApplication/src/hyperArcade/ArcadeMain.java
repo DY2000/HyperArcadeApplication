@@ -46,7 +46,7 @@ public class ArcadeMain extends FullFunctionScreen {
 
 			@Override
 			public void act() {
-				ArcadeGUI.hyperArcade.setScreen(new TetrisMain(getWidth(),getHeight()));
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.Screen2);
 			}
 		});
 		tetris.setBackground(Color.black);
@@ -56,7 +56,7 @@ public class ArcadeMain extends FullFunctionScreen {
 		Button snake = new Button(320,400,100,70,"",new Action() {
 			@Override
 			public void act() {
-				ArcadeGUI.hyperArcade.setScreen(new TheoSnakeGUI(getWidth(),getHeight()));
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.Screen4);
 			}
 		});
 		snake.setBackground(Color.black);
@@ -66,7 +66,7 @@ public class ArcadeMain extends FullFunctionScreen {
 		Button galaga = new Button(545,400,100,70,"",new Action() {
 			@Override
 			public void act() {
-				ArcadeGUI.hyperArcade.setScreen(new MarkGalaga(getWidth(),getHeight()));
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.Screen3);
 			}
 		});
 		galaga.setBackground(Color.black);
@@ -76,7 +76,7 @@ public class ArcadeMain extends FullFunctionScreen {
 		Button pacman = new Button(760,400,100,70,"",new Action() {
 			@Override
 			public void act() {
-				ArcadeGUI.hyperArcade.setScreen(new PacmanScreen(getWidth(),getHeight()));
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.Screen5);
 			}
 		});
 		pacman.setBackground(Color.black);

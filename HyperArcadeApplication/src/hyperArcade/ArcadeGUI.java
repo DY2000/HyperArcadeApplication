@@ -8,9 +8,16 @@ import AliceDanPacman.PacmanScreen;
 import guiTeacher.GUIApplication;
 import guiTeacher.components.StyledComponent;
 import markGalaga.MarkGalaga;
+import theoDevinSnake.TheoSnakeGUI;
+import willTetris.TetrisMain;
 
 public class ArcadeGUI extends GUIApplication{
 	public static ArcadeGUI hyperArcade;
+	public static ArcadeMain Screen1;
+	public static TetrisMain Screen2;
+	public static MarkGalaga Screen3;
+	public static TheoSnakeGUI Screen4;
+	public static PacmanScreen Screen5;	
 	public static Font themeFont;
 	
 	public ArcadeGUI(int width, int height) {
@@ -34,11 +41,12 @@ public class ArcadeGUI extends GUIApplication{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		ArcadeMain Screen1 = new ArcadeMain(getWidth(),getHeight());
+		Screen1 = new ArcadeMain(getWidth(),getHeight());
+		Screen2 = new TetrisMain(getWidth(),getHeight());
+		Screen3 = new MarkGalaga(getWidth(),getHeight());
+		Screen4 = new TheoSnakeGUI(getWidth(),getHeight());
+		Screen5 = new PacmanScreen(getWidth(),getHeight());
 		setScreen(Screen1);
-		MarkGalaga Screen2 = new MarkGalaga(getWidth(),getHeight());
-		
-		PacmanScreen Screen3 = new PacmanScreen(getWidth(),getHeight());
 	}
 
 }
