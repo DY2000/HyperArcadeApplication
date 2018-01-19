@@ -30,7 +30,7 @@ public class TetrisMain extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-
+		
 	}
 
 	public void paint(Graphics2D g) {

@@ -11,29 +11,29 @@ import markGalaga.MarkGalaga;
 import theoDevinSnake.TheoSnakeGUI;
 import willTetris.TetrisMain;
 
-public class ArcadeGUI extends GUIApplication{
+public class ArcadeGUI extends GUIApplication {
 	public static ArcadeGUI hyperArcade;
-	public static ArcadeMain Screen1;
-	public static TetrisMain Screen2;
-	public static MarkGalaga Screen3;
-	public static TheoSnakeGUI Screen4;
-	public static PacmanScreen Screen5;	
+	public static ArcadeMain homeScreen;
+	public static TetrisMain tetrisScreen;
+	public static MarkGalaga galagaScreen;
+	public static TheoSnakeGUI snakeScreen;
+	public static PacmanScreen pacmanScreen;
 	public static Font themeFont;
-	
+
 	public ArcadeGUI(int width, int height) {
 		super(width, height);
 		setVisible(true);
 	}
 
 	public static void main(String[] args) {
-		hyperArcade = new ArcadeGUI(1024,764);
+		hyperArcade = new ArcadeGUI(1024, 764);
 		Thread runner = new Thread(hyperArcade);
 		runner.start();
 	}
 
 	@Override
 	public void initScreen() {
-	try {
+		try {
 			File fontFile = new File("resources/ArcadeClassic.ttf");
 			Font font = Font.createFont(Font.TRUETYPE_FONT, fontFile);
 			themeFont = font.deriveFont(24f);
@@ -41,12 +41,12 @@ public class ArcadeGUI extends GUIApplication{
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		Screen1 = new ArcadeMain(getWidth(),getHeight());
-		Screen2 = new TetrisMain(getWidth(),getHeight());
-		Screen3 = new MarkGalaga(getWidth(),getHeight());
-		Screen4 = new TheoSnakeGUI(getWidth(),getHeight());
-		Screen5 = new PacmanScreen(getWidth(),getHeight());
-		setScreen(Screen1);
+		homeScreen = new ArcadeMain(getWidth(), getHeight());
+		tetrisScreen = new TetrisMain(getWidth(), getHeight());
+		galagaScreen = new MarkGalaga(getWidth(), getHeight());
+		snakeScreen = new TheoSnakeGUI(getWidth(), getHeight());
+		pacmanScreen = new PacmanScreen(getWidth(), getHeight());
+		setScreen(homeScreen);
 	}
 
 }
