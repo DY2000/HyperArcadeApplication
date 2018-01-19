@@ -8,6 +8,8 @@ import guiTeacher.interfaces.Visible;
 import willTetris.Collidable;
 
 public class AliceGhost extends AnimatedComponent implements Collidable{
+	static Thread counter = new Thread();
+
 	
 	//there are 4 main ghosts named blinky (red), pinky, clyde (orange), inky (blue)
 	//scatter mode-each ghost has a predefined corner of the grid that they follow
@@ -77,9 +79,56 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 	}
 	
 	
+	
+	
+
+	public void checkIfBlue() {
+		
+		while(isBlue()) {
+			
+			//make a ghost blue
+		}
+			
+		}
+		
+		public void whenBlue() {
+			Thread timer = new Thread(new Runnable() {
+				
+				public void run() {
+					
+					while(isBlue()) {
+						
+						try {
+							
+							Thread.sleep(1000);
+						}
+						
+						catch(Throwable e) {
+							e.printStackTrace();
+							
+						}
+					}
+					
+				}
+
+				
+				
+			});
+			
+		}
+			
+		
+	
+
+
+	private boolean isBlue() {
+		
+		return DanielPacman.ateBlue();
 	}
-	
-	
+
+
+
+
 	
 	
 }
