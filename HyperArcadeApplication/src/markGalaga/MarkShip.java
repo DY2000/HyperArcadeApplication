@@ -19,7 +19,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		shots = new ArrayList<MarkProjectile>(32);
+		shots = new ArrayList<MarkProjectile>(64);
 		for(int i = 0; i < 64; i++) {
 			shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
 		}
@@ -57,9 +57,13 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public void keyReleased(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_LEFT :
-				moveStop();
+				if(getVx() < 0)
+					moveStop();
+				else break;
 			case KeyEvent.VK_RIGHT : 
-				moveStop();
+				if(getVx() > 0)
+					moveStop();
+				else break;
 		}
 	}
 
@@ -96,6 +100,12 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 				break;
 			}
 		}	
+	}
+	
+	public void checkBehaviors() {
+		if(getVx() > 0 && getX() +10 > 1024-getWidth()) {
+			moveStop();
+		}
 	}
 	
 	public ArrayList<MarkProjectile> getShots() {
