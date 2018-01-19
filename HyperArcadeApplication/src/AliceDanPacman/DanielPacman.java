@@ -7,7 +7,7 @@ import java.awt.image.BufferedImage;
 import guiTeacher.components.AnimatedComponent;
 import markGalaga.MarkPlayerMovement;
 
-public class DanielPacman extends AnimatedComponent implements MarkPlayerMovement{
+public class DanielPacman extends AnimatedComponent implements MarkPlayerMovemen, AliceMethods t{
 
 	public DanielPacman(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -17,7 +17,10 @@ public class DanielPacman extends AnimatedComponent implements MarkPlayerMovemen
 		 g.setColor(Color.yellow);
 		  g.fillArc(0,0,100,100,20,270);
 	}
-	public static boolean ateBlue() {
-		return false;
+	@Override
+	public void ateBlue() {
+		// TODO Auto-generated method stub
+		
 	}
+
 }

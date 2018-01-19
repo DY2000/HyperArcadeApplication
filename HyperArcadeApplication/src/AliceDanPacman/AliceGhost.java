@@ -86,7 +86,7 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 		
 		while(isBlue()) {
 			
-			//make a ghost blue
+			//make a ghost blue for each ghost, replace location of old ghosts to new blue ghost, then back to normal
 		}
 			
 		}
