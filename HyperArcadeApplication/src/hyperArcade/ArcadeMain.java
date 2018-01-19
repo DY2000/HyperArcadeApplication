@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.util.List;
 
+import AliceDanPacman.PacmanScreen;
 import guiTeacher.components.Action;
 import guiTeacher.components.Button;
 import guiTeacher.components.CustomImageButton;
@@ -12,7 +13,9 @@ import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.DrawInstructions;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import markGalaga.MarkGalaga;
 import theoDevinSnake.TheoSnakeGUI;
+import willTetris.TetrisMain;
 
 public class ArcadeMain extends FullFunctionScreen {
 
@@ -24,40 +27,33 @@ public class ArcadeMain extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		viewObjects.add(new Graphic(0, 0, getWidth(), getHeight(), "resources/homescreen.png"));
-		// Button tetris = new Button(110,400,100,100,"TETRIS",new Action() {
-		// @Override
-		// public void act() {
-		//
-		// }
-		// });
 		TextArea tetrisScreen = new TextArea(110, 400, 100, 70, "TETRIS");
-		CustomImageButton tetris = new CustomImageButton(110, 400, 100, 70, new DrawInstructions() {
+		CustomImageButton tetris = new CustomImageButton(110, 400, 120, 75, new DrawInstructions() {
 
 			@Override
 			public void draw(Graphics2D g, boolean highlight) {
 				if (!highlight) {
-					g.setColor(Color.black);
-					g.fillRect(0, 0, 100, 65);
-					viewObjects.remove(tetrisScreen);
+//					g.setColor(Color.black);
+//					g.fillRect(0, 0, 100, 65);
+//					viewObjects.remove(tetrisScreen);
 				} else {
-					g.setColor(Color.white);
-					g.fillRect(0, 0, 100, 65);
-					g.setFont(ArcadeGUI.themeFont);
-					viewObjects.add(tetrisScreen);
+//					g.setColor(Color.white);
+//					g.fillRect(0, 0, 100, 65);
+//					viewObjects.add(tetrisScreen);
 				}
 			}
 		}, new Action() {
 
 			@Override
 			public void act() {
-				// TODO Auto-generated method stub
-
+				ArcadeGUI.hyperArcade.setScreen(new TetrisMain(getWidth(),getHeight()));
 			}
 		});
 		tetris.setBackground(Color.black);
-		tetris.setForeground(Color.white);
+		tetris.setForeground(Color.black);
 		viewObjects.add(tetris);
-		Button snake = new Button(400,500,100,30,"",new Action() {
+		
+		Button snake = new Button(320,400,120,75,"",new Action() {
 			@Override
 			public void act() {
 				ArcadeGUI.hyperArcade.setScreen(new TheoSnakeGUI(getWidth(),getHeight()));
@@ -66,6 +62,26 @@ public class ArcadeMain extends FullFunctionScreen {
 		snake.setBackground(Color.black);
 		snake.setForeground(Color.black);
 		viewObjects.add(snake);
+		
+		Button galaga = new Button(545,400,120,75,"",new Action() {
+			@Override
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(new MarkGalaga(getWidth(),getHeight()));
+			}
+		});
+		galaga.setBackground(Color.black);
+		galaga.setForeground(Color.black);
+		viewObjects.add(galaga);
+		
+		Button pacman = new Button(760,400,120,75,"",new Action() {
+			@Override
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(new PacmanScreen(getWidth(),getHeight()));
+			}
+		});
+		pacman.setBackground(Color.black);
+		pacman.setForeground(Color.black);
+		viewObjects.add(pacman);
 	}
 
 	public static void main(String[] args) {
