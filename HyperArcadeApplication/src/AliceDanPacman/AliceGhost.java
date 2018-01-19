@@ -86,13 +86,15 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 		
 		while(isBlue()) {
 			
-			//make a ghost blue for each ghost, replace location of old ghosts to new blue ghost, then back to normal
-		}
 			
 		}
+			
+			//make a blue ghost
+		}
 		
-		public void whenBlue() {
-			Thread timer = new Thread(new Runnable() {
+		public final void whenBlue() {
+			
+Thread timer = new Thread(new Runnable() {
 				
 				public void run() {
 					
@@ -117,13 +119,13 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 			
 		}
 			
-		
 	
 
 
 	private boolean isBlue() {
-		
-		return DanielPacman.ateBlue();
+		return false;
+		//return DanielPacman.ateBlue();
+
 	}
 
 
