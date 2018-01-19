@@ -8,6 +8,8 @@ import guiTeacher.components.AnimatedComponent;
 import markGalaga.MarkPlayerMovement;
 
 public class DanielPacman extends AnimatedComponent implements MarkPlayerMovement, AliceMethods {
+	
+	private boolean canEatGhost=false;
 
 	public DanielPacman(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -18,7 +20,27 @@ public class DanielPacman extends AnimatedComponent implements MarkPlayerMovemen
 		  g.fillArc(0,0,100,100,20,270);
 	}
 	public boolean ateBlue() {
+		
+		
+		
 		return false;
+	}
+	
+	public void whenAtePowerup() {
+		if(wentOverPowerUp()) {
+		canEatGhost = true;
+		}
+		canEatGhost = false;
+	}
+	boolean wentOverPowerUp() {
+		//if went over poweruplocation
+		if() {
+		return true;
+		}
+		else {
+			
+			return false;
+		}
 	}
 
 

@@ -94,7 +94,7 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 		
 		public final void whenBlue() {
 			
-Thread timer = new Thread(new Runnable() {
+			Thread timer = new Thread(new Runnable() {
 				
 				public void run() {
 					
@@ -123,6 +123,11 @@ Thread timer = new Thread(new Runnable() {
 
 
 	private boolean isBlue() {
+		
+		if(DanielPacman.wentOverPowerUp()) {
+			
+			return true;
+		}
 		return false;
 		//return DanielPacman.ateBlue();
 
