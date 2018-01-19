@@ -5,6 +5,8 @@ import java.io.File;
 
 import AliceDanPacman.PacmanBackground;
 import AliceDanPacman.PacmanScreen;
+import devin.Inventory;
+import devin.TicketShop;
 import guiTeacher.GUIApplication;
 import guiTeacher.components.StyledComponent;
 import markGalaga.MarkGalaga;
@@ -18,6 +20,8 @@ public class ArcadeGUI extends GUIApplication {
 	public static MarkGalaga galagaScreen;
 	public static TheoSnakeGUI snakeScreen;
 	public static PacmanScreen pacmanScreen;
+	public static TicketShop ticketScreen;
+	public static Inventory inventoryScreen;
 	public static Font themeFont;
 
 	public ArcadeGUI(int width, int height) {
@@ -46,6 +50,8 @@ public class ArcadeGUI extends GUIApplication {
 		galagaScreen = new MarkGalaga(getWidth(), getHeight());
 		snakeScreen = new TheoSnakeGUI(getWidth(), getHeight());
 		pacmanScreen = new PacmanScreen(getWidth(), getHeight());
+		ticketScreen  = new TicketShop(getWidth(), getHeight());
+		inventoryScreen = new Inventory(getWidth(), getHeight());
 		setScreen(homeScreen);
 	}
 
