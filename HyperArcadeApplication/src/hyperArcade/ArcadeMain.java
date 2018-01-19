@@ -33,7 +33,7 @@ public class ArcadeMain extends FullFunctionScreen {
 					g.setColor(Color.black);
 					g.fillRect(0, 0, 100, 65);
 				} else {
-					
+
 				}
 			}
 		}, new Action() {
@@ -52,7 +52,7 @@ public class ArcadeMain extends FullFunctionScreen {
 					g.setColor(Color.black);
 					g.fillRect(0, 0, 100, 65);
 				} else {
-					
+
 				}
 			}
 		}, new Action() {
@@ -71,7 +71,7 @@ public class ArcadeMain extends FullFunctionScreen {
 					g.setColor(Color.black);
 					g.fillRect(0, 0, 100, 65);
 				} else {
-					
+
 				}
 			}
 		}, new Action() {
