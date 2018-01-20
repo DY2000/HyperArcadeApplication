@@ -2,6 +2,7 @@ package theoDevinSnake;
 
 import java.awt.Color;
 import java.awt.Graphics2D;
+import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
 import guiTeacher.components.Graphic;
@@ -69,5 +70,40 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		if(dir==4) {
 			moveLeft();
 		}
+	}
+
+
+	@Override
+	public void keyPressed(KeyEvent arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyReleased(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void keyTyped(KeyEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public boolean isHovered(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+
+	@Override
+	public void setFocus(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 }

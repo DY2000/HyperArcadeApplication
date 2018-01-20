@@ -19,8 +19,8 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		shots = new ArrayList<MarkProjectile>(64);
-		for(int i = 0; i < 64; i++) {
+		shots = new ArrayList<MarkProjectile>();
+		for(int i = 0; i < 3; i++) {
 			shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
 		}
 		img = new Graphic(0,0,.5,"resources/Galaga_ship.png").getImage();
@@ -33,22 +33,18 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
-				if(shots.size() < 64) {
-					for(int i = shots.size(); i < 64; i++) {
+				if(shots.size() < 3) {
+					for(int i = shots.size(); i < 2; i++) {
 						shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
 					}
 				}
-				fireShot(shots,getX()+(getWidth()/2)-(shots.get(63).getWidth()/2),getY());
+				fireShot(shots,getX()+(getWidth()/2)-(shots.get(0).getWidth()/2),getY());
 				break;
 			case KeyEvent.VK_LEFT :
-				if(getX() > 0)
 					moveLeft();
-				else moveStop();
 				break;
 			case KeyEvent.VK_RIGHT : 
-				if(getX() < 1024-getWidth())
 					moveRight();
-				else moveStop();
 				break;
 		}
 	}
@@ -96,20 +92,35 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 			if(arl.get(i).getVy() == 0) {
 				arl.get(i).setX(x);
 				arl.get(i).setY(y);
-				arl.get(i).setVy(-10);			
+				arl.get(i).setVy(-25);			
 				break;
 			}
 		}	
 	}
 	
 	public void checkBehaviors() {
-		if(getVx() > 0 && getX() +10 > 1024-getWidth()) {
+		if(getVx() > 0 && getX() > 1024-(getWidth()*1.3)) {
+			moveStop();
+		}
+		if(getVx() < 0 && getX() < 8) {
 			moveStop();
 		}
 	}
 	
 	public ArrayList<MarkProjectile> getShots() {
 		return shots;
+	}
+
+	@Override
+	public boolean isHovered(int x, int y) {
+		// TODO Auto-generated method stub
+		return false;
+	}
+
+	@Override
+	public void setFocus(boolean b) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }
