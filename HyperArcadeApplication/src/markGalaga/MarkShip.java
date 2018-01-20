@@ -7,12 +7,10 @@ import java.util.ArrayList;
 
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
-import hyperArcade.ArcadeGUI;
 import willTetris.Collidable;
 
 public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
-	private BufferedImage img;
 	private ArrayList<MarkProjectile> shots;
 	
 	public MarkShip(int x, int y, int w, int h) {
@@ -20,10 +18,9 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		setX(x);
 		setY(y);
 		shots = new ArrayList<MarkProjectile>();
-		for(int i = 0; i < 3; i++) {
-			shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
+		for(int i = 0; i < 4; i++) {
+			shots.add(i, new MarkProjectile(1025,0,getWidth()/5,getHeight()/4,"player"));
 		}
-		img = new Graphic(0,0,.5,"resources/Galaga_ship.png").getImage();
 		update();
 		Thread t = new Thread(this);
 		t.start();
@@ -33,8 +30,8 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
-				if(shots.size() < 3) {
-					for(int i = shots.size(); i < 2; i++) {
+				if(shots.size() < 4) {
+					for(int i = shots.size(); i < 4; i++) {
 						shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
 					}
 				}
@@ -67,12 +64,6 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public void keyTyped(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
-	}
-
-	public void drawImage(Graphics2D g) {
-		if(img != null) {
-			g.drawImage(img,0,0,null);
-		}
 	}
 
 	public void moveStop() {
