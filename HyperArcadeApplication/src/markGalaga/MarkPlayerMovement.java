@@ -4,7 +4,7 @@ import java.awt.event.KeyEvent;
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.interfaces.KeyedComponent;
 
-public class MarkPlayerMovement extends AnimatedComponent implements KeyedComponent{
+public abstract class MarkPlayerMovement extends AnimatedComponent implements KeyedComponent{
 
 	public MarkPlayerMovement(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -12,32 +12,17 @@ public class MarkPlayerMovement extends AnimatedComponent implements KeyedCompon
 	}
 
 	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void keyPressed(KeyEvent arg0);
 
 	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void keyReleased(KeyEvent e);
 
 	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void keyTyped(KeyEvent e);
 
 	@Override
-	public boolean isHovered(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
+	public abstract boolean isHovered(int x, int y);
 
 	@Override
-	public void setFocus(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
+	public abstract void setFocus(boolean b);
 }

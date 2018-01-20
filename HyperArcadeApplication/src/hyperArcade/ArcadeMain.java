@@ -1,6 +1,7 @@
 package hyperArcade;
 
 import java.awt.Color;
+
 import java.awt.Graphics2D;
 import java.util.List;
 
@@ -16,8 +17,11 @@ import guiTeacher.userInterfaces.FullFunctionScreen;
 import markGalaga.MarkGalaga;
 import theoDevinSnake.TheoSnakeGUI;
 import willTetris.TetrisMain;
+import devin.Inventory;
+import devin.TicketShop;
 
 public class ArcadeMain extends FullFunctionScreen {
+
 
 	public ArcadeMain(int width, int height) {
 		super(width, height);
@@ -33,7 +37,7 @@ public class ArcadeMain extends FullFunctionScreen {
 					g.setColor(Color.black);
 					g.fillRect(0, 0, 100, 65);
 				} else {
-					
+
 				}
 			}
 		}, new Action() {
@@ -52,13 +56,13 @@ public class ArcadeMain extends FullFunctionScreen {
 					g.setColor(Color.black);
 					g.fillRect(0, 0, 100, 65);
 				} else {
-					
+
 				}
 			}
 		}, new Action() {
 
 			public void act() {
-				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.snakeScreen);
+//				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.snakeScreen);
 			}
 		});
 		snake.setBackground(Color.black);
@@ -71,7 +75,7 @@ public class ArcadeMain extends FullFunctionScreen {
 					g.setColor(Color.black);
 					g.fillRect(0, 0, 100, 65);
 				} else {
-					
+
 				}
 			}
 		}, new Action() {
@@ -100,8 +104,46 @@ public class ArcadeMain extends FullFunctionScreen {
 		pacman.setBackground(Color.black);
 		pacman.setForeground(Color.black);
 		viewObjects.add(pacman);
+		
+		CustomImageButton ticket = new CustomImageButton(100, 100, 100, 100, new DrawInstructions() {
+			public void draw(Graphics2D g, boolean highlight) {
+				if (!highlight) {
+					g.setColor(Color.green);
+					g.fillRect(0, 0, 100, 65);
+				} else {
+
+				}
+			}
+		}, new Action() {
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.ticketScreen);
+			}
+		});
+		ticket.setBackground(Color.white);
+		ticket.setForeground(Color.white);
+		viewObjects.add(ticket);
+		
+		CustomImageButton inventory = new CustomImageButton(750, 100, 100, 100, new DrawInstructions() {
+			public void draw(Graphics2D g, boolean highlight) {
+				if (!highlight) {
+					g.setColor(Color.red);
+					g.fillRect(0, 0, 100, 65);
+				} else {
+
+				}
+			}
+		}, new Action() {
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.inventoryScreen);
+			}
+		});
+		inventory.setBackground(Color.white);
+		inventory.setForeground(Color.white);
+		viewObjects.add(inventory);
+
 
 	}
+	
 
 	public static void main(String[] args) {
 		// TODO Auto-generated method stub
