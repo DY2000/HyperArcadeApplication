@@ -10,6 +10,8 @@ import markGalaga.MarkPlayerMovement;
 import willTetris.Collidable;
 
 public class DanielPacman extends MarkPlayerMovement implements Collidable{
+	
+	private boolean canEatGhost=false;
 
 	public DanielPacman(int x, int y, int w, int h) {
 		super(x, y, w, h);
@@ -43,5 +45,25 @@ public class DanielPacman extends MarkPlayerMovement implements Collidable{
 	public void setFocus(boolean b) {
 		// TODO Auto-generated method stub
 		
+	}
+	public boolean ateBlue() {
+		return false;
+	}
+	
+	public void whenAtePowerup() {
+		if(wentOverPowerUp()) {
+		canEatGhost = true;
+		}
+		canEatGhost = false;
+	}
+	boolean wentOverPowerUp() {
+		//if went over poweruplocation
+		if() {
+		return true;
+		}
+		else {
+			
+			return false;
+		}
 	}
 }
