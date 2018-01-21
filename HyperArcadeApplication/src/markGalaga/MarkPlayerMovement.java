@@ -15,6 +15,9 @@ public abstract class MarkPlayerMovement extends AnimatedComponent implements Ke
 	public abstract void keyPressed(KeyEvent arg0);
 
 	@Override
+	public abstract void checkBehaviors();
+	
+	@Override
 	public abstract void keyReleased(KeyEvent e);
 
 	@Override

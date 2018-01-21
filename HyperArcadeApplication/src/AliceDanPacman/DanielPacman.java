@@ -44,4 +44,9 @@ public class DanielPacman extends MarkPlayerMovement implements Collidable{
 		// TODO Auto-generated method stub
 		
 	}
+	@Override
+	public void checkBehaviors() {
+		// TODO Auto-generated method stub
+		
+	}
 }

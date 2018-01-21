@@ -29,9 +29,6 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 			setY(300);
 			setX(1025);
 		}
-		if(detectsCollision()){
-			
-		}
 	}
 
 	public boolean detectsCollision() {

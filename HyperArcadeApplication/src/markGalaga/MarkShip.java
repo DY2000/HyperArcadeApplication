@@ -11,31 +11,27 @@ import willTetris.Collidable;
 
 public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
-	private ArrayList<MarkProjectile> shots;
+	ArrayList<MarkProjectile> playerShots;
 	
-	public MarkShip(int x, int y, int w, int h) {
+	public MarkShip(int x, int y, int w, int h, ArrayList<MarkProjectile> shots) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		shots = new ArrayList<MarkProjectile>();
-		for(int i = 0; i < 4; i++) {
-			shots.add(i, new MarkProjectile(1025,0,getWidth()/5,getHeight()/4,"player"));
-		}
+		setShots(shots);
 		update();
 		Thread t = new Thread(this);
 		t.start();
 	}
 	
+	private void setShots(ArrayList<MarkProjectile> shots) {
+		this.playerShots = shots;
+	}
+
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
-				if(shots.size() < 4) {
-					for(int i = shots.size(); i < 4; i++) {
-						shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
-					}
-				}
-				fireShot(shots,getX()+(getWidth()/2)-(shots.get(0).getWidth()/2),getY());
+				fireShot(playerShots,getX()+(getWidth()/2)-(playerShots.get(0).getWidth()/2),getY());
 				break;
 			case KeyEvent.VK_LEFT :
 					moveLeft();
@@ -90,16 +86,23 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	}
 	
 	public void checkBehaviors() {
-		if(getVx() > 0 && getX() > 1024-(getWidth()*1.3)) {
+		if(getVx() > 0 && getX() > 1024-(72)) {
 			moveStop();
 		}
 		if(getVx() < 0 && getX() < 8) {
 			moveStop();
 		}
+		if(detectCollision()) {
+			
+		}
 	}
 	
+	private boolean detectCollision() {
+		return false;
+	}
+
 	public ArrayList<MarkProjectile> getShots() {
-		return shots;
+		return playerShots;
 	}
 
 	@Override
