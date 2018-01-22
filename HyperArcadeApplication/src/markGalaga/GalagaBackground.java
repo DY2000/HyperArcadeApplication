@@ -17,12 +17,12 @@ public class GalagaBackground extends AnimatedComponent{
 	}
 
 	public synchronized void checkBehaviors() {
-		if(this.getY() > 764) {
-			setY(-760);
+		if(this.getY() > -2) {
+			setY(-766);
 		}else {
 			setY(this.getY()+1);
 			setY(this.getY()+1);
 			setY(this.getY()+1);
-		}		
+		}
 	}
 }

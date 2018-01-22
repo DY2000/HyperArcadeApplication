@@ -27,40 +27,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		this.playerShots = shots;
 	}
 
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()) {
-			case KeyEvent.VK_SPACE :
-				fireShot(playerShots,getX()+(getWidth()/2)-(playerShots.get(0).getWidth()/2),getY());
-				break;
-			case KeyEvent.VK_LEFT :
-					moveLeft();
-				break;
-			case KeyEvent.VK_RIGHT : 
-					moveRight();
-				break;
-		}
-	}
 	
-	@Override
-	public void keyReleased(KeyEvent e) {
-		switch(e.getKeyCode()) {
-			case KeyEvent.VK_LEFT :
-				if(getVx() < 0)
-					moveStop();
-				else break;
-			case KeyEvent.VK_RIGHT : 
-				if(getVx() > 0)
-					moveStop();
-				else break;
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
 
 	public void moveStop() {
 		setVx(0);
@@ -79,7 +46,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 			if(arl.get(i).getVy() == 0) {
 				arl.get(i).setX(x);
 				arl.get(i).setY(y);
-				arl.get(i).setVy(-25);			
+				arl.get(i).setVy(-20);			
 				break;
 			}
 		}	
@@ -104,17 +71,5 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public ArrayList<MarkProjectile> getShots() {
 		return playerShots;
 	}
-
-	@Override
-	public boolean isHovered(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-	@Override
-	public void setFocus(boolean b) {
-		// TODO Auto-generated method stub
 		
-	}
-	
 }

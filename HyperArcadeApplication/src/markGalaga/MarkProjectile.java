@@ -26,8 +26,14 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 	public void checkBehaviors() {
 		if(this.getY() < 0) {
 			setVy(0);
+			setY(400);
+			setX(1030);
+		}
+		if(this.getY() > 764) {
+			setVy(0);
+			setVx(0);
 			setY(300);
-			setX(1025);
+			setX(1030);
 		}
 	}
 
