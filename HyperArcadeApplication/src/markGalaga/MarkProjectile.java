@@ -3,29 +3,31 @@ package markGalaga;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import guiTeacher.components.Action;
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
 import willTetris.Collidable;
 
 public class MarkProjectile extends AnimatedComponent implements Collidable{
 	
-	String shooter;
+	private MarkGalaga game;
+	private Action detectCollision;
 	
-	public MarkProjectile(int x, int y, int w, int h, String shooter) {
+	public MarkProjectile(int x, int y, int w, int h, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		setShooter(shooter);
+		this.game = game;
+		this.detectCollision = null;
 		update();
 		Thread t = new Thread(this);
 		t.start();
 	}
 
-	
-
 	public void checkBehaviors() {
 		if(this.getY() < 0) {
 			setVy(0);
+			setVx(0);
 			setY(400);
 			setX(1030);
 		}
@@ -35,17 +37,14 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 			setY(300);
 			setX(1030);
 		}
+		this.act();
+	}
+	private void act() {
+		if(this.detectCollision != null)
+			detectCollision.act();
 	}
 
-	public boolean detectsCollision() {
-		return false;
-	}
-
-	public String getShooter() {
-		return shooter;
-	}
-	
-	private void setShooter(String shooter) {
-		this.shooter = shooter;
+	public  void setDetection(Action a) {
+		this.detectCollision = a;
 	}
 }

@@ -59,13 +59,16 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		if(getVx() < 0 && getX() < 8) {
 			moveStop();
 		}
-		if(detectCollision()) {
-			
-		}
 	}
 	
-	private boolean detectCollision() {
-		return false;
+	public boolean detectCollision(MarkProjectile shot) {
+		if((shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
+			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY())){
+			return true; 
+		}
+		else{
+			return false; 
+		}
 	}
 
 	public ArrayList<MarkProjectile> getShots() {
