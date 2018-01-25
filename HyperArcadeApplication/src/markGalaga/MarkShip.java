@@ -18,6 +18,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		setX(x);
 		setY(y);
 		setShots(shots);
+		this.addSequence("resources/Galaga_spriteSheet.png", 1000, 184, 55, 15, 16, 1);
 		update();
 		Thread t = new Thread(this);
 		t.start();
@@ -34,11 +35,11 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	}
 	
 	public void moveRight() {
-		setVx(10);
+		setVx(5);
 	}
 	
 	public void moveLeft() {
-		setVx(-10);
+		setVx(-5);
 	}
 
 	public void fireShot(ArrayList<MarkProjectile> arl, int x, int y) {
@@ -46,7 +47,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 			if(arl.get(i).getVy() == 0) {
 				arl.get(i).setX(x);
 				arl.get(i).setY(y);
-				arl.get(i).setVy(-20);			
+				arl.get(i).setVy(-10);			
 				break;
 			}
 		}	
@@ -64,6 +65,16 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public boolean detectCollision(MarkProjectile shot) {
 		if((shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
 			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY())){
+			return true; 
+		}
+		else{
+			return false; 
+		}
+	}
+	
+	public boolean detectCollision(MarkMob mob) {
+		if((mob.getX() < getX() + getWidth() && mob.getX() + mob.getWidth() > getX() &&
+			mob.getY() < getY() + getHeight() && mob.getHeight() + mob.getY() > getY())){
 			return true; 
 		}
 		else{
