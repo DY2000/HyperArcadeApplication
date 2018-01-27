@@ -13,7 +13,7 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 	private MarkGalaga game;
 	private Action detectCollision;
 	
-	public MarkProjectile(int x, int y, int w, int h, MarkGalaga game) {
+	public MarkProjectile(int x, int y, int w, int h, String shooter, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
@@ -46,5 +46,9 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 
 	public  void setDetection(Action a) {
 		this.detectCollision = a;
+	}
+	
+	public MarkGalaga getGame() {
+		return game;
 	}
 }

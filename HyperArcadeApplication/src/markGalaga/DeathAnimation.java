@@ -4,7 +4,7 @@ import guiTeacher.components.AnimatedComponent;
 
 public class DeathAnimation extends AnimatedComponent{
 
-	public DeathAnimation(int x, int y, int w, int h) {
+	public DeathAnimation(int x, int y, int w, int h, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
@@ -12,6 +12,16 @@ public class DeathAnimation extends AnimatedComponent{
 		update();
 		Thread t = new Thread(this);
 		t.start();
+	}
+	
+	public void sleep(int n)
+	{
+		try {
+			Thread.sleep(n);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 }

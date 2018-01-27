@@ -11,34 +11,40 @@ import willTetris.Collidable;
 public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	private int hp;
-	private int count;
+	private int countA;
+	private int countB;
 	private boolean enabled;
+	private boolean attacking;
 	private String mobType;
 	private ArrayList<MarkProjectile> mobShots;
+	private MarkGalaga game;
 	private Action attack;
 	
-	public MarkMob(int x, int y, int w, int h, String mobType,ArrayList<MarkProjectile> arl) {
+	public MarkMob(int x, int y, int w, int h, String mobType,ArrayList<MarkProjectile> arl, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
 		setShots(arl);
 		String galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
 		if(mobType == "abductor") {
-			this.addSequence(galagaSpriteSheet, 500, 161, 103, 15, 16, 2);
+			this.addSequence(galagaSpriteSheet, 1000, 161, 103, 15, 16, 2);
 			hp = 2;
 		}
 		if(mobType == "red") {
-			this.addSequence(galagaSpriteSheet, 500, 162, 154, 15, 10, 2);
+			this.addSequence(galagaSpriteSheet, 1000, 162, 154, 15, 10, 2);
 			hp = 1;
 		}
 		if(mobType == "morpher") {
-			this.addSequence(galagaSpriteSheet, 500, 162, 178, 13, 10, 2);
+			this.addSequence(galagaSpriteSheet, 1000, 162, 178, 13, 10, 2);
 			hp = 1;
 		}
 		this.attack = null;
 		this.mobType = mobType;
+		this.game = game;
+		attacking = true;
 		enabled = true;
-		count = 0;
+		countA = -135;
+		countB = 0;
 		update();
 		Thread t = new Thread(this);
 		t.start();
@@ -49,32 +55,54 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	}
 
 	public synchronized void checkBehaviors() {
-		if(enabled) {
+		if(enabled && !attacking) {
+			if(hp == 0) {
+				enabled = false;
+				setVy(0);
+				setX(1150);
+				setY(25);
+				
+			}
+			if(countA/3 > 1) {
+				countA--;
+				if(countA%3 == 0) {
+					setX(getX()-1);
+				}
+			}else if(countA/3 < -1){
+				countA++;
+				if(countA%3 == 0) {
+					setX(getX()+1);
+				}
+			}else {
+				if(countA - 1 < 0) {
+					countA = 300;
+				}else {
+					countA = -300;
+				}
+			}
+		}else if(countA == -135) {
 			if(hp == 0) {
 				enabled = false;
 				setVy(0);
 				setX(1150);
 				setY(25);
 			}
-			if(count/3 > 1) {
-				count--;
-				if(count%3 == 0) {
-					setX(getX()-1);
+			if(countB/3 > 1) {
+				countB--;
+				if(countB%3 == 0) {
+					setY(getY()-1);
 				}
-			}else if(count/3 < -1){
-				count++;
-				if(count%3 == 0) {
-					setX(getX()+1);
+			}else if(countB/3 < -1){
+				countB++;
+				if(countB%3 == 0) {
+					setY(getY()+1);
 				}
 			}else {
-				if(count - 1 < 0) {
-					count = 90;
+				if(countB - 1 < 0) {
+					countB = 60;
 				}else {
-					count = -90;
+					countB = -60;
 				}
-			}
-			if(Math.random() < .05) {
-				
 			}
 		}
 	}

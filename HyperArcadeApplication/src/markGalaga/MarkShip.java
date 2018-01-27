@@ -54,10 +54,10 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	}
 	
 	public void checkBehaviors() {
-		if(getVx() > 0 && getX() > 1024-(72)) {
+		if(getVx() > 0 && getX() > 712) {
 			moveStop();
 		}
-		if(getVx() < 0 && getX() < 8) {
+		if(getVx() < 0 && getX() < 330) {
 			moveStop();
 		}
 	}

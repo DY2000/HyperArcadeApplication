@@ -1,5 +1,6 @@
 package markGalaga;
 
+import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
@@ -8,32 +9,46 @@ import java.util.List;
 import guiTeacher.components.Action;
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Button;
+import guiTeacher.components.TextArea;
+import guiTeacher.components.TextBox;
+import guiTeacher.components.TextField;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class MarkGalaga extends FullFunctionScreen{
 	
-	String galagaSpriteSheet;
-	AnimatedComponent bg1;
-	MarkGalaga game;
-	MarkShip playerShip;
-	ArrayList<MarkProjectile> playerShots1;
-	ArrayList<MarkMob> mobs;
-	ArrayList<MarkProjectile> mobShots;
-	int lives;
+	private String galagaSpriteSheet;
+	private AnimatedComponent background;
+	private TextArea labelBox;
+	private TextArea scoreBox;
+	private TextArea lifeBox;
+	private MarkGalaga game;
+	private MarkShip playerShip;
+	private ArrayList<MarkProjectile> playerShots1;
+	private ArrayList<MarkMob> mobs;
+	private ArrayList<MarkProjectile> mobShots;
+	private int lives;
+	private boolean spawning;
 
 	public MarkGalaga(int width, int height) {
 		super(width, height);
-		game = this;
+		lives = 3;
+		spawning = false;
 	}
 
+	public boolean getSpawning() {
+		return spawning;
+	}
+	
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
-		bg1 = new GalagaBackground(0, 0, getWidth(),1528);
-		bg1.addSequence("resources/Galaga_bg.jpeg", 1000, 0, 0, getWidth(), 1528, 1);
-		bg1.setY(-764);
-		viewObjects.add(bg1);
+		background = new GalagaBackground(325, -764, 425,getHeight()*2);
+		viewObjects.add(background);
+		
+		
+		
+		setBackground(Color.GRAY);
 		
 		galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
 		
@@ -42,32 +57,32 @@ public class MarkGalaga extends FullFunctionScreen{
 		mobs = new ArrayList<MarkMob>();
 		
 		for(int i = 0; i < 2; i++) {
-			playerShots1.add(i, new MarkProjectile(1030,400,6,16,this));
+			playerShots1.add(i, new MarkProjectile(1030,400,6,16,"player",this));
 			playerShots1.get(i).addSequence(galagaSpriteSheet, 1000, 374, 51, 3, 8, 1);
 			viewObjects.add(playerShots1.get(i));
 		}
 		
 		for(int i = 0; i < 4; i++) {
-			mobShots.add(i, new MarkProjectile(1030,300/2,6,16,this));
+			mobShots.add(i, new MarkProjectile(1030,300/2,6,16,"mob",this));
 			mobShots.get(i).addSequence(galagaSpriteSheet, 1000, 366, 195, 3, 8, 1);
 			viewObjects.add(mobShots.get(i));
 		}
 		
 		for(int i = 0; i < 40; i++) {
 			if(i < 4) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"abductor",mobShots));
+				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"abductor",mobShots,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 12) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 20) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",mobShots));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",mobShots,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 30) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"morpher",mobShots));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"morpher",mobShots,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 40) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"morpher",mobShots));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"morpher",mobShots,game));
 				viewObjects.add(mobs.get(i));
 			}
 			
@@ -91,7 +106,7 @@ public class MarkGalaga extends FullFunctionScreen{
 				
 				@Override
 				public void act() {
-					if(game.playerShip.detectCollision(s)) {
+					if(playerShip.detectCollision(s)) {
 						s.setVy(0);
 						s.setVx(0);
 						s.setY(400);
@@ -109,20 +124,14 @@ public class MarkGalaga extends FullFunctionScreen{
 					for(MarkMob m : mobs) {
 						if(m.detectCollision(s)) {
 							if(m.getHp() == 0) {
-								DeathAnimation boom = new DeathAnimation(m.getX(),m.getY(),32,32);
+								DeathAnimation boom = new DeathAnimation(m.getX(),m.getY(),32,32,game);
 								addObject(boom);
 								s.setVy(0);
 								s.setVx(0);
 								s.setY(300);
 								s.setX(1030);
-								try {
-									Thread.sleep(500);
-								} catch (InterruptedException e) {
-									// TODO Auto-generated catch block
-									e.printStackTrace();
-								}
+								boom.sleep(500);
 								remove(boom);
-								boom = null;
 							}else {
 								s.setVy(0);
 								s.setVx(0);
@@ -141,8 +150,8 @@ public class MarkGalaga extends FullFunctionScreen{
 				@Override
 				public void act() {
 					if(m.getShots().get(3).getVy() == 0) {
-						int playerX = game.playerShip.getX() + game.playerShip.getWidth()/2;
-						int playerY = game.playerShip.getY() + game.playerShip.getHeight()/2;
+						int playerX = playerShip.getX() + playerShip.getWidth()/2;
+						int playerY = playerShip.getY() + playerShip.getHeight()/2;
 						int time = (m.getY() - playerY)/5;
 						m.getShots().get(0).setY(m.getY());
 						m.getShots().get(0).setX((m.getX()+m.getWidth()/2)-(m.getShots().get(0).getWidth()/2));
@@ -157,8 +166,8 @@ public class MarkGalaga extends FullFunctionScreen{
 							// TODO Auto-generated catch block
 							e.printStackTrace();
 						}
-						playerX = game.playerShip.getX();
-						playerY = game.playerShip.getY();
+						playerX = playerShip.getX();
+						playerY = playerShip.getY();
 						time = (m.getY() - playerY)/5;
 						m.getShots().get(1).setY(m.getY());
 						m.getShots().get(1).setX((m.getX()+m.getWidth()/2)-(m.getShots().get(0).getWidth()/2));
@@ -170,6 +179,13 @@ public class MarkGalaga extends FullFunctionScreen{
 					}
 				}
 			});
+			
+			labelBox = new TextArea(325, 10, 425, 40,"    1UP                                      HIGH SCORE");
+			labelBox.setTextColor(Color.RED);
+			labelBox.setBodyColor(Color.BLACK);
+			update();
+			viewObjects.add(labelBox);
+			
 		}
 	}
 
