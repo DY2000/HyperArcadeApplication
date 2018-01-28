@@ -27,6 +27,8 @@ public class MarkGalaga extends FullFunctionScreen{
 	private ArrayList<MarkProjectile> playerShots1;
 	private ArrayList<MarkMob> mobs;
 	private ArrayList<MarkProjectile> mobShots;
+	private int score;
+	private int highscore;
 	private int lives;
 	private boolean spawning;
 
@@ -46,9 +48,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		background = new GalagaBackground(325, -764, 425,getHeight()*2);
 		viewObjects.add(background);
 		
-		
-		
-		setBackground(Color.GRAY);
+		setBackground(Color.DARK_GRAY);
 		
 		galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
 		
@@ -57,13 +57,13 @@ public class MarkGalaga extends FullFunctionScreen{
 		mobs = new ArrayList<MarkMob>();
 		
 		for(int i = 0; i < 2; i++) {
-			playerShots1.add(i, new MarkProjectile(1030,400,6,16,"player",this));
+			playerShots1.add(i, new MarkProjectile(1030,400,3,8,"player",this));
 			playerShots1.get(i).addSequence(galagaSpriteSheet, 1000, 374, 51, 3, 8, 1);
 			viewObjects.add(playerShots1.get(i));
 		}
 		
 		for(int i = 0; i < 4; i++) {
-			mobShots.add(i, new MarkProjectile(1030,300/2,6,16,"mob",this));
+			mobShots.add(i, new MarkProjectile(1030,300/2,3,8,"mob",this));
 			mobShots.get(i).addSequence(galagaSpriteSheet, 1000, 366, 195, 3, 8, 1);
 			viewObjects.add(mobShots.get(i));
 		}
@@ -124,14 +124,26 @@ public class MarkGalaga extends FullFunctionScreen{
 					for(MarkMob m : mobs) {
 						if(m.detectCollision(s)) {
 							if(m.getHp() == 0) {
-								DeathAnimation boom = new DeathAnimation(m.getX(),m.getY(),32,32,game);
-								addObject(boom);
+								Thread b = new Thread(new Runnable() {
+									
+									@Override
+									public void run() {
+										DeathAnimation boom = new DeathAnimation(m.getX(),m.getY(),32,32,game);
+										addObject(boom);
+										try {
+											Thread.sleep(500);
+										} catch (InterruptedException e) {
+											// TODO Auto-generated catch block
+											e.printStackTrace();
+										}
+										remove(boom);
+									}
+								});
 								s.setVy(0);
 								s.setVx(0);
 								s.setY(300);
 								s.setX(1030);
-								boom.sleep(500);
-								remove(boom);
+								b.start();
 							}else {
 								s.setVy(0);
 								s.setVx(0);
@@ -180,9 +192,11 @@ public class MarkGalaga extends FullFunctionScreen{
 				}
 			});
 			
-			labelBox = new TextArea(325, 10, 425, 40,"    1UP                                      HIGH SCORE");
-			labelBox.setTextColor(Color.RED);
+			labelBox = new TextArea(325, 10, 425, 40,"    1UP                                    HIGH SCORE");
+			labelBox.setBackground(Color.BLACK);
+			labelBox.setForeground(Color.BLACK);
 			labelBox.setBodyColor(Color.BLACK);
+			labelBox.setTextColor(Color.RED);
 			update();
 			viewObjects.add(labelBox);
 			
