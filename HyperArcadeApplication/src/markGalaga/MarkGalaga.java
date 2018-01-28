@@ -27,6 +27,8 @@ public class MarkGalaga extends FullFunctionScreen{
 	private ArrayList<MarkProjectile> playerShots1;
 	private ArrayList<MarkMob> mobs;
 	private ArrayList<MarkProjectile> mobShots;
+	private int shotsFired;
+	private int shotsHit;
 	private int score;
 	private int highscore;
 	private int lives;
@@ -57,13 +59,13 @@ public class MarkGalaga extends FullFunctionScreen{
 		mobs = new ArrayList<MarkMob>();
 		
 		for(int i = 0; i < 2; i++) {
-			playerShots1.add(i, new MarkProjectile(1030,400,3,8,"player",this));
+			playerShots1.add(i, new MarkProjectile(1030,400,6,16,"player",this));
 			playerShots1.get(i).addSequence(galagaSpriteSheet, 1000, 374, 51, 3, 8, 1);
 			viewObjects.add(playerShots1.get(i));
 		}
 		
 		for(int i = 0; i < 4; i++) {
-			mobShots.add(i, new MarkProjectile(1030,300/2,3,8,"mob",this));
+			mobShots.add(i, new MarkProjectile(1030,300/2,6,16,"mob",this));
 			mobShots.get(i).addSequence(galagaSpriteSheet, 1000, 366, 195, 3, 8, 1);
 			viewObjects.add(mobShots.get(i));
 		}
@@ -123,12 +125,15 @@ public class MarkGalaga extends FullFunctionScreen{
 				public void act() {
 					for(MarkMob m : mobs) {
 						if(m.detectCollision(s)) {
+							int newX = m.getX();
+							int newY = m.getY();
+							shotsHit++;
 							if(m.getHp() == 0) {
 								Thread b = new Thread(new Runnable() {
 									
 									@Override
 									public void run() {
-										DeathAnimation boom = new DeathAnimation(m.getX(),m.getY(),32,32,game);
+										DeathAnimation boom = new DeathAnimation(newX,newY,32,32,game);
 										addObject(boom);
 										try {
 											Thread.sleep(500);
@@ -139,6 +144,7 @@ public class MarkGalaga extends FullFunctionScreen{
 										remove(boom);
 									}
 								});
+								updateScore(m);
 								s.setVy(0);
 								s.setVx(0);
 								s.setY(300);
@@ -193,20 +199,81 @@ public class MarkGalaga extends FullFunctionScreen{
 			});
 			
 			labelBox = new TextArea(325, 10, 425, 40,"    1UP                                    HIGH SCORE");
-			labelBox.setBackground(Color.BLACK);
-			labelBox.setForeground(Color.BLACK);
-			labelBox.setBodyColor(Color.BLACK);
-			labelBox.setTextColor(Color.RED);
+			labelBox.setTextColor(Color.WHITE);
 			update();
 			viewObjects.add(labelBox);
+			
+			scoreBox = new TextArea(325, 24, 425, 40,"        "+score+"                                          "+highscore);
+			scoreBox.setTextColor(Color.RED);
+			update();
+			viewObjects.add(scoreBox);
 			
 		}
 	}
 
+	public void updateScore(MarkMob m) {
+		if(m.getType() == "red") {
+			if(m.isAttacking()) {
+				score = score + 160;
+				if( score >= highscore)
+					highscore = score;
+				scoreBox.clear();
+				update();
+				scoreBox.setText("        "+score+"                                          "+highscore);
+				update();
+			}else {
+				score = score + 80;
+				if( score >= highscore)
+					highscore = score;
+				scoreBox.clear();
+				update();
+				scoreBox.setText("        "+score+"                                          "+highscore);
+				update();
+			}
+		}else if ( m.getType() == "morpher") {
+			if(m.isAttacking()) {
+				score = score + 100;
+				if( score >= highscore)
+					highscore = score;
+				scoreBox.clear();
+				update();
+				scoreBox.setText("        "+score+"                                          "+highscore);
+				update();
+			}else {
+				score = score + 50;
+				if( score >= highscore)
+					highscore = score;
+				scoreBox.clear();
+				update();
+				scoreBox.setText("        "+score+"                                          "+highscore);
+				update();
+			}
+		}else if ( m.getType() == "abductor") {
+			if(m.isAttacking()) {
+				score = score + 400;
+				if( score >= highscore)
+					highscore = score;
+				scoreBox.clear();
+				update();
+				scoreBox.setText("        "+score+"                                          "+highscore);
+				update();
+			}else {
+				score = score + 200;
+				if( score >= highscore)
+					highscore = score;
+				scoreBox.clear();
+				update();
+				scoreBox.setText("        "+score+"                                          "+highscore);
+				update();
+			}
+		}
+	}
+	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
+				shotsFired++;
 				playerShip.fireShot(playerShip.getShots(),playerShip.getX()+(playerShip.getWidth()/2)-(playerShots1.get(0).getWidth()/2),playerShip.getY());
 				break;
 			case KeyEvent.VK_LEFT :
@@ -238,5 +305,8 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 	}
 	
+	public int getScore() {
+		return score;
+	}
 	
 }

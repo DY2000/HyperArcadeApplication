@@ -8,7 +8,7 @@ public class GalagaBackground extends AnimatedComponent{
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		addSequence("resources/Galaga_bg.png", 350, 0, 0, w, h, 3);
+		addSequence("resources/Galaga_bg.png", 275, 0, 0, w, h, 3);
 		update();
 		Thread t = new Thread(this);
 		t.start();

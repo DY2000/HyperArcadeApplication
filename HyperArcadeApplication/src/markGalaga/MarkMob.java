@@ -41,7 +41,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		this.attack = null;
 		this.mobType = mobType;
 		this.game = game;
-		attacking = true;
+		attacking = false;
 		enabled = true;
 		countA = -135;
 		countB = 0;
@@ -144,6 +144,10 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public int getHp() {
 		return hp;
+	}
+	
+	public boolean isAttacking() {
+		return attacking;
 	}
 	
 	public void setAttack(Action a) {
