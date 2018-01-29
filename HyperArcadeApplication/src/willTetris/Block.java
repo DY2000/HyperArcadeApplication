@@ -18,17 +18,12 @@ public class Block extends Component {
 		this.xPosition = xPos;
 		this.yPosition = yPos;
 		this.color = color;
-		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);// constructs the appearance
-
-		Graphics2D g = appearance.createGraphics();// takes the "canvas" from the appearance
-
-		g.setColor(this.color);
-		g.fillRect(this.xPosition, this.yPosition, 5, 5);
+		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
 	}
 	
 	@Override
 	public void update(Graphics2D g) {
-		g.fillRect(this.xPosition, this.yPosition, 5, 5);
+		
 	}
 
 	public int xPos() {
