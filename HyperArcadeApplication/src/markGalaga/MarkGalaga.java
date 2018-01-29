@@ -36,6 +36,8 @@ public class MarkGalaga extends FullFunctionScreen{
 
 	public MarkGalaga(int width, int height) {
 		super(width, height);
+		score = 0;
+		highscore = 10000;
 		lives = 3;
 		spawning = false;
 	}
@@ -72,19 +74,19 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 		for(int i = 0; i < 40; i++) {
 			if(i < 4) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"abductor",mobShots,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"abductor",mobShots,i,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 12) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots,i,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 20) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",mobShots,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",mobShots,i,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 30) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"morpher",mobShots,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"morpher",mobShots,i,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 40) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"morpher",mobShots,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"morpher",mobShots,i,game));
 				viewObjects.add(mobs.get(i));
 			}
 			
@@ -203,7 +205,7 @@ public class MarkGalaga extends FullFunctionScreen{
 			update();
 			viewObjects.add(labelBox);
 			
-			scoreBox = new TextArea(325, 24, 425, 40,"        "+score+"                                          "+highscore);
+			scoreBox = new TextArea(325, 24, 425, 40,"");
 			scoreBox.setTextColor(Color.RED);
 			update();
 			viewObjects.add(scoreBox);
@@ -266,6 +268,8 @@ public class MarkGalaga extends FullFunctionScreen{
 				scoreBox.setText("        "+score+"                                          "+highscore);
 				update();
 			}
+		}else {
+			
 		}
 	}
 	
