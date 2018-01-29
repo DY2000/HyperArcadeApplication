@@ -27,16 +27,16 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		setY(y);
 		setShots(arl);
 		String galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
-		if(mobType == "abductor") {
-			this.addSequence(galagaSpriteSheet, 1000, 161, 103, 15, 16, 2);
+		if(mobType == "abductor2") {
+			this.addSequence(galagaSpriteSheet, 800, 161, 103, 15, 16, 2);
 			hp = 2;
 		}
 		if(mobType == "red") {
-			this.addSequence(galagaSpriteSheet, 1000, 162, 154, 15, 10, 2);
+			this.addSequence(galagaSpriteSheet, 800, 162, 154, 13, 10, 2);
 			hp = 1;
 		}
 		if(mobType == "morpher") {
-			this.addSequence(galagaSpriteSheet, 1000, 162, 178, 13, 10, 2);
+			this.addSequence(galagaSpriteSheet, 800, 162, 178, 13, 10, 2);
 			hp = 1;
 		}
 		this.attack = null;
@@ -64,6 +64,13 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			setY(25);
 			
 		}
+		if(hp == 1 && mobType == "abductor2") {
+			if(countB%100==0) {
+				mobType = "abductor1";
+				this.clear();
+				this.addSequence("resources/Galaga_spriteSheet.png", 800, 161, 127, 15, 16, 2);
+			}
+		}
 		if(enabled && !attacking) {
 			if(countA/3 > 1) {
 				countA--;
@@ -83,6 +90,9 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				}
 			}
 		}else if(countA == -135) {
+			//when looking at the original galaga mobs have 2 idle motions,
+			//side to side when they are spawning
+			//and then a semi circle expand and contracting with the center being the top middle
 			//This is gonna be ugly
 			if(countB/3 > 1) {
 				countB--;
@@ -90,7 +100,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 					if(countB%30 == 0) {
 						setY(getY()+1);
 					}
-					if(countB%30 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 2) {
 							setX(getX()+1);
 							if(pos%2 == 0) setX(getX()+1);
@@ -116,33 +126,39 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 					if(countB%15 == 0) {
 						setY(getY()+1);
 					}
-					if(countB%20 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 16) {
 							setX(getX()-1);
+							if(pos%8 > 4) setX(getX()-1);
 						}else {
 							setX(getX()+1);
+							if(pos%8 < 3) setX(getX()+1);
 						}
 					}
 				}else if(pos < 30) {
 					if(countB%12 == 0) {
 						setY(getY()+1);
 					}
-					if(countB%15 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 25) {
 							setX(getX()+1);
+							if(pos%10 < 4) setX(getX()+1);
 						}else {
 							setX(getX()-1);
+							if(pos%10 > 5) setX(getX()-1);
 						}
 					}
 				}else if(pos < 40) {
 					if(countB%10 == 0) {
 						setY(getY()+1);
 					}
-					if(countB%12 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 35) {
 							setX(getX()+1);
+							if(pos%10 < 4) setX(getX()+1);
 						}else {
 							setX(getX()-1);
+							if(pos%10 > 5) setX(getX()-1);
 						}
 					}
 				}
@@ -152,7 +168,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 					if(countB%30 == 0) {
 						setY(getY()-1);
 					}
-					if(countB%30 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 2) {
 							setX(getX()-1);
 							if(pos%2 == 0) setX(getX()-1);
@@ -178,33 +194,39 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 					if(countB%15 == 0) {
 						setY(getY()-1);
 					}
-					if(countB%20 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 16) {
 							setX(getX()+1);
+							if(pos%8 > 4) setX(getX()+1);
 						}else {
 							setX(getX()-1);
+							if(pos%8 < 3) setX(getX()-1);
 						}
 					}
 				}else if(pos < 30) {
 					if(countB%12 == 0) {
 						setY(getY()-1);
 					}
-					if(countB%15 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 25) {
 							setX(getX()-1);
+							if(pos%10 < 4) setX(getX()-1);
 						}else {
 							setX(getX()+1);
+							if(pos%10 > 5) setX(getX()+1);
 						}
 					}
 				}else if(pos < 40) {
 					if(countB%10 == 0) {
 						setY(getY()-1);
 					}
-					if(countB%12 == 0) {
+					if(countB%25 == 0) {
 						if(pos < 35) {
 							setX(getX()-1);
+							if(pos%10 < 4) setX(getX()-1);
 						}else {
 							setX(getX()+1);
+							if(pos%10 > 5) setX(getX()+1);
 						}
 					}
 				}

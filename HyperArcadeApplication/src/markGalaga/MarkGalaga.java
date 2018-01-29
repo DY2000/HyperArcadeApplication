@@ -74,7 +74,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 		for(int i = 0; i < 40; i++) {
 			if(i < 4) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"abductor",mobShots,i,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"abductor2",mobShots,i,game));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 12) {
 				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots,i,game));
