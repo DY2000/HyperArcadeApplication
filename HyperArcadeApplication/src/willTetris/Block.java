@@ -1,27 +1,46 @@
 package willTetris;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-public class Block {
+import guiTeacher.components.Component;
 
-	int xPosition;
-	int yPosition;
+public class Block extends Component {
+
+	private int xPosition;
+	private int yPosition;
 	Color color;
-	
-	public Block(int xPos, int yPos, Color color2) {
+	private BufferedImage appearance;
+
+	public Block(int xPos, int yPos, Color color) {
+		super(xPos, yPos, 5, 5);
 		this.xPosition = xPos;
 		this.yPosition = yPos;
-		this.color = color2;
+		this.color = color;
+		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);// constructs the appearance
+
+		Graphics2D g = appearance.createGraphics();// takes the "canvas" from the appearance
+
+		g.setColor(this.color);
+		g.fillRect(this.xPosition, this.yPosition, 5, 5);
 	}
 	
-	
+	@Override
+	public void update(Graphics2D g) {
+		g.fillRect(this.xPosition, this.yPosition, 5, 5);
+	}
+
 	public int xPos() {
 		return xPosition;
 	}
+
 	public int yPos() {
 		return yPosition;
 	}
+
 	public Color blockColor() {
 		return color;
 	}
+
 }
