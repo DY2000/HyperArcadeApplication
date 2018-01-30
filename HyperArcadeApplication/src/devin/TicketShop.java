@@ -15,7 +15,7 @@ public class TicketShop extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		//viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/Ticket_Shop.jpeg"));
+		viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/Ticket_Shop.png"));
 
 	}
 
