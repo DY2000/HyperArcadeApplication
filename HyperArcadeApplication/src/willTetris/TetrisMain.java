@@ -18,7 +18,7 @@ public class TetrisMain extends FullFunctionScreen {
 	private Block[][] board;
 	private Color emptyColor;
 	private Block b;
-	private ArrayList<Block> Tetramino = = new ArrayList<Block>(4);
+	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
 	private ArrayList<Arraylist<Block>> Tetraminos = new ArrayList<ArrayList<<Block>>(7);
 
 	public TetrisMain(int width, int height) {
@@ -31,7 +31,7 @@ public class TetrisMain extends FullFunctionScreen {
 		Tetramino.add(Block(5,0));
 		Tetramino.add(Block(6,0));
 		Tetraminos.add(Tetramino);
-		Tetramino = ArrayList<Block>() 
+		Tetramino = new ArrayList<Block>(4) 
 	}
 
 	@Override
