@@ -18,14 +18,6 @@ public class TetrisGUI extends GUIApplication {
 		TetrisGUI hyperArcade = new TetrisGUI(1024, 764);
 		Thread runner = new Thread(hyperArcade);
 		runner.start();
-		Thread dropdown = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				
-
-			}
-		});
 	}
 
 	@Override

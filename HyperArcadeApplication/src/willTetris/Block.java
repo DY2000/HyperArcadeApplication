@@ -4,9 +4,11 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Component;
+import guiTeacher.components.MovingComponent;
 
-public class Block extends Component {
+public class Block extends MovingComponent {
 
 	private int xPosition;
 	private int yPosition;
@@ -19,6 +21,10 @@ public class Block extends Component {
 		this.yPosition = yPos;
 		this.color = color;
 		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
+	}
+	
+	public void checkBehaviors() {
+		
 	}
 
 	@Override
@@ -44,6 +50,11 @@ public class Block extends Component {
 
 	public Color getColor() {
 		return color;
+	}
+
+	@Override
+	public void drawImage(Graphics2D g) {
+
 	}
 
 }

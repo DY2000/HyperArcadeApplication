@@ -36,21 +36,20 @@ public class TetrisMain extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		board = new Block[10][20];
-
 	}
 
-	public void dropDown() {
-		boolean canDropDown = true;
+	public void lower() {
+		boolean canLower = true;
 		for (Block b : Tetramino) {
 			if (board[b.getX()][b.getX() - 1] != null)
-				canDropDown = false;
+				canLower = false;
 			else {
 				Tetramino.remove(0);
 				newPiece();
 			}
 		}
 
-		if (canDropDown) {
+		if (canLower) {
 			for (Block b : Tetramino) {
 				b.setX(b.getX() - 1);
 				b.setY(b.getY() - 1);
@@ -84,9 +83,4 @@ public class TetrisMain extends FullFunctionScreen {
 			}
 		}
 	}
-
-	public void repaint() {
-
-	}
-
 }
