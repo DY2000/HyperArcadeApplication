@@ -3,7 +3,7 @@ package markGalaga;
 import guiTeacher.components.AnimatedComponent;
 
 public class GalagaBackground extends AnimatedComponent{
-	
+
 	public GalagaBackground(int x, int y, int w, int h) {
 		super(x, y, w, h);
 		setX(x);
@@ -24,4 +24,9 @@ public class GalagaBackground extends AnimatedComponent{
 			setY(this.getY()+1);
 		}
 	}
+
+	public void clear() {
+
+	}
+
 }

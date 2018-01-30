@@ -238,6 +238,8 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				}
 			}
 		}
+		if(Math.random() < .0005)
+			this.attack();
 	}
 
 	private void flyingAttack(int x, int y, String mobType) {
