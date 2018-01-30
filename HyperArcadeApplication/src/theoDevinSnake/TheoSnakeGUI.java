@@ -17,6 +17,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		private ArrayList<SnakePart> snakeBody;
 		private int userscore;
 		private SnakePoint point;
+		private boolean gameOver;
 	public TheoSnakeGUI(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -46,6 +47,8 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		
 	}
 	public void gameOver() {
-		//if()
+		if(gameOver) {
+			
+		}
 	}
 }

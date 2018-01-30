@@ -73,36 +73,43 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 	}
 
 
-	@Override
+
 	public void keyPressed(KeyEvent arg0) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	@Override
+
 	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
+		
 		
 	}
 
 
-	@Override
+
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
 	}
 
 
-	@Override
+
 	public boolean isHovered(int x, int y) {
 		// TODO Auto-generated method stub
 		return false;
 	}
 
 
-	@Override
+
 	public void setFocus(boolean b) {
+		// TODO Auto-generated method stub
+		
+	}
+
+
+	@Override
+	public void checkBehaviors() {
 		// TODO Auto-generated method stub
 		
 	}
