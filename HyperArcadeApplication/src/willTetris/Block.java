@@ -20,21 +20,29 @@ public class Block extends Component {
 		this.color = color;
 		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
 	}
-	
+
 	@Override
 	public void update(Graphics2D g) {
-		
+
 	}
 
 	public int getX() {
 		return xPosition;
 	}
 
+	public void setX(int x) {
+		this.xPosition = x;
+	}
+
 	public int getY() {
 		return yPosition;
 	}
 
-	public Color blockColor() {
+	public void setY(int x) {
+		this.yPosition = x;
+	}
+
+	public Color getColor() {
 		return color;
 	}
 

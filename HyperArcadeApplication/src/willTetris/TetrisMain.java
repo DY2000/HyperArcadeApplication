@@ -19,55 +19,74 @@ public class TetrisMain extends FullFunctionScreen {
 	private Color emptyColor;
 	private Block b;
 	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
-	private ArrayList<Arraylist<Block>> Tetraminos = new ArrayList<ArrayList<<Block>>(7);
+	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
 
 	public TetrisMain(int width, int height) {
 		super(width, height);
 		emptyColor = Color.blue;
-		boardColors = new Color[10][20];
-		//I PIECE
-		Tetramino.add(Block(3,0));
-		Tetramino.add(Block(4,0));
-		Tetramino.add(Block(5,0));
-		Tetramino.add(Block(6,0));
+		// I PIECE
+		Tetramino.add(new Block(3, 0, Color.blue));
+		Tetramino.add(new Block(4, 0, Color.blue));
+		Tetramino.add(new Block(5, 0, Color.blue));
+		Tetramino.add(new Block(6, 0, Color.blue));
 		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4) 
+		Tetramino = new ArrayList<Block>(4);
 	}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		
+		board = new Block[10][20];
+
 	}
-	
-	public void dropDown(){
-		for (Block b: Tetramino){
-			boolean canDropDown = true;
-			if(board[b.getX][b.getY - 1] != null) boolean canDropDown = false;
-		} else{
-			Tetramino.remove(0,5);
-			newPiece();
+
+	public void dropDown() {
+		boolean canDropDown = true;
+		for (Block b : Tetramino) {
+			if (board[b.getX()][b.getX() - 1] != null)
+				canDropDown = false;
+			else {
+				Tetramino.remove(0);
+				newPiece();
+			}
 		}
-		
-		if(canDropDown){
-			for(Block b: Tetramino){
-				b.setX(b.getX - 1);
-				b.setY(b.getY - 1);
+
+		if (canDropDown) {
+			for (Block b : Tetramino) {
+				b.setX(b.getX() - 1);
+				b.setY(b.getY() - 1);
 			}
 		}
 	}
-	
-	public void newPiece(){
-	
+
+	public void newPiece() {
+		Tetramino = Tetraminos.get(0);
+		for (Block b : Tetramino) {
+			if (board[b.getX()][b.getY()] != null)
+				gameOver();
+			else
+				board[b.getX()][b.getY()] = b;
+		}
+	}
+
+	private void gameOver() {
+		// TODO Auto-generated method stub
+
 	}
 
 	public void paint(Graphics g) {
 		for (int w = 0; w < board.length; w++) {
 			for (int h = 0; h < board[w].length; h++) {
-				g.setColor(Color.blue);
-				if(board[w][h] != null) g.setColor(boardColors[w][h]);
+				if (board[w][h] != null)
+					g.setColor(board[w][h].getColor());
+				else
+					g.setColor(emptyColor);
 				g.fillRect(w * 30, h * 30, 25, 25);
 			}
 		}
+	}
+
+	public void repaint() {
+
 	}
 
 }
