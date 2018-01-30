@@ -26,11 +26,11 @@ public class Block extends Component {
 		
 	}
 
-	public int xPos() {
+	public int getX() {
 		return xPosition;
 	}
 
-	public int yPos() {
+	public int getY() {
 		return yPosition;
 	}
 
