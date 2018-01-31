@@ -63,23 +63,14 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	}
 	
 	public boolean detectCollision(MarkProjectile shot) {
-		if((shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
-			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY())){
-			return true; 
-		}
-		else{
-			return false; 
-		}
+		return (shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
+			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY());
 	}
 	
 	public boolean detectCollision(MarkMob mob) {
-		if((mob.getX() < getX() + getWidth() && mob.getX() + mob.getWidth() > getX() &&
-			mob.getY() < getY() + getHeight() && mob.getHeight() + mob.getY() > getY())){
-			return true; 
-		}
-		else{
-			return false; 
-		}
+		return (mob.getX() < getX() + getWidth() && mob.getX() + mob.getWidth() > getX() &&
+			mob.getY() < getY() + getHeight() && mob.getHeight() + mob.getY() > getY());
+		
 	}
 
 	public ArrayList<MarkProjectile> getShots() {

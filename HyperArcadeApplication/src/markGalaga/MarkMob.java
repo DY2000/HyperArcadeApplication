@@ -238,7 +238,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				}
 			}
 		}
-		if(Math.random() < .0005)
+		if(Math.random() < .0005 && enabled)
 			this.attack();
 	}
 
