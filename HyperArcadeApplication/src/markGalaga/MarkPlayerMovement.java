@@ -8,8 +8,8 @@ public abstract class MarkPlayerMovement extends AnimatedComponent {
 		super(x, y, w, h);
 		// TODO Auto-generated constructor stub
 	}
-	
-	@Override
-	public abstract void checkBehaviors();
-
+	public abstract void moveUp();
+	public abstract void moveLeft();
+	public abstract void moveDown();
+	public abstract void moveRight();
 }
