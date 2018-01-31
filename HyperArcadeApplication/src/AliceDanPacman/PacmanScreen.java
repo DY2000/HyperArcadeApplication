@@ -2,9 +2,9 @@ package AliceDanPacman;
 
 import java.util.List;
 
+import devin.Ticket;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
-import hyperArcade.Ticket;
 
 public class PacmanScreen extends FullFunctionScreen implements Ticket {
 
