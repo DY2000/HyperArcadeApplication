@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -23,14 +24,34 @@ public class TetrisMain extends FullFunctionScreen {
 
 	public TetrisMain(int width, int height) {
 		super(width, height);
-		emptyColor = Color.blue;
+		emptyColor = Color.black;
 		// I PIECE
 		Tetramino.add(new Block(3, 0, Color.blue));
 		Tetramino.add(new Block(4, 0, Color.blue));
 		Tetramino.add(new Block(5, 0, Color.blue));
 		Tetramino.add(new Block(6, 0, Color.blue));
+		board[3][0] = Tetramino.get(0);
+		board[4][0] = Tetramino.get(0);
+		board[5][0] = Tetramino.get(0);
+		board[6][0] = Tetramino.get(0);
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
+		Thread dropdown = new Thread(new Runnable() {
+
+			@Override
+			public void run() {
+				try {
+					Thread.sleep(1000);
+					lower();
+					repaint();
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+
+			}
+		});
+		dropdown.start();
 	}
 
 	@Override
@@ -38,23 +59,27 @@ public class TetrisMain extends FullFunctionScreen {
 		board = new Block[10][20];
 	}
 
-	public void lower() {
-		boolean canLower = true;
-		for (Block b : Tetramino) {
-			if (board[b.getX()][b.getX() - 1] != null)
-				canLower = false;
-			else {
-				Tetramino.remove(0);
-				newPiece();
-			}
-		}
+	public void dropdown() {
+	}
 
-		if (canLower) {
+	public void lower() {
+//		boolean canLower = true;
+//		for (Block b : Tetramino) {
+//			if (board[b.getX()][b.getY() - 1] != null)
+//				canLower = false;
+//			else {
+//				Tetramino.remove(0);
+//				newPiece();
+//			}
+//		}
+//
+//		if (canLower) {
 			for (Block b : Tetramino) {
-				b.setX(b.getX() - 1);
-				b.setY(b.getY() - 1);
+				Tetramino.set(0, new Block(b.getX(), b.getY() - 1, b.getColor()));
+				board[b.getX()][b.getY()] = b;
 			}
-		}
+//		}
+		repaint();
 	}
 
 	public void newPiece() {
@@ -65,10 +90,10 @@ public class TetrisMain extends FullFunctionScreen {
 			else
 				board[b.getX()][b.getY()] = b;
 		}
+		repaint();
 	}
 
-	private void gameOver() {
-		// TODO Auto-generated method stub
+	public void gameOver() {
 
 	}
 
@@ -83,4 +108,5 @@ public class TetrisMain extends FullFunctionScreen {
 			}
 		}
 	}
+
 }

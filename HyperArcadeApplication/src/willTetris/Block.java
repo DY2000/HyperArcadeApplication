@@ -10,21 +10,21 @@ import guiTeacher.components.MovingComponent;
 
 public class Block extends MovingComponent {
 
-	private int xPosition;
-	private int yPosition;
+	private int x;
+	private int y;
 	Color color;
 	private BufferedImage appearance;
 
-	public Block(int xPos, int yPos, Color color) {
-		super(xPos, yPos, 5, 5);
-		this.xPosition = xPos;
-		this.yPosition = yPos;
+	public Block(int x, int y, Color color) {
+		super(x, y, 5, 5);
+		this.x = x;
+		this.y = y;
 		this.color = color;
 		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
 	}
-	
+
 	public void checkBehaviors() {
-		
+
 	}
 
 	@Override
@@ -33,19 +33,19 @@ public class Block extends MovingComponent {
 	}
 
 	public int getX() {
-		return xPosition;
+		return x;
 	}
 
 	public void setX(int x) {
-		this.xPosition = x;
+		this.x = x;
 	}
 
 	public int getY() {
-		return yPosition;
+		return y;
 	}
 
 	public void setY(int x) {
-		this.yPosition = x;
+		this.y = y;
 	}
 
 	public Color getColor() {

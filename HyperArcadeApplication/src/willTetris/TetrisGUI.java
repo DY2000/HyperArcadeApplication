@@ -1,5 +1,7 @@
 package willTetris;
 
+import java.awt.event.KeyEvent;
+
 import guiTeacher.GUIApplication;
 
 public class TetrisGUI extends GUIApplication {
@@ -25,5 +27,6 @@ public class TetrisGUI extends GUIApplication {
 		TetrisMain Screen1 = new TetrisMain(getWidth(), getHeight());
 		setScreen(Screen1);
 	}
+
 
 }
