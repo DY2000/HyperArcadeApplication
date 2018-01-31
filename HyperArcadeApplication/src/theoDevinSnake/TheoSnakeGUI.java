@@ -1,5 +1,6 @@
 package theoDevinSnake;
 
+import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -26,8 +27,8 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		snakeBody = new ArrayList<SnakePart>();
-		snakeBody.add(new SnakePart(100,100,50,50));
-		point = new SnakePoint(getRandomX(),getRandomY(),50,50);
+		snakeBody.add(new SnakePart(500,500,25,25,true,this));
+		point = new SnakePoint(getRandomX(),getRandomY(),25,25,this);
 		viewObjects.add(point);
 		for(int i=0;i<snakeBody.size();i++) {
 			viewObjects.add(snakeBody.get(i));
@@ -50,5 +51,24 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		if(gameOver) {
 			
 		}
+	}
+	public void keyPressed(KeyEvent e) {
+		switch(e.getKeyCode()) {
+		case  KeyEvent.VK_UP : 
+			snakeBody.get(0).moveUp();
+			break;
+		case KeyEvent.VK_DOWN :
+			snakeBody.get(0).moveDown();
+			break;
+		case KeyEvent.VK_LEFT :
+			snakeBody.get(0).moveLeft();
+			break;
+		case KeyEvent.VK_RIGHT :
+			snakeBody.get(0).moveRight();
+			break;
+		}
+	}
+	public void keyReleased(KeyEvent e) {
+		
 	}
 }
