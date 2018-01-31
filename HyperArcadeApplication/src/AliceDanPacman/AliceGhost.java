@@ -9,6 +9,7 @@ import willTetris.Collidable;
 
 public class AliceGhost extends AnimatedComponent implements Collidable{
 	static Thread counter = new Thread();
+	public boolean canBeEaten = true;
 
 	
 	//there are 4 main ghosts named blinky (red), pinky, clyde (orange), inky (blue)
@@ -83,7 +84,7 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 	public void checkIfBlue() {
 		
 		while(isBlue()) {
-			
+			canBeEaten=false;
 			
 		}
 			
