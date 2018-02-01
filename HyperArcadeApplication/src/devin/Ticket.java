@@ -4,18 +4,22 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 
 import guiTeacher.components.Component;
+import hyperArcade.ArcadeGUI;
 
-public class Ticket extends Component  implements DevTicket {
-	public Ticket(int x, int y, int w, int h) {
-		super(x, y, w, h);
-		// TODO Auto-generated constructor stub
-	}
+public class Ticket extends Component {
+
 	private int score;
 	private int ticketcount; 
 	private boolean ticketreceived;
+	private ArcadeGUI program;
 	
-	public void getScore() {
+	public Ticket(int x, int y, int w, int h, ArcadeGUI program) {
+		super(x, y, w, h);
 		
+	}
+	
+	public void getTicket() {
+			
 			//Only one score will be saved here.
 			//needs to indicate what game the score is from.
 			
@@ -24,17 +28,7 @@ public class Ticket extends Component  implements DevTicket {
 		
 	}
 
-	//public int toTicket() {
-	//	getScore();
-		
-			// method to convert score to ticket
-	//	ticketreceived = true;
-	//	return ticketcount;
-			// make a boolean true
-			// returns tickets earned
-			
-		
-	//}
+
 	//public void displayTickets(int toTicket) {
 		// public void draw(Graphics2D g, boolean highlight) {
 	//	if (ticketreceived) {
@@ -48,17 +42,9 @@ public class Ticket extends Component  implements DevTicket {
 		//makeshift?
 	//}
 
-	@Override
-	public void toTicket() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void displayTickets() {
-		// TODO Auto-generated method stub
-		
-	}
+
+
 	public void update(Graphics2D g) {
 		g.getFontMetrics();	
 		if(ticketreceived) {
