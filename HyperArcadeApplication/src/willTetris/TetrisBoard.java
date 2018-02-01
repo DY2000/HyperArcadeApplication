@@ -18,6 +18,16 @@ public class TetrisBoard extends AnimatedComponent {
 		super(0, 0, 250, 500);
 		board = new Block[10][20];
 		emptyColor = Color.blue;
+		Tetramino.add(new Block(3, 0, Color.blue));
+		Tetramino.add(new Block(4, 0, Color.blue));
+		Tetramino.add(new Block(5, 0, Color.blue));
+		Tetramino.add(new Block(6, 0, Color.blue));
+		board[3][0] = Tetramino.get(0);
+		board[4][0] = Tetramino.get(0);
+		board[5][0] = Tetramino.get(0);
+		board[6][0] = Tetramino.get(0);
+		Tetraminos.add(Tetramino);
+		Tetramino = new ArrayList<Block>(4);
 	}
 
 	public void dropdown() {
@@ -26,22 +36,22 @@ public class TetrisBoard extends AnimatedComponent {
 	}
 
 	public void lower() {
-		boolean canLower = true;
-		for (Block b : Tetramino) {
-			if (board[b.getX()][b.getX() - 1] != null)
-				canLower = false;
-			else {
-				Tetramino.remove(0);
-				newPiece();
-			}
-		}
-
-		if (canLower) {
+		//		boolean canLower = true;
+//		for (Block b : Tetramino) {
+//			if (board[b.getX()][b.getY() - 1] != null)
+//				canLower = false;
+//			else {
+//				Tetramino.remove(0);
+//				newPiece();
+//			}
+//		}
+//
+//		if (canLower) {
 			for (Block b : Tetramino) {
-				b.setX(b.getX() - 1);
-				b.setY(b.getY() - 1);
+				Tetramino.set(0, new Block(b.getX(), b.getY() - 1, b.getColor()));
+				board[b.getX()][b.getY()] = b;
 			}
-		}
+//		}
 	}
 
 	public void newPiece() {
