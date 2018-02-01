@@ -27,6 +27,9 @@ public class MarkGalaga extends FullFunctionScreen{
 	private ArrayList<MarkProjectile> playerShots1;
 	private ArrayList<MarkProjectile> mobShots;
 	private MarkAlphaGreen alphaGreen;
+	private MarkAlphaPurple alphaPurple;
+	private MarkAlphaRed alphaRed;
+	private MarkAlphaBlue alphaBlue;
 	private ArrayList<MarkMob> mobs;
 	private int shotsFired;
 	private int shotsHit;
@@ -49,7 +52,19 @@ public class MarkGalaga extends FullFunctionScreen{
 	public MarkAlphaGreen getAlphaGreen() {
 		return alphaGreen;
 	}
+	
+	public MarkAlphaPurple getAlphaPurple() {
+		return alphaPurple;
+	}
+	
+	public MarkAlphaRed getAlphaRed() {
+		return alphaRed;
+	}
 
+	public MarkAlphaBlue getAlphaBlue() {
+		return alphaBlue;
+	}
+	
 	public boolean getSpawning() {
 		return spawning;
 	}
@@ -68,9 +83,9 @@ public class MarkGalaga extends FullFunctionScreen{
 		mobShots = new ArrayList<MarkProjectile>();
 		
 		alphaGreen = new MarkAlphaGreen(1030,600,15,16);
-		
-		
-		
+		alphaPurple = new MarkAlphaPurple(1030,620,15,16);
+		alphaRed = new MarkAlphaRed(1030,640,13,10);
+		alphaBlue = new MarkAlphaBlue(1030,660,13,10);
 		
 		mobs = new ArrayList<MarkMob>();
 		

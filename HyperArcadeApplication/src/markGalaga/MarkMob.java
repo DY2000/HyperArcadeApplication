@@ -34,17 +34,15 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			hp = 2;
 		}
 		if(mobType == "red") {
-			this.addSequence(galagaSpriteSheet, 800, 162, 154, 13, 10, 2);
 			hp = 1;
 		}
 		if(mobType == "blue") {
-			this.addSequence(galagaSpriteSheet, 800, 162, 178, 13, 10, 2);
 			hp = 1;
 		}
 		this.attack = null;
 		this.mobType = mobType;
 		this.game = game;
-		attacking = true;
+		attacking = false;
 		enabled = true;
 		countA = -135;
 		countB = 0;
@@ -60,10 +58,17 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 
 	public void drawImage(Graphics2D g) {
 		if(mobType == "green") {
-				img = game.getAlphaGreen().getImage();
+			img = game.getAlphaGreen().getImage();
+		}else if(mobType == "purple") {
+			img = game.getAlphaPurple().getImage();
+		}else if(mobType == "red") {
+			img = game.getAlphaRed().getImage();
+		}else if(mobType == "blue") {
+			img = game.getAlphaBlue().getImage();
 		}
 		if(img != null) {
-			g.drawImage(img,getX(),getY(),null);
+			this.clear();
+			g.drawImage(img,0,0,getWidth(),getHeight(),null);
 		}
 	}
 	
