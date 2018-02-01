@@ -29,6 +29,14 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		update();
 	}
 
+	public int getDirection() {
+		return direction;
+	}
+
+	public void setDirection(int direction) {
+		this.direction = direction;
+	}
+
 	public void moveUp() {
 		direction=1;
 		setVx(0);
@@ -77,5 +85,8 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 	public boolean checkColision(SnakePoint p) {
 	 return p.getX() < getX() + getWidth() && p.getX() + p.getWidth() > getX() &&
 				p.getY() < getY() + getHeight() && p.getHeight() + p.getY() > getY();
+	}
+	public void setAction(Action a) {
+		this.detectColision= a;
 	}
 }

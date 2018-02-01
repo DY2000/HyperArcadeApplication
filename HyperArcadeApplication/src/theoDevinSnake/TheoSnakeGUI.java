@@ -4,6 +4,7 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import guiTeacher.components.Action;
 import guiTeacher.components.Button;
 import guiTeacher.components.TextArea;
 import guiTeacher.components.TextLabel;
@@ -18,7 +19,6 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		private ArrayList<SnakePart> snakeBody;
 		private int userscore;
 		private SnakePoint point;
-		private boolean gameOver;
 	public TheoSnakeGUI(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -28,13 +28,72 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 	public void initAllObjects(List<Visible> viewObjects) {
 		snakeBody = new ArrayList<SnakePart>();
 		snakeBody.add(new SnakePart(500,500,25,25,true,this));
+		
 		point = new SnakePoint(getRandomX(),getRandomY(),25,25,this);
 		viewObjects.add(point);
 		for(int i=0;i<snakeBody.size();i++) {
 			viewObjects.add(snakeBody.get(i));
 		}
+		for(SnakePart s : snakeBody) {
+		snakeBody.get(0).setAction(new Action() {
+			
+			@Override
+				public void act() {
+					if(snakeBody.get(0).checkColision(s)) {
+						gameOver();
+					}
+					if(snakeBody.get(0).checkColision(point)) {
+						pointGet();
+					}
+				}
+			});
+		}
 	}
 
+	protected void pointGet() {
+		System.out.println("feelsdabman");
+		point.setX(getRandomX());
+		point.setY(getRandomY());
+		try {
+			Thread.sleep(200);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		addSnek();
+		snakeBody.get(snakeBody.size()-1).setAction(new Action() {
+			
+			@Override
+			public void act() {
+				
+			}
+		});
+		for(SnakePart s : snakeBody) {
+			snakeBody.get(0).setAction(new Action() {
+
+				@Override
+					public void act() {
+						if(snakeBody.get(0).checkColision(s)) {
+							gameOver();
+						}
+						if(snakeBody.get(0).checkColision(point)) {
+							pointGet();
+						}
+						if(snakeBody.get(snakeBody.size()-2).getX()>=snakeBody.get(snakeBody.size()-1).getX()){
+							snakeBody.get(snakeBody.size()-1).setDirection(snakeBody.get(snakeBody.size()-2).getDirection());
+						}
+					}
+				});
+			}
+	}
+	public void addSnek() {
+		 int snekX=snakeBody.get(snakeBody.size()-1).getX();
+		 int snekY=snakeBody.get(snakeBody.size()-1).getY();
+		snakeBody.add(new SnakePart(snekX,snekY,25,25,false,this));
+		snakeBody.get(snakeBody.size()-1).setVx(snakeBody.get(snakeBody.size()-2).getVx());
+		snakeBody.get(snakeBody.size()-1).setVy(snakeBody.get(snakeBody.size()-2).getVy());
+		addObject(snakeBody.get(snakeBody.size()-1));
+}
 	public int getRandomX() {
 		return (int)(Math.random()*1024);
 	}
@@ -48,9 +107,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		
 	}
 	public void gameOver() {
-		if(gameOver) {
-			
-		}
+
 	}
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
@@ -68,7 +125,5 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 			break;
 		}
 	}
-	public void keyReleased(KeyEvent e) {
-		
-	}
+
 }
