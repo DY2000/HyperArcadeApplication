@@ -1,5 +1,7 @@
 package markGalaga;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
@@ -19,6 +21,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	private String mobType;
 	private ArrayList<MarkProjectile> mobShots;
 	private MarkGalaga game;
+	private BufferedImage img;
 	private Action attack;
 	
 	public MarkMob(int x, int y, int w, int h, String mobType,ArrayList<MarkProjectile> arl, int pos, MarkGalaga game) {
@@ -27,15 +30,14 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		setY(y);
 		setShots(arl);
 		String galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
-		if(mobType == "abductor2") {
-			this.addSequence(galagaSpriteSheet, 800, 161, 103, 15, 16, 2);
+		if(mobType == "green") {
 			hp = 2;
 		}
 		if(mobType == "red") {
 			this.addSequence(galagaSpriteSheet, 800, 162, 154, 13, 10, 2);
 			hp = 1;
 		}
-		if(mobType == "morpher") {
+		if(mobType == "blue") {
 			this.addSequence(galagaSpriteSheet, 800, 162, 178, 13, 10, 2);
 			hp = 1;
 		}
@@ -56,6 +58,15 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		this.mobShots = arl;
 	}
 
+	public void drawImage(Graphics2D g) {
+		if(mobType == "green") {
+				MarkAlphaGreen alphaGreen = game.getAlphaGreen();
+		}
+		if(img != null) {
+			g.drawImage(img,getX(),getY(),null);
+		}
+	}
+	
 	public synchronized void checkBehaviors() {
 		if(hp == 0) {
 			enabled = false;
@@ -64,11 +75,9 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			setY(25);
 			
 		}
-		if(hp == 1 && mobType == "abductor2") {
+		if(hp == 1 && mobType == "green") {
 			if(countB%100==0) {
-				mobType = "abductor1";
-				this.clear();
-				this.addSequence("resources/Galaga_spriteSheet.png", 800, 161, 127, 15, 16, 2);
+				mobType = "purple";
 			}
 		}
 		if(enabled && !attacking) {
