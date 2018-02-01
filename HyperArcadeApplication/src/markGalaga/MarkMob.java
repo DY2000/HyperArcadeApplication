@@ -60,7 +60,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 
 	public void drawImage(Graphics2D g) {
 		if(mobType == "green") {
-				MarkAlphaGreen alphaGreen = game.getAlphaGreen();
+				img = game.getAlphaGreen().getImage();
 		}
 		if(img != null) {
 			g.drawImage(img,getX(),getY(),null);

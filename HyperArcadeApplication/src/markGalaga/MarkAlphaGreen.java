@@ -15,10 +15,8 @@ public class MarkAlphaGreen extends AnimatedComponent{
 		update();
 		t.start();
 	}
-
-	public BufferedImage getImage() {
-		System.out.println("returned img");
-		return null;
-	}
 	
+	public BufferedImage getImage() {
+		return this.getFrame().get(this.getCurrentFrame());
+	}
 }

@@ -30,6 +30,10 @@ import javax.imageio.ImageIO;
 public class AnimatedComponent extends MovingComponent{
 
 	private ArrayList<BufferedImage> frame; //the images that can be displayed
+	
+
+
+
 	private ArrayList<Integer> times; //the time each image is displayed
 	private long displayTime; //the time when the last image switched
 	private int currentFrame; //the frame that is currently being displayed
@@ -44,6 +48,8 @@ public class AnimatedComponent extends MovingComponent{
 		currentFrame = 0;
 		repeat = true;
 	}
+
+	
 
 	public void setRepeat(boolean b){
 		repeat = b;
@@ -124,4 +130,19 @@ public class AnimatedComponent extends MovingComponent{
 		}
 	}
 
+	public ArrayList<BufferedImage> getFrame() {
+		return frame;
+	}
+
+	public void setFrame(ArrayList<BufferedImage> frame) {
+		this.frame = frame;
+	}
+	
+	public int getCurrentFrame() {
+		return currentFrame;
+	}
+
+	public void setCurrentFrame(int currentFrame) {
+		this.currentFrame = currentFrame;
+	}
 }

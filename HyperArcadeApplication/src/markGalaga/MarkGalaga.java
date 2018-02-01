@@ -43,11 +43,10 @@ public class MarkGalaga extends FullFunctionScreen{
 		this.highscore = 10000;
 		this.lives = 3;
 		this.spawning = false;
-		this.alphaGreen = new MarkAlphaGreen(1030,600,15,16);
+		
 	}
 	
 	public MarkAlphaGreen getAlphaGreen() {
-		System.out.println("error");
 		return alphaGreen;
 	}
 
@@ -68,7 +67,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		playerShots1 = new ArrayList<MarkProjectile>();
 		mobShots = new ArrayList<MarkProjectile>();
 		
-		
+		alphaGreen = new MarkAlphaGreen(1030,600,15,16);
 		
 		
 		
@@ -89,19 +88,19 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 		for(int i = 0; i < 40; i++) {
 			if(i < 4) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"green",mobShots,i,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"green",mobShots,i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 12) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots,i,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots,i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 20) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",mobShots,i,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",mobShots,i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 30) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"blue",mobShots,i,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"blue",mobShots,i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 40) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"blue",mobShots,i,game));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"blue",mobShots,i,this));
 				viewObjects.add(mobs.get(i));
 			}
 			
