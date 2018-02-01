@@ -21,6 +21,7 @@ public class TetrisMain extends FullFunctionScreen {
 	private Block b;
 	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
 	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
+	private TetrisBoard tetris;
 
 	public TetrisMain(int width, int height) {
 		super(width, height);
@@ -36,22 +37,9 @@ public class TetrisMain extends FullFunctionScreen {
 		board[6][0] = Tetramino.get(0);
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		Thread dropdown = new Thread(new Runnable() {
-
-			@Override
-			public void run() {
-				try {
-					Thread.sleep(1000);
-					lower();
-					repaint();
-				} catch (InterruptedException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-
-			}
-		});
-		dropdown.start();
+		repaint();
+		Thread t = new Thread(this);
+		t.start();
 	}
 
 	@Override
@@ -73,12 +61,14 @@ public class TetrisMain extends FullFunctionScreen {
 //			}
 //		}
 //
-//		if (canLower) {
-			for (Block b : Tetramino) {
-				Tetramino.set(0, new Block(b.getX(), b.getY() - 1, b.getColor()));
-				board[b.getX()][b.getY()] = b;
-			}
-//		}
+// 		if (canLower) {
+// 			for (Block b : Tetramino) {
+// 				Tetramino.set(0, new Block(b.getX(), b.getY() - 1, b.getColor()));
+// 				board[b.getX()][b.getY()] = b;
+// 			}
+// 		}
+// 		repaint();
+		board.lower();
 		repaint();
 	}
 
@@ -98,10 +88,19 @@ public class TetrisMain extends FullFunctionScreen {
 	}
 
 	public void paint(Graphics g) {
-		for (int w = 0; w < board.length; w++) {
-			for (int h = 0; h < board[w].length; h++) {
+// 		for (int w = 0; w < board.length; w++) {
+// 			for (int h = 0; h < board[w].length; h++) {
+// 				if (board[w][h] != null)
+// 					g.setColor(board[w][h].getColor());
+// 				else
+// 					g.setColor(emptyColor);
+// 				g.fillRect(w * 30, h * 30, 25, 25);
+// 			}
+// 		}
+		for (int w = 0; w < tetris.getBoard().length; w++) {
+			for (int h = 0; h < tetris.getBoard()[w].length; h++) {
 				if (board[w][h] != null)
-					g.setColor(board[w][h].getColor());
+					g.setColor(tetris.getBoard()[w][h].getColor());
 				else
 					g.setColor(emptyColor);
 				g.fillRect(w * 30, h * 30, 25, 25);
