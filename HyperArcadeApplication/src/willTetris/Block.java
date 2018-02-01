@@ -12,13 +12,15 @@ public class Block extends MovingComponent {
 
 	private int x;
 	private int y;
-	Color color;
+	private boolean active; 
+	private Color color;
 	private BufferedImage appearance;
 
 	public Block(int x, int y, Color color) {
 		super(x, y, 5, 5);
 		this.x = x;
 		this.y = y;
+		active = true;
 		this.color = color;
 		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
 	}
@@ -44,7 +46,7 @@ public class Block extends MovingComponent {
 		return y;
 	}
 
-	public void setY(int x) {
+	public void setY(int y) {
 		this.y = y;
 	}
 
@@ -52,9 +54,17 @@ public class Block extends MovingComponent {
 		return color;
 	}
 
-	@Override
-	public void drawImage(Graphics2D g) {
-
+	public boolean getActive() {
+		return active;
+	}
+	
+	public void setActive(boolean x) {
+		this.active = x;
 	}
 
+	@Override
+	public void drawImage(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
+	}
 }
