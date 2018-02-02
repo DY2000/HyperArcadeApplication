@@ -18,13 +18,18 @@ public class Ticket extends Component {
 		
 	}
 	
-	public void getTicket() {
-			
-			//Only one score will be saved here.
-			//needs to indicate what game the score is from.
-			
-				
+	public void getScore(int getscore) {
+		this.score = getscore;
+	}
+	public void getTicket(int ticket) {
 		
+		this.ticketcount = ticket;	
+		ticketreceived = true;
+					
+	}
+	public void displayTickets() {
+		
+		update();
 		
 	}
 
@@ -51,6 +56,7 @@ public class Ticket extends Component {
 			g.fillRect(0, 0, 100, 100);
 			g.setColor(Color.BLACK);
 			g.drawString("Ticket: " + ticketcount , 10, 30);
+			ticketreceived = false;
 			//makeshift.
 	}
 }
