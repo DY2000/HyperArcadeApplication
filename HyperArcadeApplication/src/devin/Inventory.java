@@ -2,10 +2,12 @@ package devin;
 
 import java.util.List;
 
+import guiTeacher.components.Action;
 import guiTeacher.components.Button;
 import guiTeacher.components.Graphic;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import hyperArcade.ArcadeGUI;
 
 public class Inventory extends FullFunctionScreen {
 	private Button back;
