@@ -48,7 +48,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		this.spawning = false;
 		
 	}
-	
+
 	public MarkAlphaGreen getAlphaGreen() {
 		return alphaGreen;
 	}
@@ -82,10 +82,10 @@ public class MarkGalaga extends FullFunctionScreen{
 		playerShots1 = new ArrayList<MarkProjectile>();
 		mobShots = new ArrayList<MarkProjectile>();
 		
-		alphaGreen = new MarkAlphaGreen(1030,600,15,16);
-		alphaPurple = new MarkAlphaPurple(1030,620,15,16);
-		alphaRed = new MarkAlphaRed(1030,640,13,10);
-		alphaBlue = new MarkAlphaBlue(1030,660,13,10);
+		alphaGreen = new MarkAlphaGreen(1030,600,15,16,this);
+		alphaPurple = new MarkAlphaPurple(1030,620,15,16,this);
+		alphaRed = new MarkAlphaRed(1030,640,13,10,this);
+		alphaBlue = new MarkAlphaBlue(1030,660,13,10,this);
 		
 		mobs = new ArrayList<MarkMob>();
 		
@@ -198,7 +198,7 @@ public class MarkGalaga extends FullFunctionScreen{
 				
 				@Override
 				public void act() {
-					if(m.getShots().get(3).getVy() == 0) {
+					if(m.getShots().get(0).getVy() == 0) {
 						int playerX = playerShip.getX() + playerShip.getWidth()/2;
 						int playerY = playerShip.getY() + playerShip.getHeight()/2;
 						int time = (m.getY() - playerY)/5;
@@ -261,7 +261,7 @@ public class MarkGalaga extends FullFunctionScreen{
 				scoreBox.setText("        "+score+"                                          "+highscore);
 				update();
 			}
-		}else if ( m.getType() == "morpher") {
+		}else if ( m.getType() == "blue") {
 			if(m.isAttacking()) {
 				score = score + 100;
 				if( score >= highscore)
@@ -279,7 +279,7 @@ public class MarkGalaga extends FullFunctionScreen{
 				scoreBox.setText("        "+score+"                                          "+highscore);
 				update();
 			}
-		}else if ( m.getType() == "abductor") {
+		}else if ( m.getType() == "purple") {
 			if(m.isAttacking()) {
 				score = score + 400;
 				if( score >= highscore)
@@ -336,11 +336,9 @@ public class MarkGalaga extends FullFunctionScreen{
 	public int getScore() {
 		return score;
 	}
-
 	
-
-	public void setAlphaGreen(MarkAlphaGreen alphaGreen) {
-		this.alphaGreen = alphaGreen;
+	public boolean isSpawning() {
+		return spawning;
 	}
 	
 }
