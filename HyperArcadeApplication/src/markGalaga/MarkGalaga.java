@@ -24,7 +24,7 @@ public class MarkGalaga extends FullFunctionScreen{
 	private TextArea lifeBox;
 	private MarkGalaga game;
 	private MarkShip playerShip;
-	private ArrayList<MarkProjectile> playerShots1;
+	private ArrayList<MarkProjectile> playerShots;
 	private ArrayList<MarkProjectile> mobShots;
 	private MarkAlphaGreen alphaGreen;
 	private MarkAlphaPurple alphaPurple;
@@ -49,25 +49,6 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 	}
 
-	public MarkAlphaGreen getAlphaGreen() {
-		return alphaGreen;
-	}
-	
-	public MarkAlphaPurple getAlphaPurple() {
-		return alphaPurple;
-	}
-	
-	public MarkAlphaRed getAlphaRed() {
-		return alphaRed;
-	}
-
-	public MarkAlphaBlue getAlphaBlue() {
-		return alphaBlue;
-	}
-	
-	public boolean getSpawning() {
-		return spawning;
-	}
 	
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
@@ -79,7 +60,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 		galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
 		
-		playerShots1 = new ArrayList<MarkProjectile>();
+		playerShots = new ArrayList<MarkProjectile>();
 		mobShots = new ArrayList<MarkProjectile>();
 		
 		alphaGreen = new MarkAlphaGreen(1030,600,15,16,this);
@@ -89,13 +70,16 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 		mobs = new ArrayList<MarkMob>();
 		
+		playerShip = new MarkShip(getWidth()/2 + 16, 600, 32, 32, this);
+		viewObjects.add(playerShip);
+		
 		for(int i = 0; i < 2; i++) {
-			playerShots1.add(i, new MarkProjectile(1030,400,6,16,"player",this));
-			playerShots1.get(i).addSequence(galagaSpriteSheet, 1000, 374, 51, 3, 8, 1);
-			viewObjects.add(playerShots1.get(i));
+			playerShots.add(i, new MarkProjectile(1030,400,6,16,"player",this));
+			playerShots.get(i).addSequence(galagaSpriteSheet, 1000, 374, 51, 3, 8, 1);
+			viewObjects.add(playerShots.get(i));
 		}
 		
-		for(int i = 0; i < 4; i++) {
+		for(int i = 0; i < 2; i++) {
 			mobShots.add(i, new MarkProjectile(1030,300/2,6,16,"mob",this));
 			mobShots.get(i).addSequence(galagaSpriteSheet, 1000, 366, 195, 3, 8, 1);
 			viewObjects.add(mobShots.get(i));
@@ -103,143 +87,30 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 		for(int i = 0; i < 40; i++) {
 			if(i < 4) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"green",mobShots,i,this));
+				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"green",i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 12) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",mobShots,i,this));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 20) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",mobShots,i,this));
+				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),168,30,20,"red",i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 30) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"blue",mobShots,i,this));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),202,26,20,"blue",i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 40) {
-				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"blue",mobShots,i,this));
+				mobs.add(i, new MarkMob((getWidth()/2)+(5*32)-((i%10)*32),236,26,20,"blue",i,this));
 				viewObjects.add(mobs.get(i));
 			}
-			
 		}
 		
-		mobShots = new ArrayList<MarkProjectile>();
-		for(int i = 0; i < mobs.size(); i++) {
-			mobShots.addAll(mobs.get(i).getShots());
-		}
+		labelBox.setTextColor(Color.RED);
+		labelBox = new TextArea(325, 10, 425, 40,"    1UP                                    HIGH SCORE");
+		viewObjects.add(labelBox);
 		
-		for(int i = 0; i< mobShots.size(); i++) {
-			mobShots.get(i).addSequence(galagaSpriteSheet, 1000, 366, 195, 3, 8, 1);
-			viewObjects.add(mobShots.get(i));
-		}
-		
-		playerShip = new MarkShip(getWidth()/2, 600, 32, 32, playerShots1);
-		viewObjects.add(playerShip);
-		
-		for(MarkProjectile s : mobShots) {
-			s.setDetection( new Action() {
-				
-				@Override
-				public void act() {
-					if(playerShip.detectCollision(s)) {
-						s.setVy(0);
-						s.setVx(0);
-						s.setY(400);
-						s.setX(1030);
-					};
-				}
-			});
-		}
-		
-		for(MarkProjectile s : playerShots1) {
-			s.setDetection( new Action() {
-				
-				@Override
-				public void act() {
-					for(MarkMob m : mobs) {
-						if(m.detectCollision(s)) {
-							int newX = m.getX();
-							int newY = m.getY();
-							shotsHit++;
-							if(m.getHp() == 0) {
-								Thread b = new Thread(new Runnable() {
-									
-									@Override
-									public void run() {
-										DeathAnimation boom = new DeathAnimation(newX,newY,32,32,game);
-										addObject(boom);
-										try {
-											Thread.sleep(500);
-										} catch (InterruptedException e) {
-											// TODO Auto-generated catch block
-											e.printStackTrace();
-										}
-										remove(boom);
-									}
-								});
-								updateScore(m);
-								s.setVy(0);
-								s.setVx(0);
-								s.setY(300);
-								s.setX(1030);
-								b.start();
-							}else {
-								s.setVy(0);
-								s.setVx(0);
-								s.setY(300);
-								s.setX(1030);
-							}
-						}
-					}
-				}
-			});
-		}
-		
-		for(MarkMob m : mobs) {
-			m.setAttack( new Action() {
-				
-				@Override
-				public void act() {
-					if(m.getShots().get(0).getVy() == 0) {
-						int playerX = playerShip.getX() + playerShip.getWidth()/2;
-						int playerY = playerShip.getY() + playerShip.getHeight()/2;
-						int time = (m.getY() - playerY)/5;
-						m.getShots().get(0).setY(m.getY());
-						m.getShots().get(0).setX((m.getX()+m.getWidth()/2)-(m.getShots().get(0).getWidth()/2));
-						m.getShots().get(0).setVy(5);
-						m.getShots().get(0).setVx((m.getX() - playerX)/time);
-						if(m.getShots().get(0).getVx() > 5) {
-							m.getShots().get(0).setVx(5);
-						}
-						try {
-							Thread.sleep(200);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-						playerX = playerShip.getX();
-						playerY = playerShip.getY();
-						time = (m.getY() - playerY)/5;
-						m.getShots().get(1).setY(m.getY());
-						m.getShots().get(1).setX((m.getX()+m.getWidth()/2)-(m.getShots().get(0).getWidth()/2));
-						m.getShots().get(1).setVy(5);
-						m.getShots().get(1).setVx((m.getX() - playerX)/time);
-						if(m.getShots().get(1).getVx() > 5) {
-							m.getShots().get(1).setVx(5);
-						}
-					}
-				}
-			});
-			
-			labelBox = new TextArea(325, 10, 425, 40,"    1UP                                    HIGH SCORE");
-			labelBox.setTextColor(Color.WHITE);
-			update();
-			viewObjects.add(labelBox);
-			
-			scoreBox = new TextArea(325, 24, 425, 40,"");
-			scoreBox.setTextColor(Color.RED);
-			update();
-			viewObjects.add(scoreBox);
-			
-		}
+		scoreBox.setTextColor(Color.WHITE);
+		scoreBox = new TextArea(325, 24, 425, 40,"");
+		viewObjects.add(scoreBox);
 	}
 
 	public void updateScore(MarkMob m) {
@@ -307,7 +178,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
 				shotsFired++;
-				playerShip.fireShot(playerShip.getShots(),playerShip.getX()+(playerShip.getWidth()/2)-(playerShots1.get(0).getWidth()/2),playerShip.getY());
+				playerShip.fireShot(playerShots,playerShip.getX()+(playerShip.getWidth()/2)-(playerShots.get(0).getWidth()/2),playerShip.getY());
 				break;
 			case KeyEvent.VK_LEFT :
 					playerShip.moveLeft();
@@ -337,8 +208,50 @@ public class MarkGalaga extends FullFunctionScreen{
 		return score;
 	}
 	
+	public MarkShip getShip() {
+		return playerShip;
+	}
+	
+	public ArrayList<MarkMob> getMobs(){
+		return mobs;
+	}
+	
+	public ArrayList<MarkProjectile> getMobShots() {
+		return mobShots;
+	}
+	
+	public ArrayList<MarkProjectile> getPlayerShots() {
+		return playerShots;
+	}
+	
+	public MarkAlphaGreen getAlphaGreen() {
+		return alphaGreen;
+	}
+	
+	public MarkAlphaPurple getAlphaPurple() {
+		return alphaPurple;
+	}
+	
+	public MarkAlphaRed getAlphaRed() {
+		return alphaRed;
+	}
+
+	public MarkAlphaBlue getAlphaBlue() {
+		return alphaBlue;
+	}
+	
 	public boolean isSpawning() {
 		return spawning;
+	}
+
+
+	public int getShotsHit() {
+		return shotsHit;
+	}
+
+
+	public void setShotsHit(int shotsHit) {
+		this.shotsHit = shotsHit;
 	}
 	
 }

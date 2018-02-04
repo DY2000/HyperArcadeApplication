@@ -6,7 +6,7 @@ import guiTeacher.components.AnimatedComponent;
 
 public class MarkAlphaPurple extends AnimatedComponent{
 
-	MarkGalaga game;
+	private MarkGalaga game;
 	
 	public MarkAlphaPurple(int x, int y, int w, int h, MarkGalaga game) {
 		super(x, y, w, h);
@@ -17,11 +17,6 @@ public class MarkAlphaPurple extends AnimatedComponent{
 		Thread t = new Thread(this);
 		update();
 		t.start();
-	}
-	
-	public synchronized void checkBehaviors() {
-		if(this.getCurrentFrame() != game.getAlphaGreen().getCurrentFrame())
-			this.setCurrentFrame(game.getAlphaGreen().getCurrentFrame());
 	}
 	
 	public BufferedImage getImage() {

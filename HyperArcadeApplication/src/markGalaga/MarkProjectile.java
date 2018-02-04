@@ -11,12 +11,14 @@ import willTetris.Collidable;
 public class MarkProjectile extends AnimatedComponent implements Collidable{
 	
 	private MarkGalaga game;
+	private String shooter;
 	private Action detectCollision;
 	
 	public MarkProjectile(int x, int y, int w, int h, String shooter, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
+		this.shooter = shooter;
 		this.game = game;
 		this.detectCollision = null;
 		update();
@@ -37,18 +39,49 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 			setY(300);
 			setX(1030);
 		}
-		this.act();
-	}
-	private void act() {
-		if(this.detectCollision != null)
-			detectCollision.act();
-	}
-
-	public  void setDetection(Action a) {
-		this.detectCollision = a;
-	}
-	
-	public MarkGalaga getGame() {
-		return game;
+//		this.act();
+		if(shooter == "player") {
+			for(MarkMob m : game.getMobs()) {
+				if(m.detectCollision(this)) {
+					int newX = m.getX();
+					int newY = m.getY();
+					game.setShotsHit(game.getShotsHit() + 1);
+					if(m.getHp() == 0) {
+						Thread b = new Thread(new Runnable() {
+							
+							@Override
+							public void run() {
+								DeathAnimation boom = new DeathAnimation(newX,newY,64,64,game);
+								game.addObject(boom);
+								try {
+									Thread.sleep(250);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								game.remove(boom);
+							}
+						});
+						game.updateScore(m);
+						setVy(0);
+						setVx(0);
+						setY(300);
+						setX(1030);
+						b.start();
+					}else {
+						setVy(0);
+						setVx(0);
+						setY(300);
+						setX(1030);
+					}
+				}
+			}
+		}else {
+			if(game.getShip().detectCollision(this)) {
+				setVy(0);
+				setVx(0);
+				setY(400);
+				setX(1030);
+			}
+		}
 	}
 }

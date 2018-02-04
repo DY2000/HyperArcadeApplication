@@ -1,6 +1,7 @@
 package markGalaga;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
@@ -11,43 +12,24 @@ import willTetris.Collidable;
 
 public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
-	ArrayList<MarkProjectile> playerShots;
+	BufferedImage img;
 	
-	public MarkShip(int x, int y, int w, int h, ArrayList<MarkProjectile> shots) {
+	public MarkShip(int x, int y, int w, int h, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		setShots(shots);
 		this.addSequence("resources/Galaga_spriteSheet.png", 1000, 184, 55, 15, 16, 1);
 		update();
 		Thread t = new Thread(this);
 		t.start();
 	}
 	
-	private void setShots(ArrayList<MarkProjectile> shots) {
-		this.playerShots = shots;
-	}
-
-	
-
-	public void moveStop() {
-		setVx(0);
-	}
-	
-	public void moveRight() {
-		setVx(5);
-	}
-	
-	public void moveLeft() {
-		setVx(-5);
-	}
-
 	public void fireShot(ArrayList<MarkProjectile> arl, int x, int y) {
 		for(int i = 0; i<arl.size();i++) {
 			if(arl.get(i).getVy() == 0) {
 				arl.get(i).setX(x);
 				arl.get(i).setY(y);
-				arl.get(i).setVy(-15);			
+				arl.get(i).setVy(-14);			
 				break;
 			}
 		}	
@@ -72,9 +54,24 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 			mob.getY() < getY() + getHeight() && mob.getHeight() + mob.getY() > getY());
 		
 	}
-
-	public ArrayList<MarkProjectile> getShots() {
-		return playerShots;
-	}
 		
+	public void moveStop() {
+		setVx(0);
+	}
+	
+	public void moveRight() {
+		setVx(5);
+	}
+	
+	public void moveLeft() {
+		setVx(-5);
+	}
+
+	public void moveUp() {
+		
+	}
+
+	public void moveDown() {
+	
+	}
 }

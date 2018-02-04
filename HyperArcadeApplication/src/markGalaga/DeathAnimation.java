@@ -8,7 +8,7 @@ public class DeathAnimation extends AnimatedComponent{
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		this.addSequence("resources/Galaga_spriteSheet.png", 100, 200, 192, 32, 32, 5);
+		this.addSequence("resources/Galaga_spriteSheet.png", 50, 200, 192, 32, 32, 5);
 		update();
 		Thread t = new Thread(this);
 		t.start();

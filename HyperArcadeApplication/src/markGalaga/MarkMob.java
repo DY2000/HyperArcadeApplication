@@ -22,14 +22,12 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	private ArrayList<MarkProjectile> mobShots;
 	private MarkGalaga game;
 	private BufferedImage img;
-	private Action attack;
 	
-	public MarkMob(int x, int y, int w, int h, String mobType,ArrayList<MarkProjectile> arl, int pos, MarkGalaga game) {
+	public MarkMob(int x, int y, int w, int h, String mobType, int pos, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		setShots(arl);
-		String galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
+		mobShots = game.getMobShots();
 		if(mobType == "green") {
 			hp = 2;
 		}
@@ -39,7 +37,6 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		if(mobType == "blue") {
 			hp = 1;
 		}
-		this.attack = null;
 		this.mobType = mobType;
 		this.game = game;
 		attacking = false;
@@ -78,179 +75,14 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			setVy(0);
 			setX(1150);
 			setY(25);
-			
 		}
 		if(hp == 1 && mobType == "green") {
-			if(countB%100==0) {
 				mobType = "purple";
-			}
 		}
 		if(enabled && !attacking) {
-			if(countA/3 > 1) {
-				countA--;
-				if(countA%3 == 0) {
-					setX(getX()-1);
-				}
-			}else if(countA/3 < -1){
-				countA++;
-				if(countA%3 == 0) {
-					setX(getX()+1);
-				}
-			}else {
-				if(countA - 1 < 0) {
-					countA = 300;
-				}else {
-					countA = -300;
-				}
-			}
+			
 		}else if(countA == -135) {
-			//when looking at the original galaga mobs have 2 idle motions,
-			//side to side when they are spawning
-			//and then a semi circle expand and contracting with the center being the top middle
-			//This is gonna be ugly
-			if(countB/3 > 1) {
-				countB--;
-				if(pos < 4) {
-					if(countB%30 == 0) {
-						setY(getY()+1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 2) {
-							setX(getX()+1);
-							if(pos%2 == 0) setX(getX()+1);
-						}else{
-							setX(getX()-1);
-							if(pos%2 == 1) setX(getX()-1);
-						}
-					}
-				}else if(pos < 12) {
-					if(countB%20 == 0) {
-						setY(getY()+1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 8) {
-							setX(getX()-1);
-							if(pos%8 > 4) setX(getX()-1);
-						}else {
-							setX(getX()+1);
-							if(pos%8 < 3) setX(getX()+1);
-						}
-					}
-				}else if(pos < 20) {
-					if(countB%15 == 0) {
-						setY(getY()+1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 16) {
-							setX(getX()-1);
-							if(pos%8 > 4) setX(getX()-1);
-						}else {
-							setX(getX()+1);
-							if(pos%8 < 3) setX(getX()+1);
-						}
-					}
-				}else if(pos < 30) {
-					if(countB%12 == 0) {
-						setY(getY()+1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 25) {
-							setX(getX()+1);
-							if(pos%10 < 4) setX(getX()+1);
-						}else {
-							setX(getX()-1);
-							if(pos%10 > 5) setX(getX()-1);
-						}
-					}
-				}else if(pos < 40) {
-					if(countB%10 == 0) {
-						setY(getY()+1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 35) {
-							setX(getX()+1);
-							if(pos%10 < 4) setX(getX()+1);
-						}else {
-							setX(getX()-1);
-							if(pos%10 > 5) setX(getX()-1);
-						}
-					}
-				}
-			}else if(countB/3 < -1){
-				countB++;
-				if(pos < 4) {
-					if(countB%30 == 0) {
-						setY(getY()-1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 2) {
-							setX(getX()-1);
-							if(pos%2 == 0) setX(getX()-1);
-						}else{
-							setX(getX()+1);
-							if(pos%2 == 1) setX(getX()+1);
-						}
-					}
-				}else if(pos < 12) {
-					if(countB%20 == 0) {
-						setY(getY()-1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 8) {
-							setX(getX()+1);
-							if(pos%8 > 4) setX(getX()+1);
-						}else {
-							setX(getX()-1);
-							if(pos%8 < 3) setX(getX()-1);
-						}
-					}
-				}else if(pos < 20) {
-					if(countB%15 == 0) {
-						setY(getY()-1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 16) {
-							setX(getX()+1);
-							if(pos%8 > 4) setX(getX()+1);
-						}else {
-							setX(getX()-1);
-							if(pos%8 < 3) setX(getX()-1);
-						}
-					}
-				}else if(pos < 30) {
-					if(countB%12 == 0) {
-						setY(getY()-1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 25) {
-							setX(getX()-1);
-							if(pos%10 < 4) setX(getX()-1);
-						}else {
-							setX(getX()+1);
-							if(pos%10 > 5) setX(getX()+1);
-						}
-					}
-				}else if(pos < 40) {
-					if(countB%10 == 0) {
-						setY(getY()-1);
-					}
-					if(countB%25 == 0) {
-						if(pos < 35) {
-							setX(getX()-1);
-							if(pos%10 < 4) setX(getX()-1);
-						}else {
-							setX(getX()+1);
-							if(pos%10 > 5) setX(getX()+1);
-						}
-					}
-				}
-			}else {
-				if(countB - 1 < 0) {
-					countB = 300;
-				}else {
-						countB = -300;
-				}
-			}
+			
 		}
 		if(Math.random() < .0005 && enabled)
 			this.attack();
@@ -261,12 +93,27 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	}
 	
 	private void attack() {
-			this.act();
-	}
-
-	public void act() {
-		if(this.attack != null) {
-			attack.act();
+		MarkShip ship = game.getShip();
+		if(getShots().get(0).getVy() == 0) {
+			int playerX = ship.getX() + ship.getWidth()/2;
+			int playerY = ship.getY() + ship.getHeight()/2;
+			int time = (getY() - playerY)/6;
+			getShots().get(0).setY(getY());
+			getShots().get(0).setX((getX()+getWidth()/2)-(getShots().get(0).getWidth()/2));
+			getShots().get(0).setVy(6);
+			getShots().get(0).setVx(((getX() - playerX)/time));
+			try {
+				Thread.sleep(200);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+			playerX = ship.getX();
+			playerY = ship.getY();
+			time = (getY() - playerY)/6;
+			getShots().get(1).setY(getY());
+			getShots().get(1).setX((getX()+getWidth()/2)-(getShots().get(0).getWidth()/2));
+			getShots().get(1).setVy(6);
+			getShots().get(1).setVx(((getX() - playerX)/time));
 		}
 	}
 
@@ -297,9 +144,5 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public boolean isAttacking() {
 		return attacking;
-	}
-	
-	public void setAttack(Action a) {
-		this.attack = a;
 	}
 }
