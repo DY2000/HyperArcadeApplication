@@ -2,6 +2,7 @@ package markGalaga;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import guiTeacher.components.Action;
 import guiTeacher.components.AnimatedComponent;
@@ -45,16 +46,14 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 				if(m.detectCollision(this)) {
 					int newX = m.getX();
 					int newY = m.getY();
-					game.setShotsHit(game.getShotsHit() + 1);
+					game.setHits(game.getHits() + 1);
 					if(m.getHp() == 0) {
 						Thread b = new Thread(new Runnable() {
-							
-							@Override
 							public void run() {
-								DeathAnimation boom = new DeathAnimation(newX,newY,64,64,game);
+								DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"mob",game);
 								game.addObject(boom);
 								try {
-									Thread.sleep(250);
+									Thread.sleep(200);
 								} catch (InterruptedException e) {
 									e.printStackTrace();
 								}
@@ -81,6 +80,7 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 				setVx(0);
 				setY(400);
 				setX(1030);
+				game.getShip().shipHit();
 			}
 		}
 	}

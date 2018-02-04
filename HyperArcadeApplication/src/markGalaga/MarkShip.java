@@ -12,12 +12,15 @@ import willTetris.Collidable;
 
 public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
-	BufferedImage img;
+	private MarkGalaga game;
+	private boolean enabled;
 	
 	public MarkShip(int x, int y, int w, int h, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
+		this.enabled = true;
+		this.game = game;
 		this.addSequence("resources/Galaga_spriteSheet.png", 1000, 184, 55, 15, 16, 1);
 		update();
 		Thread t = new Thread(this);
@@ -55,6 +58,26 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		
 	}
 		
+	public void shipHit() {
+		int newX = getX();
+		int newY = getY();
+		Thread b = new Thread(new Runnable() {
+			public void run() {
+				DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"player",game);
+				game.addObject(boom);
+				try {
+					Thread.sleep(300);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				game.remove(boom);
+			}
+		});
+		b.start();
+		enabled = false;
+		game.remove(this);
+	}
+	
 	public void moveStop() {
 		setVx(0);
 	}
@@ -74,4 +97,9 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	public void moveDown() {
 	
 	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
 }

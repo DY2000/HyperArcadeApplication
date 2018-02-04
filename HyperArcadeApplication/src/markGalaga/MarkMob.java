@@ -72,12 +72,14 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	public synchronized void checkBehaviors() {
 		if(hp == 0) {
 			enabled = false;
+//			game.remove(this);
+//			game.getMobs().remove(this);
 			setVy(0);
 			setX(1150);
 			setY(25);
 		}
 		if(hp == 1 && mobType == "green") {
-				mobType = "purple";
+			mobType = "purple";
 		}
 		if(enabled && !attacking) {
 			
@@ -103,7 +105,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			getShots().get(0).setVy(6);
 			getShots().get(0).setVx(((getX() - playerX)/time));
 			try {
-				Thread.sleep(200);
+				Thread.sleep(150);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
