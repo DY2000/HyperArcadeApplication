@@ -77,10 +77,15 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		if(beep.getSnakeBody().get(0).checkColision(beep.getPoint())) {
 			beep.pointGet();
 		}
-		//if(beep.getSnakeBody().get(beep.getSnakeBody().size()-2).getX()>=beep.getSnakeBody().get(beep.getSnakeBody().size()-1).getX()){
-		//	beep.getSnakeBody().get(beep.getSnakeBody().size()-1).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().size()-2).getDirection());
-		//}
+		if(!head) {
+		if(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX()){
+			beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
+		}
+		if(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY()){
+			beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
+		}
 	}
+}
 	//private void act() {
 	//	detectColision.act();
 	//	
