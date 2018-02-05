@@ -93,7 +93,7 @@ public class MarkGalaga extends FullFunctionScreen{
 			if(i < 4) {
 				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"green",i,this));
 				viewObjects.add(mobs.get(i));
-			}else if(i < 12) {
+			}else if(i < 12) {uk
 				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 20) {
@@ -163,6 +163,7 @@ public class MarkGalaga extends FullFunctionScreen{
 			}
 		});
 		intro.start();
+		
 		
 	}
 	
@@ -254,7 +255,7 @@ public class MarkGalaga extends FullFunctionScreen{
 					playerShip.moveRight();
 				break;
 			case KeyEvent.VK_ENTER : 
-				if(playerShip == null)
+//				if(playerShip == null)
 					startGame();
 				break;
 		}
@@ -281,6 +282,10 @@ public class MarkGalaga extends FullFunctionScreen{
 	
 	public MarkShip getShip() {
 		return playerShip;
+	}
+	
+	public void setShip(MarkShip o) {
+		playerShip = o;
 	}
 	
 	public ArrayList<MarkMob> getMobs(){
@@ -322,4 +327,7 @@ public class MarkGalaga extends FullFunctionScreen{
 	public int getHits() {
 		return hits;
 	}
+
+
+	
 }

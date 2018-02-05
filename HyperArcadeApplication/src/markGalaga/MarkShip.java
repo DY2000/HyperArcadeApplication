@@ -76,6 +76,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		b.start();
 		enabled = false;
 		game.remove(this);
+		game.setShip(null);
 	}
 	
 	public void moveStop() {

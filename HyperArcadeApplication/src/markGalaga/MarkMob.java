@@ -72,11 +72,11 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	public synchronized void checkBehaviors() {
 		if(hp == 0) {
 			enabled = false;
-//			game.remove(this);
-//			game.getMobs().remove(this);
-			setVy(0);
-			setX(1150);
-			setY(25);
+			game.remove(this);
+			game.getMobs().remove(this);
+//			setVy(0);
+//			setX(1150);
+//			setY(25);
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
@@ -87,7 +87,8 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			
 		}
 		if(Math.random() < .0005 && enabled)
-			this.attack();
+			if(game.getShip() != null)
+			attack();
 	}
 
 	private void flyingAttack(int x, int y, String mobType) {

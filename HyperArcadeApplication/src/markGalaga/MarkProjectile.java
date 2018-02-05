@@ -41,7 +41,7 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 			setX(1030);
 		}
 //		this.act();
-		if(shooter == "player") {
+		if(shooter == "player" && getVy() != 0) {
 			for(MarkMob m : game.getMobs()) {
 				if(m.detectCollision(this)) {
 					int newX = m.getX();
@@ -66,6 +66,7 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 						setY(300);
 						setX(1030);
 						b.start();
+						break;
 					}else {
 						setVy(0);
 						setVx(0);
@@ -75,7 +76,7 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 				}
 			}
 		}else {
-			if(game.getShip().detectCollision(this)) {
+			if(game.getShip() != null && game.getShip().detectCollision(this)) {
 				setVy(0);
 				setVx(0);
 				setY(400);
