@@ -26,6 +26,7 @@ public class TicketShop extends FullFunctionScreen {
 			}
 		});
 		viewObjects.add(back);
+		
 	}
 }
 
