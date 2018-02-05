@@ -28,5 +28,4 @@ public class TetrisGUI extends GUIApplication {
 		setScreen(Screen1);
 	}
 
-
 }
