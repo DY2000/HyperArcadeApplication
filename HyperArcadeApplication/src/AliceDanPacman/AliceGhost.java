@@ -104,4 +104,8 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 		//return DanielPacman.ateBlue();
 
 	}
+	
+	
+	
+	
 }
