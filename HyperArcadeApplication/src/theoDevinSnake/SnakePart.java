@@ -23,7 +23,7 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		setY(y);
 		this.beep=snake;
 		Thread t = new Thread(this);
-		this.addSequence("resources/snakeBody.png",1000,0, 0,50,50, 1);
+		this.addSequence("resources/SnakeBody.png",1000,0, 0,50,50, 1);
 		this.head=head;
 		t.start();
 		update();
@@ -71,12 +71,20 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		if(direction==4) {
 			moveLeft();
 		}
-		this.act();
+		if(beep.getSnakeBody().get(0).checkColision(this)) {
+			beep.gameOver();
+		}
+		if(beep.getSnakeBody().get(0).checkColision(beep.getPoint())) {
+			beep.pointGet();
+		}
+		//if(beep.getSnakeBody().get(beep.getSnakeBody().size()-2).getX()>=beep.getSnakeBody().get(beep.getSnakeBody().size()-1).getX()){
+		//	beep.getSnakeBody().get(beep.getSnakeBody().size()-1).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().size()-2).getDirection());
+		//}
 	}
-	private void act() {
-		detectColision.act();
-		
-	}
+	//private void act() {
+	//	detectColision.act();
+	//	
+	//}
 
 	public boolean checkColision(SnakePart p) {
 		return p.getX() < getX() + getWidth() && p.getX() + p.getWidth() > getX() &&
@@ -86,7 +94,7 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 	 return p.getX() < getX() + getWidth() && p.getX() + p.getWidth() > getX() &&
 				p.getY() < getY() + getHeight() && p.getHeight() + p.getY() > getY();
 	}
-	public void setAction(Action a) {
-		this.detectColision= a;
-	}
+	//public void setAction(Action a) {
+		//this.detectColision= a;
+	//}
 }

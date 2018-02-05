@@ -19,11 +19,14 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		private ArrayList<SnakePart> snakeBody;
 		private int userscore;
 		private SnakePoint point;
+
 	public TheoSnakeGUI(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
 	}
-
+	public SnakePoint getPoint() {
+		return point;
+	}
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		snakeBody = new ArrayList<SnakePart>();
@@ -34,20 +37,24 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		for(int i=0;i<snakeBody.size();i++) {
 			viewObjects.add(snakeBody.get(i));
 		}
-		for(SnakePart s : snakeBody) {
-		snakeBody.get(0).setAction(new Action() {
-			
-			@Override
-				public void act() {
-					if(snakeBody.get(0).checkColision(s)) {
-						gameOver();
-					}
-					if(snakeBody.get(0).checkColision(point)) {
-						pointGet();
-					}
-				}
-			});
-		}
+//		for(SnakePart s : snakeBody) {
+//		snakeBody.get(0).setAction(new Action() {
+//			
+//			@Override
+//				public void act() {
+//					if(snakeBody.get(0).checkColision(s)) {
+//						gameOver();
+//					}
+//					if(snakeBody.get(0).checkColision(point)) {
+//						pointGet();
+//					}
+//				}
+//			});
+//		}
+	}
+
+	public ArrayList<SnakePart> getSnakeBody() {
+		return snakeBody;
 	}
 
 	protected void pointGet() {
@@ -61,30 +68,30 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 			e.printStackTrace();
 		}
 		addSnek();
-		snakeBody.get(snakeBody.size()-1).setAction(new Action() {
-			
-			@Override
-			public void act() {
-				
-			}
-		});
-		for(SnakePart s : snakeBody) {
-			snakeBody.get(0).setAction(new Action() {
-
-				@Override
-					public void act() {
-						if(snakeBody.get(0).checkColision(s)) {
-							gameOver();
-						}
-						if(snakeBody.get(0).checkColision(point)) {
-							pointGet();
-						}
-						if(snakeBody.get(snakeBody.size()-2).getX()>=snakeBody.get(snakeBody.size()-1).getX()){
-							snakeBody.get(snakeBody.size()-1).setDirection(snakeBody.get(snakeBody.size()-2).getDirection());
-						}
-					}
-				});
-			}
+//		snakeBody.get(snakeBody.size()-1).setAction(new Action() {
+//			
+//			@Override
+//			public void act() {
+//				
+//			}
+//		});
+//		for(SnakePart s : snakeBody) {
+//			snakeBody.get(0).setAction(new Action() {
+//
+//				@Override
+//					public void act() {
+//						if(snakeBody.get(0).checkColision(s)) {
+//							gameOver();
+//						}
+//						if(snakeBody.get(0).checkColision(point)) {
+//							pointGet();
+//						}
+//						if(snakeBody.get(snakeBody.size()-2).getX()>=snakeBody.get(snakeBody.size()-1).getX()){
+//							snakeBody.get(snakeBody.size()-1).setDirection(snakeBody.get(snakeBody.size()-2).getDirection());
+//						}
+//					}
+//				});
+//			}
 	}
 	public void addSnek() {
 		 int snekX=snakeBody.get(snakeBody.size()-1).getX();
@@ -107,7 +114,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		
 	}
 	public void gameOver() {
-
+		
 	}
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {

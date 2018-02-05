@@ -5,9 +5,9 @@ import java.util.List;
 import devin.Ticket;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
-import hyperArcade.DevTicket;
 
-public class PacmanScreen extends FullFunctionScreen implements DevTicket {
+
+public class PacmanScreen extends FullFunctionScreen {
 
 	public PacmanScreen(int width, int height) {
 		super(width, height);
