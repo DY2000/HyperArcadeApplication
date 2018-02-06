@@ -92,8 +92,6 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 		}
 			
 	
-
-
 	private boolean isBlue() {
 		
 		if(DanielPacman.wentOverPowerUp()) {
@@ -105,6 +103,11 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 
 	}
 	
+	private boolean wentOverDots() {
+		
+		//no change!
+		
+	}
 	
 	
 	

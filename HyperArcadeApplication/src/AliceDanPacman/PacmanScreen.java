@@ -13,6 +13,7 @@ public class PacmanScreen extends FullFunctionScreen implements Ticket {
 	public PacmanScreen(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
+
 	}
 
 	@Override
@@ -36,7 +37,6 @@ public class PacmanScreen extends FullFunctionScreen implements Ticket {
 		
 		}
 	}
-	
 	
 	
 
