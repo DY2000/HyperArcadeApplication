@@ -25,6 +25,19 @@ public class DevinItem extends Component{
 		if(itemName = "" )
 			//skins for games could work, but that would be too much work. 
 			//pikachu doll,
+			
+	}
+	public void buyItems(){
+		int items = 5;
+		for(int i = 0; i < items; i++) {
+			if(displayTicket < price) {
+				
+			}
+			else {
+				//ticket will decrease based on price of item
+				itemName = "";//item that will be be bought will be empty
+			}
+		}
 	}
 	
 }
