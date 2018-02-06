@@ -94,9 +94,26 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 //			}
 	}
 	public void addSnek() {
+		if(snakeBody.get(snakeBody.size()-1).getDirection()==1) {
 		 int snekX=snakeBody.get(snakeBody.size()-1).getX();
-		 int snekY=snakeBody.get(snakeBody.size()-1).getY();
+		 int snekY=snakeBody.get(snakeBody.size()-1).getY()+30;
 		snakeBody.add(new SnakePart(snekX,snekY,25,25,false,this));
+		}
+		if(snakeBody.get(snakeBody.size()-1).getDirection()==2) {
+			 int snekX=snakeBody.get(snakeBody.size()-1).getX()-30;
+			 int snekY=snakeBody.get(snakeBody.size()-1).getY();
+			snakeBody.add(new SnakePart(snekX,snekY,25,25,false,this));
+		}
+		if(snakeBody.get(snakeBody.size()-1).getDirection()==3) {
+			 int snekX=snakeBody.get(snakeBody.size()-1).getX();
+			 int snekY=snakeBody.get(snakeBody.size()-1).getY()-30;
+			snakeBody.add(new SnakePart(snekX,snekY,25,25,false,this));
+			}
+		if(snakeBody.get(snakeBody.size()-1).getDirection()==4) {
+			 int snekX=snakeBody.get(snakeBody.size()-1).getX()+30;
+			 int snekY=snakeBody.get(snakeBody.size()-1).getY();
+			snakeBody.add(new SnakePart(snekX,snekY,25,25,false,this));
+			}
 		snakeBody.get(snakeBody.size()-1).setVx(snakeBody.get(snakeBody.size()-2).getVx());
 		snakeBody.get(snakeBody.size()-1).setVy(snakeBody.get(snakeBody.size()-2).getVy());
 		addObject(snakeBody.get(snakeBody.size()-1));
@@ -119,16 +136,20 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 		case  KeyEvent.VK_UP : 
-			snakeBody.get(0).moveUp();
+			if(snakeBody.get(0).getVy() != 5)
+			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),1);
 			break;
 		case KeyEvent.VK_DOWN :
-			snakeBody.get(0).moveDown();
+			if(snakeBody.get(0).getVy() != -5)
+			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),3);
 			break;
 		case KeyEvent.VK_LEFT :
-			snakeBody.get(0).moveLeft();
+			if(snakeBody.get(0).getVx() != 5)
+			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),4);
 			break;
 		case KeyEvent.VK_RIGHT :
-			snakeBody.get(0).moveRight();
+			if(snakeBody.get(0).getVx() != -5)
+			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),2);
 			break;
 		}
 	}

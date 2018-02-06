@@ -57,6 +57,17 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		setVy(0);
 		setVx(5);
 	}
+	public void turn(int x,int y,int dir) {
+		while(x== this.getX() && this.getY()==y) {
+			direction=dir;
+			break;
+			}
+		if(direction==dir) {
+			if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+				beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+			}
+		}
+	} 
 	@Override
 	public void checkBehaviors() {
 		if(direction==1) {
@@ -77,14 +88,14 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		if(beep.getSnakeBody().get(0).checkColision(beep.getPoint())) {
 			beep.pointGet();
 		}
-		if(!head) {
-		if(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX()){
-			beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
-		}
-		if(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY()){
-			beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
-		}
-	}
+		//if(!head) {
+		//if((beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() ) || (beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()<=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() )){
+		//	beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
+		//}
+		//if( (beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX()) ||(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()<=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX())){
+		//	beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
+		//}
+	//}
 }
 	//private void act() {
 	//	detectColision.act();
