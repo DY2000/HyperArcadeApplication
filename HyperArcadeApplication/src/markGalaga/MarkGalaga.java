@@ -22,6 +22,7 @@ public class MarkGalaga extends FullFunctionScreen{
 	private GalagaBackground background;
 	private TextArea labelBox;
 	private TextArea scoreBox;
+	private TextArea highscoreBox;	
 	private TextArea lifeBox;
 	private TextArea player1Box;
 	private TextArea stageBox;
@@ -57,16 +58,16 @@ public class MarkGalaga extends FullFunctionScreen{
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		
+		setBackground(Color.DARK_GRAY);
+		
 		background = new GalagaBackground(325, -764, 425,getHeight()*2, true);
 		viewObjects.add(background);
-		
-		setBackground(Color.DARK_GRAY);
 		
 		galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
 		
 		playerShots = new ArrayList<MarkProjectile>();
 		mobShots = new ArrayList<MarkProjectile>();
-		
+
 		alphaGreen = new MarkAlphaGreen(1030,600,15,16,this);
 		alphaPurple = new MarkAlphaPurple(1030,620,15,16,this);
 		alphaRed = new MarkAlphaRed(1030,640,13,10,this);
@@ -93,7 +94,7 @@ public class MarkGalaga extends FullFunctionScreen{
 			if(i < 4) {
 				mobs.add(i, new MarkMob((getWidth()/2)+(2*32)-((i%4)*32),100,30,32,"green",i,this));
 				viewObjects.add(mobs.get(i));
-			}else if(i < 12) {uk
+			}else if(i < 12) {
 				mobs.add(i, new MarkMob((getWidth()/2)+(4*32)-((i%8)*32),134,30,20,"red",i,this));
 				viewObjects.add(mobs.get(i));
 			}else if(i < 20) {
@@ -114,14 +115,19 @@ public class MarkGalaga extends FullFunctionScreen{
 		viewObjects.add(labelBox);
 		
 		scoreBox.setTextColor(Color.WHITE);
-		scoreBox = new TextArea(325, 30, 425, 40,"");
+		scoreBox = new TextArea(350, 30, 425, 40,"");
 		scoreBox.setSize(25);
 		viewObjects.add(scoreBox);
+		
+		highscoreBox = new TextArea(510, 30, 425, 40,"");
+		highscoreBox.setSize(25);
+		viewObjects.add(highscoreBox);
 		
 		updateScore(null);
 	}
 	
 	private void startGame() {
+		running = true;
 		Thread intro = new Thread(new Runnable() {
 			
 			@Override
@@ -163,7 +169,10 @@ public class MarkGalaga extends FullFunctionScreen{
 			}
 		});
 		intro.start();
-		
+		generateStage(stage);
+		for(MarkMob m : mobs) {
+			m.spawn();
+		}
 		
 	}
 	
@@ -175,24 +184,23 @@ public class MarkGalaga extends FullFunctionScreen{
 		if(m == null) {
 			score = 0;
 			highscore = 10000;
-				scoreBox.setText("        "+score+"0                                          "+highscore);
+				scoreBox.setText(score+"0");
+				highscoreBox.setText(highscore+"");
 			update();
 		}else if(m.getType() == "red") {
 			if(m.isAttacking()) {
 				score = score + 160;
 				if( score >= highscore)
 					highscore = score;
-				scoreBox.clear();
-				update();
-				scoreBox.setText("        "+score+"                                           "+highscore);
+				scoreBox.setText(score+"");
+				highscoreBox.setText(highscore+"");
 				update();
 			}else {
 				score = score + 80;
 				if( score >= highscore)
 					highscore = score;
-				scoreBox.clear();
-				update();
-				scoreBox.setText("        "+score+"                                           "+highscore);
+				scoreBox.setText(score+"");
+				highscoreBox.setText(highscore+"");
 				update();
 			}
 		}else if ( m.getType() == "blue") {
@@ -200,17 +208,15 @@ public class MarkGalaga extends FullFunctionScreen{
 				score = score + 100;
 				if( score >= highscore)
 					highscore = score;
-				scoreBox.clear();
-				update();
-				scoreBox.setText("        "+score+"                                           "+highscore);
+				scoreBox.setText(score+"");
+				highscoreBox.setText(highscore+"");
 				update();
 			}else {
 				score = score + 50;
 				if( score >= highscore)
 					highscore = score;
-				scoreBox.clear();
-				update();
-				scoreBox.setText("        "+score+"                                           "+highscore);
+				scoreBox.setText(score+"");
+				highscoreBox.setText(highscore+"");
 				update();
 			}
 		}else if ( m.getType() == "purple") {
@@ -218,44 +224,47 @@ public class MarkGalaga extends FullFunctionScreen{
 				score = score + 400;
 				if( score >= highscore)
 					highscore = score;
-				scoreBox.clear();
-				update();
-				scoreBox.setText("        "+score+"                                           "+highscore);
+				scoreBox.setText(score+"");
+				highscoreBox.setText(highscore+"");
 				update();
 			}else {
 				score = score + 200;
 				if( score >= highscore)
 					highscore = score;
-				scoreBox.clear();
-				update();
-				scoreBox.setText("        "+score+"                                           "+highscore);
+				scoreBox.setText(score+"");
+				highscoreBox.setText(highscore+"");
 				update();
 			}
 		}
 	}
 	
-	
+	public void generateStage(int stgNum) {
+		if(stgNum%6 == 0) {};
+	}
 
 	
 	@Override
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
+				if(playerShip != null)
 				if(playerShip.isEnabled()) {
 					shotsFired++;
 					playerShip.fireShot(playerShots,playerShip.getX()+(playerShip.getWidth()/2)-(playerShots.get(0).getWidth()/2),playerShip.getY());
 					break;
 				}
 			case KeyEvent.VK_LEFT :
+				if(playerShip != null)
 				if(playerShip.isEnabled())
 					playerShip.moveLeft();
 				break;
-			case KeyEvent.VK_RIGHT : 
+			case KeyEvent.VK_RIGHT :
+				if(playerShip != null)
 				if(playerShip.isEnabled())
 					playerShip.moveRight();
 				break;
 			case KeyEvent.VK_ENTER : 
-//				if(playerShip == null)
+				if(playerShip == null && !running)
 					startGame();
 				break;
 		}
@@ -265,10 +274,12 @@ public class MarkGalaga extends FullFunctionScreen{
 	public void keyReleased(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_LEFT :
+				if(playerShip != null)
 				if(playerShip.getVx() < 0)
 					playerShip.moveStop();
 				else break;
 			case KeyEvent.VK_RIGHT : 
+				if(playerShip != null)
 				if(playerShip.getVx() > 0)
 					playerShip.moveStop();
 				else break;
@@ -328,6 +339,8 @@ public class MarkGalaga extends FullFunctionScreen{
 		return hits;
 	}
 
-
+	public int getStage() {
+		return stage;
+	}
 	
 }

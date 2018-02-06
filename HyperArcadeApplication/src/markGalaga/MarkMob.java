@@ -22,6 +22,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	private ArrayList<MarkProjectile> mobShots;
 	private MarkGalaga game;
 	private BufferedImage img;
+	private Thread t;
 	
 	public MarkMob(int x, int y, int w, int h, String mobType, int pos, MarkGalaga game) {
 		super(x, y, w, h);
@@ -71,52 +72,54 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public synchronized void checkBehaviors() {
 		if(hp == 0) {
-			enabled = false;
 			game.remove(this);
 			game.getMobs().remove(this);
-//			setVy(0);
-//			setX(1150);
-//			setY(25);
+			this.setRunning(false);
+			System.out.println("get deleted");
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
 		}
-		if(enabled && !attacking) {
+		if(!game.isSpawning() && !attacking) {
 			
 		}else if(countA == -135) {
 			
 		}
 		if(Math.random() < .0005 && enabled)
 			if(game.getShip() != null)
-			attack();
+			flyingAttack();
 	}
 
-	private void flyingAttack(int x, int y, String mobType) {
+	public void spawn() {
+		/**
+		 * This is going to very bloated and inelegant
+		 * Mainly because I want to fit the original
+		 * version of how everything spawns and this
+		 * is my way of working. Its 'soft' hard coding
+		 */
+		if(mobType == "green" && game.getStage()%4 == 0 || game.getStage() == 1) {
+			
+		}
+	}
+	
+	private void flyingAttack() {
+		int startX = getX();
+		int startY = getY();
 		attack();
 	}
 	
 	private void attack() {
 		MarkShip ship = game.getShip();
-		if(getShots().get(0).getVy() == 0) {
-			int playerX = ship.getX() + ship.getWidth()/2;
-			int playerY = ship.getY() + ship.getHeight()/2;
-			int time = (getY() - playerY)/6;
-			getShots().get(0).setY(getY());
-			getShots().get(0).setX((getX()+getWidth()/2)-(getShots().get(0).getWidth()/2));
-			getShots().get(0).setVy(6);
-			getShots().get(0).setVx(((getX() - playerX)/time));
-			try {
-				Thread.sleep(150);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+		for(int i = 0; i < getShots().size(); i++) {
+			if(getShots().get(i).getVy() == 0) {
+				int playerX = ship.getX() + ship.getWidth()/2;
+				int playerY = ship.getY() + ship.getHeight()/2;
+				int time = (getY() - playerY)/6;
+				getShots().get(i).setY(getY());
+				getShots().get(i).setX((getX()+getWidth()/2)-(getShots().get(i).getWidth()/2));
+				getShots().get(i).setVy(6);
+				getShots().get(i).setVx(((getX() - playerX)/time));
 			}
-			playerX = ship.getX();
-			playerY = ship.getY();
-			time = (getY() - playerY)/6;
-			getShots().get(1).setY(getY());
-			getShots().get(1).setX((getX()+getWidth()/2)-(getShots().get(0).getWidth()/2));
-			getShots().get(1).setVy(6);
-			getShots().get(1).setVx(((getX() - playerX)/time));
 		}
 	}
 
@@ -148,4 +151,6 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	public boolean isAttacking() {
 		return attacking;
 	}
+
+	
 }

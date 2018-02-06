@@ -59,14 +59,14 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	}
 		
 	public void shipHit() {
-		int newX = getX();
-		int newY = getY();
+		int newX = getX()-16;
+		int newY = getY()-16;
 		Thread b = new Thread(new Runnable() {
 			public void run() {
 				DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"player",game);
 				game.addObject(boom);
 				try {
-					Thread.sleep(300);
+					Thread.sleep(375);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
