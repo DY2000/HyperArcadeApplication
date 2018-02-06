@@ -25,12 +25,12 @@ public class TetrisMain extends FullFunctionScreen {
 	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
 	private ArrayList<ArrayList<ArrayList<Block>>> TetraminoRotations = new ArrayList<ArrayList<ArrayList<Block>>>(4);
 	private int rotation;
-	private int tetramino;
+	private int shape;
 
 	public TetrisMain(int width, int height) {
 		super(width, height);
 		rotation = 0;
-		tetramino = 2;
+		shape = 0;
 
 		// I PIECE
 		Tetramino.add(new Block(3, 0, Color.cyan));
@@ -60,7 +60,7 @@ public class TetrisMain extends FullFunctionScreen {
 		Tetramino.add(new Block(5, 0, Color.green));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		// T PIECE
+		// Z PIECE
 		Tetramino.add(new Block(4, 1, Color.red));
 		Tetramino.add(new Block(5, 1, Color.red));
 		Tetramino.add(new Block(3, 0, Color.red));
@@ -80,6 +80,7 @@ public class TetrisMain extends FullFunctionScreen {
 		Tetramino.add(new Block(4, 4, Color.orange));
 		Tetramino.add(new Block(5, 4, Color.orange));
 		Tetraminos.add(Tetramino);
+		Tetramino = new ArrayList<Block>(4);
 
 		TetraminoRotations.add(Tetraminos);
 
@@ -104,8 +105,8 @@ public class TetrisMain extends FullFunctionScreen {
 		// T PIECE
 		Tetramino.add(new Block(4, 2, Color.white));
 		Tetramino.add(new Block(4, 1, Color.white));
-		Tetramino.add(new Block(5, 1, Color.white));
 		Tetramino.add(new Block(4, 0, Color.white));
+		Tetramino.add(new Block(5, 1, Color.white));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
 		// S PIECE
@@ -146,7 +147,7 @@ public class TetrisMain extends FullFunctionScreen {
 			public void run() {
 				lower();
 			}
-		}, 0, 200);
+		}, 0, 500);
 	}
 
 	@Override
@@ -236,8 +237,9 @@ public class TetrisMain extends FullFunctionScreen {
 	}
 
 	public void newPiece() {
-		int x = (int) (Math.random() * Tetraminos.size());
-		active = (ArrayList<Block>) Tetraminos.get(2).clone();
+		// shape = (int) (Math.random() * Tetraminos.size());
+		shape = 2;
+		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
 	}
 
 	public void gameOver() {
@@ -281,18 +283,41 @@ public class TetrisMain extends FullFunctionScreen {
 	}
 
 	private void clockWise() {
-		for (int i = 0; i < 4; i++) {
-			active.get(i).setX(active.get(i).getX() + TetraminoRotations.get(1).get(tetramino).get(i).getX()
-					- TetraminoRotations.get(0).get(tetramino).get(i).getX());
-			active.get(i).setY(active.get(i).getY() + TetraminoRotations.get(1).get(tetramino).get(i).getY()
-					- TetraminoRotations.get(0).get(tetramino).get(i).getY());
-		}
-		for (int i = 0; i < 4; i++) {
-			board[active.get(i).getX()][active.get(i).getY()] = null;
-		}
-		for (int i = 0; i < 4; i++) {
-			active.set(i, new Block(active.get(i).getX(), active.get(i).getY(), active.get(i).getColor()));
-			board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+//		for (int i = 0; i < 4; i++) {
+//			board[active.get(i).getX()][active.get(i).getY()] = null;
+//			System.out.println("1");
+//		}
+//		if (shape == 1) {
+//
+//		} else if (shape == 2) {
+//			if(rotation % 2 == 0) {
+//				for (int i = 0; i < 4; i++) {
+//					active.set(i, new Block(active.get(i).getY() + active.get(1).getX() - active.get(1).getY(),
+//							active.get(i).getX() + active.get(1).getY() - active.get(1).getX(), active.get(i).getColor()));
+//				}
+//			}else {
+//				for (int i = 0; i < 4; i++) {
+//					active.set(i, new Block(active.get(i).getY() + active.get(1).getX() - active.get(1).getY(),
+//							active.get(i).getX() + active.get(1).getY() - active.get(1).getX(), active.get(i).getColor()));
+//				}
+//			}
+//
+//		} else if (shape == 3) {
+//			for (int i = 0; i < 4; i++) {
+//				active.set(i, new Block(active.get(i).getY() + active.get(1).getX() - active.get(1).getY(),
+//						active.get(i).getX() + active.get(1).getY() - active.get(1).getX(), active.get(i).getColor()));
+//			}
+//
+//		} else if (shape == 4) {
+//
+//		}
+//
+//		for (int i = 0; i < 4; i++) {
+//			board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+//		}
+		
+		for(int i = 0; i < 4; i ++) {
+			
 		}
 	}
 }
