@@ -55,14 +55,18 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	}
 
 	public void drawImage(Graphics2D g) {
-		if(mobType == "green") {
-			img = game.getAlphaGreen().getImage();
-		}else if(mobType == "purple") {
-			img = game.getAlphaPurple().getImage();
-		}else if(mobType == "red") {
-			img = game.getAlphaRed().getImage();
-		}else if(mobType == "blue") {
-			img = game.getAlphaBlue().getImage();
+		if(enabled && !attacking) {
+			if(mobType == "green") {
+				img = game.getAlphaGreen().getImage();
+			}else if(mobType == "purple") {
+				img = game.getAlphaPurple().getImage();
+			}else if(mobType == "red") {
+				img = game.getAlphaRed().getImage();
+			}else if(mobType == "blue") {
+				img = game.getAlphaBlue().getImage();
+			}
+		}else if(!enabled || attacking){
+			super.drawImage(g);
 		}
 		if(img != null) {
 			this.clear();
@@ -75,7 +79,6 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			game.remove(this);
 			game.getMobs().remove(this);
 			this.setRunning(false);
-			System.out.println("get deleted");
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
@@ -85,20 +88,58 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		}else if(countA == -135) {
 			
 		}
-		if(Math.random() < .0005 && enabled)
+		if(Math.random() < .25 && enabled)
 			if(game.getShip() != null)
-			flyingAttack();
+				flyingAttack();
 	}
 
-	public void spawn() {
+	public void spawn(int stage) {
 		/**
 		 * This is going to very bloated and inelegant
 		 * Mainly because I want to fit the original
 		 * version of how everything spawns and this
 		 * is my way of working. Its 'soft' hard coding
 		 */
-		if(mobType == "green" && game.getStage()%4 == 0 || game.getStage() == 1) {
-			
+		//1 2 3 4 5 6 7 8 9 10
+		//1 2 * 1 2 3 * 1 2 3
+		if(mobType == "green") {
+			if(stage == 1 || stage%4== 0) {
+				
+			}else if(stage == 2 || stage%4 == 1) {
+				
+			}else if(stage%4 == 2) {
+				
+			}else {
+				/**
+				 * This will contain spawn sequence for challenge stages
+				 */
+			}
+		}
+		if(mobType == "red") {
+			if(stage == 1 || stage%4== 0) {
+				//Because of how sequences are created I will manually add them to the sprite sheet as needed
+			}else if(stage == 2 || stage%4 == 1) {
+				
+			}else if(stage%4 == 2) {
+				
+			}else {
+				/**
+				 * This will contain spawn sequence for challenge stages
+				 */
+			}
+		}
+		if(mobType == "blue") {
+			if(stage == 1 || stage%4== 0) {
+				
+			}else if(stage == 2 || stage%4 == 1) {
+				
+			}else if(stage%4 == 2) {
+				
+			}else {
+				/**
+				 * This will contain spawn sequence for challenge stages
+				 */
+			}
 		}
 	}
 	
@@ -110,6 +151,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	private void attack() {
 		MarkShip ship = game.getShip();
+		if(ship.isEnabled())
 		for(int i = 0; i < getShots().size(); i++) {
 			if(getShots().get(i).getVy() == 0) {
 				int playerX = ship.getX() + ship.getWidth()/2;
@@ -119,6 +161,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				getShots().get(i).setX((getX()+getWidth()/2)-(getShots().get(i).getWidth()/2));
 				getShots().get(i).setVy(6);
 				getShots().get(i).setVx(((getX() - playerX)/time));
+				break;
 			}
 		}
 	}

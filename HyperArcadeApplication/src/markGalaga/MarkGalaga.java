@@ -76,6 +76,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		mobs = new ArrayList<MarkMob>();
 		
 		playerShip = new MarkShip(getWidth()/2 + 16, 600, 32, 32, this);
+		playerShip.setVisible(false);
 		viewObjects.add(playerShip);
 		
 		for(int i = 0; i < 2; i++) {
@@ -84,7 +85,7 @@ public class MarkGalaga extends FullFunctionScreen{
 			viewObjects.add(playerShots.get(i));
 		}
 		
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 40; i++) {
 			mobShots.add(i, new MarkProjectile(1030,300/2,6,16,"mob",this));
 			mobShots.get(i).addSequence(galagaSpriteSheet, 1000, 366, 195, 3, 8, 1);
 			viewObjects.add(mobShots.get(i));
@@ -151,28 +152,29 @@ public class MarkGalaga extends FullFunctionScreen{
 				stageBox.setSize(32);
 				addObject(stageBox);
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(1500);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 				background.setEnabled(true);
 				player1Box.setY(player1Box.getY()-25);
 				player1Box.setVisible(true);
+				playerShip.setVisible(true);
 				try {
-					Thread.sleep(1500);
+					Thread.sleep(1000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 				player1Box.setVisible(false);
 				stageBox.setVisible(false);
+				
+				playerShip.setEnabled(true);
 			}
 		});
 		intro.start();
 		generateStage(stage);
-		for(MarkMob m : mobs) {
-			m.spawn();
-		}
+		
 		
 	}
 	
@@ -239,7 +241,22 @@ public class MarkGalaga extends FullFunctionScreen{
 	}
 	
 	public void generateStage(int stgNum) {
-		if(stgNum%6 == 0) {};
+		//Stage type order 1 2 * 1 2 3 * 1 2 3
+		// * = challenge stage
+		if(stgNum == 1 || stgNum%4 == 0) {
+			
+		}else if(stgNum == 2 || stgNum == 1) {
+			
+		}else if(stgNum%4 == 2) {
+			
+		}else {
+			/**
+			 * This is where the specific challenge stage will make mobs
+			 */
+		}
+		for(MarkMob m : mobs) {
+			m.spawn(stgNum);
+		}
 	}
 
 	
@@ -247,24 +264,24 @@ public class MarkGalaga extends FullFunctionScreen{
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_SPACE :
-				if(playerShip != null)
+				if(playerShip.isEnabled())
 				if(playerShip.isEnabled()) {
 					shotsFired++;
 					playerShip.fireShot(playerShots,playerShip.getX()+(playerShip.getWidth()/2)-(playerShots.get(0).getWidth()/2),playerShip.getY());
 					break;
 				}
 			case KeyEvent.VK_LEFT :
-				if(playerShip != null)
+				if(playerShip.isEnabled())
 				if(playerShip.isEnabled())
 					playerShip.moveLeft();
 				break;
 			case KeyEvent.VK_RIGHT :
-				if(playerShip != null)
+				if(playerShip.isEnabled())
 				if(playerShip.isEnabled())
 					playerShip.moveRight();
 				break;
 			case KeyEvent.VK_ENTER : 
-				if(playerShip == null && !running)
+				if(!playerShip.isEnabled() && !running)
 					startGame();
 				break;
 		}
@@ -274,12 +291,12 @@ public class MarkGalaga extends FullFunctionScreen{
 	public void keyReleased(KeyEvent e) {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_LEFT :
-				if(playerShip != null)
+				if(playerShip.isEnabled())
 				if(playerShip.getVx() < 0)
 					playerShip.moveStop();
 				else break;
 			case KeyEvent.VK_RIGHT : 
-				if(playerShip != null)
+				if(playerShip.isEnabled())
 				if(playerShip.getVx() > 0)
 					playerShip.moveStop();
 				else break;
@@ -293,10 +310,6 @@ public class MarkGalaga extends FullFunctionScreen{
 	
 	public MarkShip getShip() {
 		return playerShip;
-	}
-	
-	public void setShip(MarkShip o) {
-		playerShip = o;
 	}
 	
 	public ArrayList<MarkMob> getMobs(){

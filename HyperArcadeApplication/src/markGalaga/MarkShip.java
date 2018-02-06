@@ -19,7 +19,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		this.enabled = true;
+		this.enabled = false;
 		this.game = game;
 		this.addSequence("resources/Galaga_spriteSheet.png", 1000, 184, 55, 15, 16, 1);
 		update();
@@ -73,10 +73,9 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 				game.remove(boom);
 			}
 		});
+		setVisible(false);
 		b.start();
 		enabled = false;
-		game.remove(this);
-		game.setShip(null);
 	}
 	
 	public void moveStop() {
@@ -101,6 +100,10 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 
 	public boolean isEnabled() {
 		return enabled;
+	}
+	
+	public void setEnabled(boolean b) {
+		this.enabled = b;
 	}
 	
 }
