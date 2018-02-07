@@ -22,6 +22,7 @@ public class PacmanScreen extends FullFunctionScreen implements Ticket {
 		viewObjects.add(Image);
 		DanielPacman pac = new DanielPacman(100,100,200,20);
 		viewObjects.add(pac);
+		PacmanGrid movementGrid = new PacmanGrid(60,85,662,518,"move");
 	}
 	public void keyPressed(KeyEvent e)
 	{
