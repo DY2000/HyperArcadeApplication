@@ -77,8 +77,11 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	public synchronized void checkBehaviors() {
 		if(hp == 0) {
 			game.remove(this);
-			game.getMobs().remove(this);
-			this.setRunning(false);
+			enabled = false;
+			if(!game.isSpawning() && !enabled) {
+				game.getMobs().remove(this);
+				setRunning(false);
+			}
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
@@ -101,13 +104,15 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		 * is my way of working. Its 'soft' hard coding
 		 */
 		//1 2 3 4 5 6 7 8 9 10
-		//1 2 * 1 2 3 * 1 2 3
+		//3 2 * 1 2 3 * 1 2 3
+		goToPos(game.getIdleCoods()[pos][0],game.getIdleCoods()[pos][1], 5);
+		
 		if(mobType == "green") {
-			if(stage == 1 || stage%4== 0) {
+			if(stage%4== 0) {
 				
 			}else if(stage == 2 || stage%4 == 1) {
 				
-			}else if(stage%4 == 2) {
+			}else if(stage == 1 || stage%4 == 2) {
 				
 			}else {
 				/**
@@ -117,7 +122,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		}
 		if(mobType == "red") {
 			if(stage == 1 || stage%4== 0) {
-				//Because of how sequences are created I will manually add them to the sprite sheet as needed
+				
 			}else if(stage == 2 || stage%4 == 1) {
 				
 			}else if(stage%4 == 2) {
@@ -143,13 +148,19 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		}
 	}
 	
-	private void flyingAttack() {
+	public void goToPos(int x, int y, int spd) {
+		int time = (getY() - y)/spd;
+		setX(x);
+		setY(y);
+	}
+	
+	public void flyingAttack() {
 		int startX = getX();
 		int startY = getY();
 		attack();
 	}
 	
-	private void attack() {
+	public void attack() {
 		MarkShip ship = game.getShip();
 		if(ship.isEnabled())
 		for(int i = 0; i < getShots().size(); i++) {
@@ -160,7 +171,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				getShots().get(i).setY(getY());
 				getShots().get(i).setX((getX()+getWidth()/2)-(getShots().get(i).getWidth()/2));
 				getShots().get(i).setVy(6);
-				getShots().get(i).setVx(((getX() - playerX)/time));
+				getShots().get(i).setVx((getX() - playerX)/time);
 				break;
 			}
 		}
@@ -191,8 +202,20 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		return hp;
 	}
 	
+	public int getPos() {
+		return pos;
+	}
+	
 	public boolean isAttacking() {
 		return attacking;
+	}
+
+	public void setEnabled(boolean b) {
+		this.enabled = b;
+	}
+
+	public boolean isEnabled() {
+		return enabled;
 	}
 
 	

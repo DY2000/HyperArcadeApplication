@@ -49,7 +49,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
 	public boolean detectCollision(MarkProjectile shot) {
 		return (shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
-			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY());
+			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY() && enabled);
 	}
 	
 	public boolean detectCollision(MarkMob mob) {
@@ -59,23 +59,25 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 	}
 		
 	public void shipHit() {
-		int newX = getX()-16;
-		int newY = getY()-16;
-		Thread b = new Thread(new Runnable() {
-			public void run() {
-				DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"player",game);
-				game.addObject(boom);
-				try {
-					Thread.sleep(375);
-				} catch (InterruptedException e) {
-					e.printStackTrace();
+		if(enabled) {
+			enabled = false;
+			setVisible(false);
+			int newX = getX()-16;
+			int newY = getY()-16;
+			Thread b = new Thread(new Runnable() {
+				public void run() {
+					DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"player",game);
+					game.addObject(boom);
+					try {
+						Thread.sleep(375);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					game.remove(boom);
 				}
-				game.remove(boom);
-			}
-		});
-		setVisible(false);
-		b.start();
-		enabled = false;
+			});
+			b.start();
+		}
 	}
 	
 	public void moveStop() {

@@ -24,7 +24,6 @@ public class GalagaBackground extends AnimatedComponent{
 			setY(this.getY()+1);
 			setY(this.getY()+1);
 			setY(this.getY()+1);
-			setY(this.getY()+1);
 		}
 	}
 
