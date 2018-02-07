@@ -341,6 +341,12 @@ public class MarkGalaga extends FullFunctionScreen{
 			remove(m);
 		}
 		mobs.clear();
+		mobShots.clear();
+		for(int i = 0; i < 1; i++) {
+			mobShots.add(i, new MarkProjectile(1030,300/2,6,16,"mob",this));
+			mobShots.get(i).addSequence(galagaSpriteSheet, 1000, 366, 195, 3, 8, 1);
+			addObject(mobShots.get(i));
+		}
 		update();
 		messageBox.setText("GAME  OVER");
 		messageBox.setVisible(true);
@@ -353,8 +359,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		messageBox.setVisible(false);
 		resultsBox.setText("                  RESULTS\n"
 						 + " SHOTS FIRED                    "+shotsFired+"\n"
-						 + " SHOTS HIT                      "+hits+"\n"
-						 + " HIT RATIO      "+(double)(hits/shotsFired));
+						 + " SHOTS HIT                      "+hits);
 		resultsBox.setVisible(true);
 		try {
 			Thread.sleep(4500);

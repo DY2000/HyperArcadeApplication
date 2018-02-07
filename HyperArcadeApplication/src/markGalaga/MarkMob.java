@@ -76,18 +76,32 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public synchronized void checkBehaviors() {
 		if(hp == 0) {
-			game.remove(this);
+			setVisible(false);
 			enabled = false;
-			if(!game.isSpawning() && !enabled) {
+			if(!game.isSpawning() && !enabled && !isVisible()) {
+				game.remove(this);
 				game.getMobs().remove(this);
 				setRunning(false);
+				System.out.println(pos);
 			}
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
 		}
 		if(!game.isSpawning() && !attacking) {
-			
+			if(countA/2 > 1) {
+				countA--;
+				if(countA%3==0)
+				setX(getX()-1);
+			}else if(countA/3 < -1) {
+				countA++;
+				if(countA%3==0)
+				setX(getX()+1);
+			}else if(countA - 1 < 0) {
+				countA = 285;
+			}else {
+				countA = -300;
+			}
 		}else if(countA == -135) {
 			
 		}
@@ -150,6 +164,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public void goToPos(int x, int y, int spd) {
 		int time = (getY() - y)/spd;
+		countA = -135;
 		setX(x);
 		setY(y);
 	}
