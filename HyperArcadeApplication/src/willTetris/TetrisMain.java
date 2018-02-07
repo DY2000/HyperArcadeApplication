@@ -23,7 +23,6 @@ public class TetrisMain extends FullFunctionScreen {
 	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
 	private ArrayList<Block> active = new ArrayList<Block>(4);
 	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
-	private ArrayList<ArrayList<ArrayList<Block>>> TetraminoRotations = new ArrayList<ArrayList<ArrayList<Block>>>(4);
 	private int rotation;
 	private int shape;
 
@@ -32,112 +31,55 @@ public class TetrisMain extends FullFunctionScreen {
 		rotation = 0;
 		shape = 0;
 
-		// I PIECE
+		// I PIECE 0
 		Tetramino.add(new Block(3, 0, Color.cyan));
-		Tetramino.add(new Block(4, 0, Color.cyan));
 		Tetramino.add(new Block(5, 0, Color.cyan));
+		Tetramino.add(new Block(4, 0, Color.cyan));
 		Tetramino.add(new Block(6, 0, Color.cyan));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		// O PIECE
+		// O PIECE 1
 		Tetramino.add(new Block(4, 0, Color.yellow));
 		Tetramino.add(new Block(5, 0, Color.yellow));
 		Tetramino.add(new Block(4, 1, Color.yellow));
 		Tetramino.add(new Block(5, 1, Color.yellow));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		// T PIECE
+		// T PIECE 2
 		Tetramino.add(new Block(3, 1, Color.white));
 		Tetramino.add(new Block(4, 1, Color.white));
 		Tetramino.add(new Block(5, 1, Color.white));
 		Tetramino.add(new Block(4, 0, Color.white));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		// S PIECE
+		// S PIECE 3
 		Tetramino.add(new Block(3, 1, Color.green));
 		Tetramino.add(new Block(4, 1, Color.green));
 		Tetramino.add(new Block(4, 0, Color.green));
 		Tetramino.add(new Block(5, 0, Color.green));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		// Z PIECE
-		Tetramino.add(new Block(4, 1, Color.red));
+		// Z PIECE 4
 		Tetramino.add(new Block(5, 1, Color.red));
+		Tetramino.add(new Block(4, 1, Color.red));
 		Tetramino.add(new Block(3, 0, Color.red));
 		Tetramino.add(new Block(4, 0, Color.red));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		// J PIECE
+		// J PIECE 5
+		Tetramino.add(new Block(4, 1, Color.blue));
+		Tetramino.add(new Block(4, 2, Color.blue));
 		Tetramino.add(new Block(5, 2, Color.blue));
-		Tetramino.add(new Block(5, 3, Color.blue));
-		Tetramino.add(new Block(5, 4, Color.blue));
-		Tetramino.add(new Block(4, 4, Color.blue));
+		Tetramino.add(new Block(6, 2, Color.blue));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-		// L PIECE
+		// L PIECE 6
+		Tetramino.add(new Block(6, 1, Color.orange));
+		Tetramino.add(new Block(6, 2, Color.orange));
+		Tetramino.add(new Block(5, 2, Color.orange));
 		Tetramino.add(new Block(4, 2, Color.orange));
-		Tetramino.add(new Block(4, 3, Color.orange));
-		Tetramino.add(new Block(4, 4, Color.orange));
-		Tetramino.add(new Block(5, 4, Color.orange));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-
-		TetraminoRotations.add(Tetraminos);
-
-		/*
-		 * 1 ROTATION
-		 */
-
-		// I PIECE
-		Tetramino.add(new Block(3, 0, Color.cyan));
-		Tetramino.add(new Block(4, 0, Color.cyan));
-		Tetramino.add(new Block(5, 0, Color.cyan));
-		Tetramino.add(new Block(6, 0, Color.cyan));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
-		// O PIECE
-		Tetramino.add(new Block(4, 0, Color.yellow));
-		Tetramino.add(new Block(5, 0, Color.yellow));
-		Tetramino.add(new Block(4, 1, Color.yellow));
-		Tetramino.add(new Block(5, 1, Color.yellow));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
-		// T PIECE
-		Tetramino.add(new Block(4, 2, Color.white));
-		Tetramino.add(new Block(4, 1, Color.white));
-		Tetramino.add(new Block(4, 0, Color.white));
-		Tetramino.add(new Block(5, 1, Color.white));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
-		// S PIECE
-		Tetramino.add(new Block(3, 1, Color.green));
-		Tetramino.add(new Block(4, 1, Color.green));
-		Tetramino.add(new Block(4, 0, Color.green));
-		Tetramino.add(new Block(5, 0, Color.green));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
-		// T PIECE
-		Tetramino.add(new Block(4, 1, Color.red));
-		Tetramino.add(new Block(5, 1, Color.red));
-		Tetramino.add(new Block(3, 0, Color.red));
-		Tetramino.add(new Block(4, 0, Color.red));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
-		// J PIECE
-		Tetramino.add(new Block(5, 2, Color.blue));
-		Tetramino.add(new Block(5, 3, Color.blue));
-		Tetramino.add(new Block(5, 4, Color.blue));
-		Tetramino.add(new Block(4, 4, Color.blue));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
-		// L PIECE
-		Tetramino.add(new Block(4, 2, Color.orange));
-		Tetramino.add(new Block(4, 3, Color.orange));
-		Tetramino.add(new Block(4, 4, Color.orange));
-		Tetramino.add(new Block(5, 4, Color.orange));
-		Tetraminos.add(Tetramino);
-
-		TetraminoRotations.add(Tetraminos);
 
 		newPiece();
 
@@ -238,8 +180,9 @@ public class TetrisMain extends FullFunctionScreen {
 
 	public void newPiece() {
 		// shape = (int) (Math.random() * Tetraminos.size());
-		shape = 2;
+		shape = 3;
 		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
+		rotation = 0;
 	}
 
 	public void gameOver() {
@@ -274,50 +217,42 @@ public class TetrisMain extends FullFunctionScreen {
 			break;
 		case KeyEvent.VK_DOWN:
 			if (!active.isEmpty())
-				countClockWise();
+				counterClockWise();
 			break;
 		}
 	}
 
-	private void countClockWise() {
+	private void counterClockWise() {
 	}
 
 	private void clockWise() {
-//		for (int i = 0; i < 4; i++) {
-//			board[active.get(i).getX()][active.get(i).getY()] = null;
-//			System.out.println("1");
-//		}
-//		if (shape == 1) {
-//
-//		} else if (shape == 2) {
-//			if(rotation % 2 == 0) {
-//				for (int i = 0; i < 4; i++) {
-//					active.set(i, new Block(active.get(i).getY() + active.get(1).getX() - active.get(1).getY(),
-//							active.get(i).getX() + active.get(1).getY() - active.get(1).getX(), active.get(i).getColor()));
-//				}
-//			}else {
-//				for (int i = 0; i < 4; i++) {
-//					active.set(i, new Block(active.get(i).getY() + active.get(1).getX() - active.get(1).getY(),
-//							active.get(i).getX() + active.get(1).getY() - active.get(1).getX(), active.get(i).getColor()));
-//				}
-//			}
-//
-//		} else if (shape == 3) {
-//			for (int i = 0; i < 4; i++) {
-//				active.set(i, new Block(active.get(i).getY() + active.get(1).getX() - active.get(1).getY(),
-//						active.get(i).getX() + active.get(1).getY() - active.get(1).getX(), active.get(i).getColor()));
-//			}
-//
-//		} else if (shape == 4) {
-//
-//		}
-//
-//		for (int i = 0; i < 4; i++) {
-//			board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
-//		}
-		
-		for(int i = 0; i < 4; i ++) {
-			
+		if (shape != 1) {
+			rotation++;
+			int transX = 0;
+			int transY = 0;
+			if (rotation % 4 == 3) {
+				transX = active.get(1).getX() - active.get(1).getY() - 1;
+				transY = active.get(1).getX() + active.get(1).getY();
+				System.out.print(rotation);
+			} else if (rotation % 4 == 0) {
+				transX = active.get(1).getX() - active.get(1).getY() + 1;
+				transY = active.get(1).getX() + active.get(1).getY();
+				System.out.print(rotation);
+			} else {
+				transX = active.get(1).getX() - active.get(1).getY();
+				transY = active.get(1).getX() + active.get(1).getY();
+			}
+			for (int i = 0; i < 4; i++) {
+				board[active.get(i).getX()][active.get(i).getY()] = null;
+			}
+			for (int i = 0; i < 4; i++) {
+				active.set(i, new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY,
+						active.get(i).getColor()));
+			}
+			for (int i = 0; i < 4; i++) {
+				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+			}
 		}
+
 	}
 }
