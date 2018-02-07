@@ -58,16 +58,49 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		setVx(5);
 	}
 	public void turn(int x,int y,int dir) {
-		while(x== this.getX() && this.getY()==y) {
+		if(this.direction ==1) {
+		while(this.getY()>=y) {
 			direction=dir;
-			break;
-			}
-		if(direction==dir) {
+			this.setY(y);
 			if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
 				beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
 			}
+			break;
 		}
-	} 
+		}
+		if(this.direction ==3) {
+			while(this.getY()<=y) {
+			
+				direction=dir;
+				this.setY(y);
+				if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+					beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+				}
+				break;
+			}
+		}
+		if(this.direction ==2) {
+			while(this.getX()>=x) {
+				direction=dir;
+				this.setX(x);
+				if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+					beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+				}
+				break;
+			}
+		}
+		if(this.direction ==4) {
+			while(this.getX()<=x) {
+				direction=dir;
+				this.setX(x);
+				if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+					beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+				}
+				break;
+			}
+		}
+	
+} 
 	@Override
 	public void checkBehaviors() {
 		if(direction==1) {
