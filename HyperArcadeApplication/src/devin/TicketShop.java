@@ -1,5 +1,6 @@
 package devin;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import guiTeacher.components.Graphic;
@@ -31,6 +32,15 @@ public class TicketShop extends FullFunctionScreen {
 //			//custom image?
 //		}
 //	}
+	public void buy(Item item) {
+		String name = item.getName();
+		ArrayList<item> itemlist = items.get(name);
+		if(itemlist == null) {
+			itemlist = new ArrayList<item>();
+			items.put(name,itemlist);
+		}
+		itemlist.add(item);
+	}
 
 
 }
