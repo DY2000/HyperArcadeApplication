@@ -109,7 +109,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		}else if(!isVisible() || enabled || hp != 0) {
 //			System.out.println(pos);
 		}
-		if(isVisible() && attacking && (getVy() != 0 || getVx() != 0)) {
+		if(isVisible() && attacking) {
 			try {
 				if(game.getShip().detectCollision(this) && isEnabled() && isVisible()) {
 					game.getShip().shipHit();
@@ -138,6 +138,10 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 						setVx(0);
 						setY(300);
 						setX(1030);
+					}
+					if(getY() > game.getHeight()) {
+						attacking = false;
+						spawn(game.getStage());
 					}
 				}
 			} catch (Exception e) {
@@ -263,7 +267,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			@Override
 			public void run() {
 				setY(idleY);
-				if((pos-4)%8 > 4) {
+				if((pos-4)%8 > 3) {
 					setX(RIGHT - getWidth());
 					for(int i = RIGHT - getWidth(); i != idleX; i--) {
 						setX(i);
@@ -340,7 +344,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			@Override
 			public void run() {
 				setY(idleY);
-				if(pos%10 > 5) {
+				if(pos%10 > 4) {
 					setX(RIGHT - getWidth());
 					for(int i = RIGHT - getWidth(); i != idleX; i--) {
 						setX(i);
@@ -438,7 +442,138 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public void flyingAttack() {
 		attacking = true;
-		attack();
+		Thread at = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(attacking) {
+					for(int i = 0; i < 75; i++) {
+						setY(getY()+1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					for(int i = 0; i < 75; i++) {
+						setX(getX()-1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					attack();
+					for(int i = 0; i < 75; i++) {
+						setY(getY()+1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					for(int i = 0; i < 75; i++) {
+						setX(getX()+1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		Thread bt = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				while(attacking) {
+					attack();
+					while(getY() < game.getShip().getY()) {
+						setY(getY()+1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					for(int i = 0; i < getHeight()+10; i++) {
+						setY(getY()+1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					while(getX() > game.getShip().getX()) {
+						setX(getX()-1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					while(getX() < game.getShip().getX()) {
+						setX(getX()+1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					for(int i = 0; i < 80; i++) {
+						setY(getY()-1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					if(getX() < game.getWidth()/2)
+						for(int i = 0; i < 100; i++) {
+							setX(getX()-1);
+							try {
+								Thread.sleep(5);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					else
+						for(int i = 0; i < 100; i++) {
+							setX(getX()+1);
+							try {
+								Thread.sleep(5);
+							} catch (InterruptedException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+					for(int i = 0; i < 100; i++) {
+						setY(getY()+1);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		if(mobType == "blue")
+			bt.start();
+		else
+			at.start();
 	}
 	
 	public void attack() {

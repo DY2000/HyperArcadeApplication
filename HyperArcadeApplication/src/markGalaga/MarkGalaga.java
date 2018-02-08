@@ -341,7 +341,7 @@ public class MarkGalaga extends FullFunctionScreen{
 					}	
 				}
 				try {
-					Thread.sleep(500);
+					Thread.sleep(400);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -349,13 +349,13 @@ public class MarkGalaga extends FullFunctionScreen{
 				for(MarkMob m : spawnGroup5) {
 					m.spawn(stgNum);
 					try {
-						Thread.sleep(120);
+						Thread.sleep(125);
 					} catch (InterruptedException e) {
 						e.printStackTrace();
 					}	
 				}
 				try {
-					Thread.sleep(1200);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
