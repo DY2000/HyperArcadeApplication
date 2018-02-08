@@ -68,15 +68,15 @@ public class TetrisMain extends FullFunctionScreen {
 		Tetramino = new ArrayList<Block>(4);
 		// J PIECE 5
 		Tetramino.add(new Block(4, 1, Color.blue));
-		Tetramino.add(new Block(4, 2, Color.blue));
 		Tetramino.add(new Block(5, 2, Color.blue));
+		Tetramino.add(new Block(4, 2, Color.blue));
 		Tetramino.add(new Block(6, 2, Color.blue));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
 		// L PIECE 6
 		Tetramino.add(new Block(6, 1, Color.orange));
-		Tetramino.add(new Block(6, 2, Color.orange));
 		Tetramino.add(new Block(5, 2, Color.orange));
+		Tetramino.add(new Block(6, 2, Color.orange));
 		Tetramino.add(new Block(4, 2, Color.orange));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
@@ -98,22 +98,26 @@ public class TetrisMain extends FullFunctionScreen {
 	}
 
 	public void dropdown() {
+		while (canLower()) {
+			lower();
+		}
+	}
+
+	public boolean canLower() {
+		for (Block b : active) {
+			if (b.getY() > 18) {
+				return false;
+			} else if (board[b.getX()][b.getY() + 1] != null) {
+				if (!board[b.getX()][b.getY() + 1].getActive())
+					return false;
+
+			}
+		}
+		return true;
 	}
 
 	public void lower() {
-		boolean canMove = true;
-
-		for (Block b : active) {
-			if (b.getY() > 18) {
-				canMove = false;
-			} else if (board[b.getX()][b.getY() + 1] != null) {
-				if (!board[b.getX()][b.getY() + 1].getActive()) {
-					canMove = false;
-				}
-			}
-		}
-
-		if (canMove) {
+		if (canLower()) {
 			for (int i = 0; i < 4; i++) {
 				board[active.get(i).getX()][active.get(i).getY()] = null;
 			}
@@ -179,10 +183,45 @@ public class TetrisMain extends FullFunctionScreen {
 	}
 
 	public void newPiece() {
-		// shape = (int) (Math.random() * Tetraminos.size());
-		shape = 3;
+		checkRows();
+		shape = (int) (Math.random() * Tetraminos.size());
 		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
 		rotation = 0;
+	}
+
+	public void checkRows() {
+		boolean row = true;
+		int rowCount = 0;
+		for (int r = board[0].length - 1; r > 0; r--) {
+			row = true;
+			for (int c = board.length - 1; c > 0; c--) {
+				if (board[c][r] == null)
+					row = false;
+			}
+			if (row) {
+				clearRow(r);
+				moveDownAbove(r);
+				rowCount++;
+				System.out.println("" + row + rowCount);
+			}
+		}
+	}
+
+	private void moveDownAbove(int r) {
+		for (int x = r - 1; x > 0; x--) {
+			for (int b = board.length - 1; b >= 0; b--) {
+//				if (board[b][x] != null) {
+//					board[b][x].setY(board[b][x].getY());
+//				}
+					board[b][x] = null;
+			}
+		}
+	}
+
+	private void clearRow(int h) {
+		for (int b = board.length - 1; b >= 0; b--) {
+			board[b][h] = null;
+		}
 	}
 
 	public void gameOver() {
@@ -217,41 +256,30 @@ public class TetrisMain extends FullFunctionScreen {
 			break;
 		case KeyEvent.VK_DOWN:
 			if (!active.isEmpty())
-				counterClockWise();
+				lower();
+			break;
+		case KeyEvent.VK_SPACE:
+			if (!active.isEmpty())
+				dropdown();
 			break;
 		}
 	}
 
-	private void counterClockWise() {
-	}
-
 	private void clockWise() {
-		if (shape != 1) {
-			rotation++;
-			int transX = 0;
-			int transY = 0;
-			if (rotation % 4 == 3) {
-				transX = active.get(1).getX() - active.get(1).getY() - 1;
-				transY = active.get(1).getX() + active.get(1).getY();
-				System.out.print(rotation);
-			} else if (rotation % 4 == 0) {
-				transX = active.get(1).getX() - active.get(1).getY() + 1;
-				transY = active.get(1).getX() + active.get(1).getY();
-				System.out.print(rotation);
-			} else {
-				transX = active.get(1).getX() - active.get(1).getY();
-				transY = active.get(1).getX() + active.get(1).getY();
-			}
-			for (int i = 0; i < 4; i++) {
-				board[active.get(i).getX()][active.get(i).getY()] = null;
-			}
-			for (int i = 0; i < 4; i++) {
-				active.set(i, new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY,
-						active.get(i).getColor()));
-			}
-			for (int i = 0; i < 4; i++) {
-				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
-			}
+
+		rotation++;
+		int transX = active.get(1).getX() - active.get(1).getY();
+		int transY = active.get(1).getX() + active.get(1).getY();
+
+		for (int i = 0; i < 4; i++) {
+			board[active.get(i).getX()][active.get(i).getY()] = null;
+		}
+		for (int i = 0; i < 4; i++) {
+			active.set(i,
+					new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY, active.get(i).getColor()));
+		}
+		for (int i = 0; i < 4; i++) {
+			board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 		}
 
 	}
