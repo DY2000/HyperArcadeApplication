@@ -77,6 +77,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	}
 	
 	public synchronized void checkBehaviors() {
+		System.out.println(hp);
 		if(hp == 0) {
 			setVy(0);
 			setVx(0);
@@ -90,9 +91,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
-		}else if(!game.isSpawning() && !attacking) {
-			setVy(0);
-			setVx(0);
+		}else if(!game.isSpawning() && !attacking && enabled) {
 			if(countA/2 > 1) {
 				countA--;
 				if(countA%3==0)
@@ -104,12 +103,13 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			}else if(countA - 1 < 0) {
 				countA = 270;
 			}else {
-				countA = -282;
+				countA = -270;
 			}
-		}else if(!isVisible() || enabled || hp != 0) {
-//			System.out.println(pos);
 		}
-		if(isVisible() && attacking) {
+		if(!game.isSpawning() && enabled && Math.random() < .25) {
+			attack();
+		}
+		if(attacking) {
 			try {
 				if(game.getShip().detectCollision(this) && isEnabled() && isVisible()) {
 					game.getShip().shipHit();
@@ -118,7 +118,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 					if(getHp() == 0) {
 						Thread b = new Thread(new Runnable() {
 							public void run() {
-								DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"mob",game);
+								MarkDeathAnimation boom = new MarkDeathAnimation(newX,newY,64,64,"mob",game);
 								game.addObject(boom);
 								try {
 									Thread.sleep(250);
@@ -139,7 +139,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 						setY(300);
 						setX(1030);
 					}
-					if(getY() > game.getHeight()) {
+					if(getY() > 764) {
 						attacking = false;
 						spawn(game.getStage());
 					}
@@ -371,63 +371,24 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		});
 		//AFTER I HAVE FINSIHED, I warn ye above there be dragons
 		if(mobType == "green") {
-			if(stage < 3) {
-				if(stage == 1) {
-					g3.start();
-				}
-				if(stage == 2) {
-					g2.start();
-				}
-			}else if(stage%4== 0) {
-				g3.start();
-			}else if(stage%4 == 1) {
-				g2.start();
-			}else if(stage%4 == 2) {
+			if(stage%2 == 0) {
 				g3.start();
 			}else {
-				/**
-				 * This will contain spawn sequence for challenge stages
-				 */
+				b2.start();
 			}
 		}
 		if(mobType == "red") {
-			if(stage < 3) {
-				if(stage == 1) {
-					r3.start();
-				}
-				if(stage == 2) {
-					r2.start();
-				}
-			}else if(stage%4== 0) {
+			if(stage%2 == 0) {
 				r1.start();
-			}else if(stage%4 == 1) {
-				r2.start();
-			}else if(stage%4 == 2) {
-				r3.start();
 			}else {
-				/**
-				 * This will contain spawn sequence for challenge stages
-				 */
+				r2.start();
 			}
 		}
 		if(mobType == "blue") {
-			if(stage < 3) {
-				if(stage == 1) {
-					b3.start();
-				}
-				if(stage == 2) {
-					b2.start();
-				}
-			}else if(stage%4== 0) {
+			if(stage%2 == 0) {
 				b1.start();
-			}else if(stage%4 == 1) {
-				b2.start();
-			}else if(stage%4 == 2) {
-				b3.start();
 			}else {
-				/**
-				 * This will contain spawn sequence for challenge stages
-				 */
+				b2.start();
 			}
 		}
 		attacking = false;
@@ -487,93 +448,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				}
 			}
 		});
-		Thread bt = new Thread(new Runnable() {
-			
-			@Override
-			public void run() {
-				while(attacking) {
-					attack();
-					while(getY() < game.getShip().getY()) {
-						setY(getY()+1);
-						try {
-							Thread.sleep(5);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					for(int i = 0; i < getHeight()+10; i++) {
-						setY(getY()+1);
-						try {
-							Thread.sleep(5);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					while(getX() > game.getShip().getX()) {
-						setX(getX()-1);
-						try {
-							Thread.sleep(5);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					while(getX() < game.getShip().getX()) {
-						setX(getX()+1);
-						try {
-							Thread.sleep(5);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					for(int i = 0; i < 80; i++) {
-						setY(getY()-1);
-						try {
-							Thread.sleep(5);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-					if(getX() < game.getWidth()/2)
-						for(int i = 0; i < 100; i++) {
-							setX(getX()-1);
-							try {
-								Thread.sleep(5);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					else
-						for(int i = 0; i < 100; i++) {
-							setX(getX()+1);
-							try {
-								Thread.sleep(5);
-							} catch (InterruptedException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
-						}
-					for(int i = 0; i < 100; i++) {
-						setY(getY()+1);
-						try {
-							Thread.sleep(5);
-						} catch (InterruptedException e) {
-							// TODO Auto-generated catch block
-							e.printStackTrace();
-						}
-					}
-				}
-			}
-		});
-		if(mobType == "blue")
-			bt.start();
-		else
-			at.start();
+		at.start();
 	}
 	
 	public void attack() {
@@ -584,6 +459,7 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				int playerX = ship.getX() + ship.getWidth()/2;
 				int playerY = ship.getY() + ship.getHeight()/2;
 				int time = (getY() - playerY)/6;
+				if(time == 0) time = 1;
 				getShots().get(i).setY(getY());
 				getShots().get(i).setX((getX()+getWidth()/2)-(getShots().get(i).getWidth()/2));
 				getShots().get(i).setVy(6);
@@ -621,6 +497,10 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public int getPos() {
 		return pos;
+	}
+	
+	public void setAttacking(boolean b) {
+		this.attacking = b;
 	}
 	
 	public boolean isAttacking() {

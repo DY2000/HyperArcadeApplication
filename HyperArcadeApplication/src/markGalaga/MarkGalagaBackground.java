@@ -2,11 +2,11 @@ package markGalaga;
 
 import guiTeacher.components.AnimatedComponent;
 
-public class GalagaBackground extends AnimatedComponent{
+public class MarkGalagaBackground extends AnimatedComponent{
 
 	private boolean enabled;
 	
-	public GalagaBackground(int x, int y, int w, int h, boolean enb) {
+	public MarkGalagaBackground(int x, int y, int w, int h, boolean enb) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);

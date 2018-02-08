@@ -2,9 +2,9 @@ package markGalaga;
 
 import guiTeacher.components.AnimatedComponent;
 
-public class DeathAnimation extends AnimatedComponent{
+public class MarkDeathAnimation extends AnimatedComponent{
 
-	public DeathAnimation(int x, int y, int w, int h, String m, MarkGalaga game) {
+	public MarkDeathAnimation(int x, int y, int w, int h, String m, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);

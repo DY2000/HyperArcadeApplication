@@ -62,7 +62,7 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 						if(m.getHp() == 0) {
 							Thread b = new Thread(new Runnable() {
 								public void run() {
-									DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"mob",game);
+									MarkDeathAnimation boom = new MarkDeathAnimation(newX,newY,64,64,"mob",game);
 									game.addObject(boom);
 									try {
 										Thread.sleep(250);

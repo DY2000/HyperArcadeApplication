@@ -7,13 +7,13 @@ import java.util.List;
 import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
-import markGalaga.GalagaBackground;
+import markGalaga.MarkGalagaBackground;
 
 public class MarkGalaga extends FullFunctionScreen{
 	
 	private String galagaSpriteSheet;
-	private GalagaBackground background;
-	private GameManager manager;
+	private MarkGalagaBackground background;
+	private MarkGameManager manager;
 	private TextArea labelBox;
 	private TextArea scoreBox;
 	private TextArea highscoreBox;	
@@ -57,7 +57,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		spawning = false;
 		running = false;
 		
-		background = new GalagaBackground(325, -764, 425,getHeight()*2, true);
+		background = new MarkGalagaBackground(325, -764, 425,getHeight()*2, true);
 		viewObjects.add(background);
 		
 		galagaSpriteSheet = "resources/Galaga_spriteSheet.png";
@@ -77,7 +77,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		playerShip.setVisible(false);
 		viewObjects.add(playerShip);
 		
-		for(int i = 0; i < 2; i++) {
+		for(int i = 0; i < 4; i++) {
 			playerShots.add(i, new MarkProjectile(1030,400,6,16,"player",this));
 			playerShots.get(i).addSequence(galagaSpriteSheet, 1000, 374, 51, 3, 8, 1);
 			viewObjects.add(playerShots.get(i));
@@ -148,7 +148,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		resultsBox.setVisible(false);
 		viewObjects.add(resultsBox);
 		
-		manager = new GameManager(1,1,1,1,this);
+		manager = new MarkGameManager(1,1,1,1,this);
 		
 		updateScore(null);
 	}
@@ -212,67 +212,65 @@ public class MarkGalaga extends FullFunctionScreen{
 		ArrayList<MarkMob> spawnGroup3 = new ArrayList<MarkMob>();
 		ArrayList<MarkMob> spawnGroup4 = new ArrayList<MarkMob>();
 		ArrayList<MarkMob> spawnGroup5 = new ArrayList<MarkMob>();
-		if(stgNum%4 != 3) {
-			for(int i = 0; i < 40; i++) {
-				if(i < 4) {
-					mobs.add(i, new MarkMob(1030,200,30,32,"green",i,this));
-					addObject(mobs.get(i));
-				}else if(i < 12) {
-					mobs.add(i, new MarkMob(1030,200,30,20,"red",i,this));
-					addObject(mobs.get(i));
-				}else if(i < 20) {
-					mobs.add(i, new MarkMob(1030,200,30,20,"red",i,this));
-					addObject(mobs.get(i));
-				}else if(i < 30) {
-					mobs.add(i, new MarkMob(1030,200,26,20,"blue",i,this));
-					addObject(mobs.get(i));
-				}else if(i < 40) {
-					mobs.add(i, new MarkMob(1030,200,26,20,"blue",i,this));
-					addObject(mobs.get(i));
-				}
+		for(int i = 0; i < 40; i++) {
+			if(i < 4) {
+				mobs.add(i, new MarkMob(1030,200,30,32,"green",i,this));
+				addObject(mobs.get(i));
+			}else if(i < 12) {
+				mobs.add(i, new MarkMob(1030,200,30,20,"red",i,this));
+				addObject(mobs.get(i));
+			}else if(i < 20) {
+				mobs.add(i, new MarkMob(1030,200,30,20,"red",i,this));
+				addObject(mobs.get(i));
+			}else if(i < 30) {
+				mobs.add(i, new MarkMob(1030,200,26,20,"blue",i,this));
+				addObject(mobs.get(i));
+			}else if(i < 40) {
+				mobs.add(i, new MarkMob(1030,200,26,20,"blue",i,this));
+				addObject(mobs.get(i));
 			}
-			//Im sorry but this controls spawn order
-			spawnGroup1.add(mobs.get(8));
-			spawnGroup1.add(mobs.get(7));
-			spawnGroup1.add(mobs.get(16));
-			spawnGroup1.add(mobs.get(15));
-			spawnGroup1.add(mobs.get(25));
-			spawnGroup1.add(mobs.get(24));
-			spawnGroup1.add(mobs.get(35));
-			spawnGroup1.add(mobs.get(34));
-			spawnGroup2.add(mobs.get(2));
-			spawnGroup2.add(mobs.get(1));
-			spawnGroup2.add(mobs.get(3));
-			spawnGroup2.add(mobs.get(0));
-			spawnGroup2.add(mobs.get(9));
-			spawnGroup2.add(mobs.get(6));
-			spawnGroup2.add(mobs.get(17));
-			spawnGroup2.add(mobs.get(14));
-			spawnGroup3.add(mobs.get(10));
-			spawnGroup3.add(mobs.get(5));
-			spawnGroup3.add(mobs.get(11));
-			spawnGroup3.add(mobs.get(4));
-			spawnGroup3.add(mobs.get(18));
-			spawnGroup3.add(mobs.get(13));
-			spawnGroup3.add(mobs.get(19));
-			spawnGroup3.add(mobs.get(12));
-			spawnGroup4.add(mobs.get(26));
-			spawnGroup4.add(mobs.get(23));
-			spawnGroup4.add(mobs.get(36));
-			spawnGroup4.add(mobs.get(33));
-			spawnGroup4.add(mobs.get(27));
-			spawnGroup4.add(mobs.get(22));
-			spawnGroup4.add(mobs.get(37));
-			spawnGroup4.add(mobs.get(32));
-			spawnGroup5.add(mobs.get(28));
-			spawnGroup5.add(mobs.get(38));
-			spawnGroup5.add(mobs.get(21));
-			spawnGroup5.add(mobs.get(31));
-			spawnGroup5.add(mobs.get(29));
-			spawnGroup5.add(mobs.get(39));
-			spawnGroup5.add(mobs.get(20));
-			spawnGroup5.add(mobs.get(30));
 		}
+		//Im sorry but this controls spawn order
+		spawnGroup1.add(mobs.get(8));
+		spawnGroup1.add(mobs.get(7));
+		spawnGroup1.add(mobs.get(16));
+		spawnGroup1.add(mobs.get(15));
+		spawnGroup1.add(mobs.get(25));
+		spawnGroup1.add(mobs.get(24));
+		spawnGroup1.add(mobs.get(35));
+		spawnGroup1.add(mobs.get(34));
+		spawnGroup2.add(mobs.get(2));
+		spawnGroup2.add(mobs.get(1));
+		spawnGroup2.add(mobs.get(3));
+		spawnGroup2.add(mobs.get(0));
+		spawnGroup2.add(mobs.get(9));
+		spawnGroup2.add(mobs.get(6));
+		spawnGroup2.add(mobs.get(17));
+		spawnGroup2.add(mobs.get(14));
+		spawnGroup3.add(mobs.get(10));
+		spawnGroup3.add(mobs.get(5));
+		spawnGroup3.add(mobs.get(11));
+		spawnGroup3.add(mobs.get(4));
+		spawnGroup3.add(mobs.get(18));
+		spawnGroup3.add(mobs.get(13));
+		spawnGroup3.add(mobs.get(19));
+		spawnGroup3.add(mobs.get(12));
+		spawnGroup4.add(mobs.get(26));
+		spawnGroup4.add(mobs.get(23));
+		spawnGroup4.add(mobs.get(36));
+		spawnGroup4.add(mobs.get(33));
+		spawnGroup4.add(mobs.get(27));
+		spawnGroup4.add(mobs.get(22));
+		spawnGroup4.add(mobs.get(37));
+		spawnGroup4.add(mobs.get(32));
+		spawnGroup5.add(mobs.get(28));
+		spawnGroup5.add(mobs.get(38));
+		spawnGroup5.add(mobs.get(21));
+		spawnGroup5.add(mobs.get(31));
+		spawnGroup5.add(mobs.get(29));
+		spawnGroup5.add(mobs.get(39));
+		spawnGroup5.add(mobs.get(20));
+		spawnGroup5.add(mobs.get(30));
 		
 		if(stgNum == 1 || stgNum%4 == 0) {
 			
@@ -355,7 +353,7 @@ public class MarkGalaga extends FullFunctionScreen{
 					}	
 				}
 				try {
-					Thread.sleep(2000);
+					Thread.sleep(1300);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -406,6 +404,7 @@ public class MarkGalaga extends FullFunctionScreen{
 					lives--;
 					lifeBox.setText("LIVES "+lives);
 					for(MarkMob m: mobs) {
+						m.setAttacking(false);
 						m.goToPos(idleCood[m.getPos()][0],idleCood[m.getPos()][1]);
 						m.setEnabled(false);
 						try {

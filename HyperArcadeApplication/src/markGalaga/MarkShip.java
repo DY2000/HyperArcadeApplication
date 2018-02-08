@@ -70,7 +70,7 @@ public class MarkShip extends MarkPlayerMovement implements Collidable{
 			int newY = getY()-16;
 			Thread b = new Thread(new Runnable() {
 				public void run() {
-					DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"player",game);
+					MarkDeathAnimation boom = new MarkDeathAnimation(newX,newY,64,64,"player",game);
 					game.addObject(boom);
 					try {
 						Thread.sleep(375);
