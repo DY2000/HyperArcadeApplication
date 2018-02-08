@@ -1,17 +1,10 @@
 package markGalaga;
 
 import java.awt.Color;
-import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
-
-import guiTeacher.components.Action;
-import guiTeacher.components.AnimatedComponent;
-import guiTeacher.components.Button;
 import guiTeacher.components.TextArea;
-import guiTeacher.components.TextBox;
-import guiTeacher.components.TextField;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 import markGalaga.GalagaBackground;
@@ -101,10 +94,10 @@ public class MarkGalaga extends FullFunctionScreen{
 				idleCood[i][0] = (getWidth()/2)+(2*32)-((i%4)*32);
 				idleCood[i][1] = 100;
 			}else if(i < 12) {
-				idleCood[i][0] = (getWidth()/2)+(4*32)-((i%8)*32);
+				idleCood[i][0] = (getWidth()/2)+(4*32)-(((i-4)%8)*32);
 				idleCood[i][1] = 134;
 			}else if(i < 20) {
-				idleCood[i][0] = (getWidth()/2)+(4*32)-((i%8)*32);
+				idleCood[i][0] = (getWidth()/2)+(4*32)-(((i-4)%8)*32);
 				idleCood[i][1] = 168;
 			}else if(i < 30) {
 				idleCood[i][0] = (getWidth()/2)+(5*32)-((i%10)*32);
@@ -149,8 +142,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		
 		resultsBox = new TextArea(400,250,400,400,"                     RESULTS\n"
 												+ " SHOTS FIRED               "+shotsFired+"\n"
-												+ " SHOTS HIT                 "+hits+"\n"
-												+ " HIT RATIO                 "+(double)hits/shotsFired+"%");
+												+ " SHOTS HIT                 "+hits+"\n");
 		resultsBox.setCustomTextColor(Color.RED);
 		resultsBox.setSize(26);
 		resultsBox.setVisible(false);
@@ -215,6 +207,11 @@ public class MarkGalaga extends FullFunctionScreen{
 		//1 2 3 4 5 6 7 8 9 10
 		// * = challenge stage
 		spawning = true;
+		ArrayList<MarkMob> spawnGroup1 = new ArrayList<MarkMob>();
+		ArrayList<MarkMob> spawnGroup2 = new ArrayList<MarkMob>();
+		ArrayList<MarkMob> spawnGroup3 = new ArrayList<MarkMob>();
+		ArrayList<MarkMob> spawnGroup4 = new ArrayList<MarkMob>();
+		ArrayList<MarkMob> spawnGroup5 = new ArrayList<MarkMob>();
 		if(stgNum%4 != 3) {
 			for(int i = 0; i < 40; i++) {
 				if(i < 4) {
@@ -234,6 +231,47 @@ public class MarkGalaga extends FullFunctionScreen{
 					addObject(mobs.get(i));
 				}
 			}
+			//Im sorry but this controls spawn order
+			spawnGroup1.add(mobs.get(8));
+			spawnGroup1.add(mobs.get(7));
+			spawnGroup1.add(mobs.get(16));
+			spawnGroup1.add(mobs.get(15));
+			spawnGroup1.add(mobs.get(25));
+			spawnGroup1.add(mobs.get(24));
+			spawnGroup1.add(mobs.get(35));
+			spawnGroup1.add(mobs.get(34));
+			spawnGroup2.add(mobs.get(2));
+			spawnGroup2.add(mobs.get(1));
+			spawnGroup2.add(mobs.get(3));
+			spawnGroup2.add(mobs.get(0));
+			spawnGroup2.add(mobs.get(9));
+			spawnGroup2.add(mobs.get(6));
+			spawnGroup2.add(mobs.get(17));
+			spawnGroup2.add(mobs.get(14));
+			spawnGroup3.add(mobs.get(10));
+			spawnGroup3.add(mobs.get(5));
+			spawnGroup3.add(mobs.get(11));
+			spawnGroup3.add(mobs.get(4));
+			spawnGroup3.add(mobs.get(18));
+			spawnGroup3.add(mobs.get(13));
+			spawnGroup3.add(mobs.get(19));
+			spawnGroup3.add(mobs.get(12));
+			spawnGroup4.add(mobs.get(26));
+			spawnGroup4.add(mobs.get(23));
+			spawnGroup4.add(mobs.get(36));
+			spawnGroup4.add(mobs.get(33));
+			spawnGroup4.add(mobs.get(27));
+			spawnGroup4.add(mobs.get(22));
+			spawnGroup4.add(mobs.get(37));
+			spawnGroup4.add(mobs.get(32));
+			spawnGroup5.add(mobs.get(28));
+			spawnGroup5.add(mobs.get(38));
+			spawnGroup5.add(mobs.get(21));
+			spawnGroup5.add(mobs.get(31));
+			spawnGroup5.add(mobs.get(29));
+			spawnGroup5.add(mobs.get(39));
+			spawnGroup5.add(mobs.get(20));
+			spawnGroup5.add(mobs.get(30));
 		}
 		
 		if(stgNum == 1 || stgNum%4 == 0) {
@@ -247,18 +285,80 @@ public class MarkGalaga extends FullFunctionScreen{
 			 * This is where the specific challenge stage will make mobs
 			 */
 		}
+		//don't open this
 		Thread h = new Thread(new Runnable() {
 					
 			@Override
 			public void run() {
-				for(MarkMob m : mobs) {
+				for(MarkMob m : spawnGroup1) {
 					m.spawn(stgNum);
 					try {
 						Thread.sleep(125);
 					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
 						e.printStackTrace();
-					}
+					}	
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(MarkMob m : spawnGroup2) {
+					m.spawn(stgNum);
+					try {
+						Thread.sleep(125);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}	
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(MarkMob m : spawnGroup3) {
+					m.spawn(stgNum);
+					try {
+						Thread.sleep(125);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}	
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(MarkMob m : spawnGroup4) {
+					m.spawn(stgNum);
+					try {
+						Thread.sleep(125);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}	
+				}
+				try {
+					Thread.sleep(500);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				for(MarkMob m : spawnGroup5) {
+					m.spawn(stgNum);
+					try {
+						Thread.sleep(120);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}	
+				}
+				try {
+					Thread.sleep(1200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
 				spawning = false;
 			}
@@ -284,7 +384,7 @@ public class MarkGalaga extends FullFunctionScreen{
 				stageBox.setVisible(true);
 				update();
 				try {
-					Thread.sleep(1000);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -306,14 +406,20 @@ public class MarkGalaga extends FullFunctionScreen{
 					lives--;
 					lifeBox.setText("LIVES "+lives);
 					for(MarkMob m: mobs) {
-						m.goToPos(idleCood[m.getPos()][0],idleCood[m.getPos()][1],5);
+						m.goToPos(idleCood[m.getPos()][0],idleCood[m.getPos()][1]);
 						m.setEnabled(false);
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
 					}
 					messageBox.setText("READY");
 					messageBox.setCustomTextColor(Color.CYAN);
 					messageBox.setVisible(true);
 					try {
-						Thread.sleep(3000);
+						Thread.sleep(3500);
 					} catch (InterruptedException e) {
 						// TODO Auto-generated catch block
 						e.printStackTrace();
@@ -362,7 +468,7 @@ public class MarkGalaga extends FullFunctionScreen{
 						 + " SHOTS HIT                      "+hits);
 		resultsBox.setVisible(true);
 		try {
-			Thread.sleep(4500);
+			Thread.sleep(5000);
 		} catch (InterruptedException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

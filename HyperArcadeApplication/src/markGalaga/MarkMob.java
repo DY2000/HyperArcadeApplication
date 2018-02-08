@@ -14,6 +14,8 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	private int hp;
 	private int pos;
+	private int idleX;
+	private int idleY;
 	private int countA;
 	private int countB;
 	private boolean enabled;
@@ -40,11 +42,13 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		}
 		this.mobType = mobType;
 		this.game = game;
-		attacking = false;
-		enabled = true;
+		attacking = true;
+		enabled = false;
 		countA = -135;
 		countB = 0;
 		this.pos = pos;
+		idleX = game.getIdleCoods()[pos][0];
+		idleY = game.getIdleCoods()[pos][1];
 		update();
 		Thread t = new Thread(this);
 		t.start();
@@ -65,8 +69,6 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			}else if(mobType == "blue") {
 				img = game.getAlphaBlue().getImage();
 			}
-		}else if(!enabled || attacking){
-			super.drawImage(g);
 		}
 		if(img != null) {
 			this.clear();
@@ -76,19 +78,21 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public synchronized void checkBehaviors() {
 		if(hp == 0) {
+			setVy(0);
+			setVx(0);
 			setVisible(false);
 			enabled = false;
 			if(!game.isSpawning() && !enabled && !isVisible()) {
 				game.remove(this);
 				game.getMobs().remove(this);
 				setRunning(false);
-				System.out.println(pos);
 			}
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
-		}
-		if(!game.isSpawning() && !attacking) {
+		}else if(!game.isSpawning() && !attacking) {
+			setVy(0);
+			setVx(0);
 			if(countA/2 > 1) {
 				countA--;
 				if(countA%3==0)
@@ -98,16 +102,54 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 				if(countA%3==0)
 				setX(getX()+1);
 			}else if(countA - 1 < 0) {
-				countA = 285;
+				countA = 270;
 			}else {
-				countA = -300;
+				countA = -282;
 			}
-		}else if(countA == -135) {
-			
+		}else if(!isVisible() || enabled || hp != 0) {
+//			System.out.println(pos);
 		}
-		if(Math.random() < .25 && enabled)
-			if(game.getShip() != null)
-				flyingAttack();
+		if(isVisible() && attacking && (getVy() != 0 || getVx() != 0)) {
+			try {
+				if(game.getShip().detectCollision(this) && isEnabled() && isVisible()) {
+					game.getShip().shipHit();
+					int newX = getX()-16;
+					int newY = getY()-16;
+					if(getHp() == 0) {
+						Thread b = new Thread(new Runnable() {
+							public void run() {
+								DeathAnimation boom = new DeathAnimation(newX,newY,64,64,"mob",game);
+								game.addObject(boom);
+								try {
+									Thread.sleep(250);
+								} catch (InterruptedException e) {
+									e.printStackTrace();
+								}
+								game.remove(boom);
+							}
+						});
+						setVy(0);
+						setVx(0);
+						setY(300);
+						setX(1030);
+						b.start();
+					}else {
+						setVy(0);
+						setVx(0);
+						setY(300);
+						setX(1030);
+					}
+				}
+			} catch (Exception e) {
+					game.remove(this);
+					game.getPlayerShots().clear();
+					game.getPlayerShots().add(new MarkProjectile(1030,400,6,16,"player",game));
+					game.getPlayerShots().add(new MarkProjectile(1030,400,6,16,"player",game));
+					game.getPlayerShots().get(0).addSequence("resources/Galaga_spriteSheet.png", 1000, 374, 51, 3, 8, 1);
+					game.getPlayerShots().get(1).addSequence("resources/Galaga_spriteSheet.png", 1000, 374, 51, 3, 8, 1);
+					setRunning(false);
+			}
+		}
 	}
 
 	public void spawn(int stage) {
@@ -119,15 +161,225 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 		 */
 		//1 2 3 4 5 6 7 8 9 10
 		//3 2 * 1 2 3 * 1 2 3
-		goToPos(game.getIdleCoods()[pos][0],game.getIdleCoods()[pos][1], 5);
-		
+		int RIGHT = 750;
+		int LEFT = 325;
+		//Every spawn sequnce for each mob
+		Thread g2 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setX(idleX);
+				setY(0-getHeight());
+				for(int i = getHeight(); i != idleY; i++) {
+					setY(i);
+					try {
+						Thread.sleep(5);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		Thread g3 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setY(idleY);
+				if(pos < 2) {
+					setX(RIGHT - getWidth());
+					for(int i = RIGHT - getWidth(); i != idleX; i--) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					setX(LEFT);
+					for(int i = LEFT; i != idleX; i++) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		Thread r1 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setY(idleY);
+				if((pos-4)%8 < 4) {
+					setX(RIGHT - getWidth());
+					for(int i = RIGHT - getWidth(); i != idleX; i--) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					setX(LEFT);
+					for(int i = LEFT; i != idleX; i++) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		Thread r2 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setX(idleX);
+				setY(0-getHeight());
+				for(int i = getHeight(); i != idleY; i++) {
+					setY(i);
+					try {
+						Thread.sleep(5);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		Thread r3 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setY(idleY);
+				if((pos-4)%8 > 4) {
+					setX(RIGHT - getWidth());
+					for(int i = RIGHT - getWidth(); i != idleX; i--) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					setX(LEFT);
+					for(int i = LEFT; i != idleX; i++) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		Thread b1 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setY(idleY);
+				if(pos%10 < 5) {
+					setX(RIGHT - getWidth());
+					for(int i = RIGHT - getWidth(); i != idleX; i--) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					setX(LEFT);
+					for(int i = LEFT; i != idleX; i++) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		Thread b2 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setX(idleX);
+				setY(0-getHeight());
+				for(int i = getHeight(); i != idleY; i++) {
+					setY(i);
+					try {
+						Thread.sleep(5);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				}
+			}
+		});
+		Thread b3 = new Thread(new Runnable() {
+			
+			@Override
+			public void run() {
+				setY(idleY);
+				if(pos%10 > 5) {
+					setX(RIGHT - getWidth());
+					for(int i = RIGHT - getWidth(); i != idleX; i--) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}else {
+					setX(LEFT);
+					for(int i = LEFT; i != idleX; i++) {
+						setX(i);
+						try {
+							Thread.sleep(5);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+				}
+			}
+		});
+		//AFTER I HAVE FINSIHED, I warn ye above there be dragons
 		if(mobType == "green") {
-			if(stage%4== 0) {
-				
-			}else if(stage == 2 || stage%4 == 1) {
-				
-			}else if(stage == 1 || stage%4 == 2) {
-				
+			if(stage < 3) {
+				if(stage == 1) {
+					g3.start();
+				}
+				if(stage == 2) {
+					g2.start();
+				}
+			}else if(stage%4== 0) {
+				g3.start();
+			}else if(stage%4 == 1) {
+				g2.start();
+			}else if(stage%4 == 2) {
+				g3.start();
 			}else {
 				/**
 				 * This will contain spawn sequence for challenge stages
@@ -135,12 +387,19 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			}
 		}
 		if(mobType == "red") {
-			if(stage == 1 || stage%4== 0) {
-				
-			}else if(stage == 2 || stage%4 == 1) {
-				
+			if(stage < 3) {
+				if(stage == 1) {
+					r3.start();
+				}
+				if(stage == 2) {
+					r2.start();
+				}
+			}else if(stage%4== 0) {
+				r1.start();
+			}else if(stage%4 == 1) {
+				r2.start();
 			}else if(stage%4 == 2) {
-				
+				r3.start();
 			}else {
 				/**
 				 * This will contain spawn sequence for challenge stages
@@ -148,30 +407,37 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 			}
 		}
 		if(mobType == "blue") {
-			if(stage == 1 || stage%4== 0) {
-				
-			}else if(stage == 2 || stage%4 == 1) {
-				
+			if(stage < 3) {
+				if(stage == 1) {
+					b3.start();
+				}
+				if(stage == 2) {
+					b2.start();
+				}
+			}else if(stage%4== 0) {
+				b1.start();
+			}else if(stage%4 == 1) {
+				b2.start();
 			}else if(stage%4 == 2) {
-				
+				b3.start();
 			}else {
 				/**
 				 * This will contain spawn sequence for challenge stages
 				 */
 			}
 		}
+		attacking = false;
+		enabled = true;
 	}
 	
-	public void goToPos(int x, int y, int spd) {
-		int time = (getY() - y)/spd;
+	public void goToPos(int x, int y) {
 		countA = -135;
 		setX(x);
 		setY(y);
 	}
 	
 	public void flyingAttack() {
-		int startX = getX();
-		int startY = getY();
+		attacking = true;
 		attack();
 	}
 	
@@ -195,15 +461,12 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	public boolean detectCollision(MarkProjectile shot) {
 		if((shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
 			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY())){
-			hp--;
+			if(hp != 0)hp--;
 			return true; 
-		}
-		else{
+		}else{
 			return false; 
 		}
 	}
-	
-	
 	
 	public ArrayList<MarkProjectile> getShots(){
 		return mobShots;
@@ -215,6 +478,10 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	
 	public int getHp() {
 		return hp;
+	}
+	
+	public void setHp(int n) {
+		this.hp = n;
 	}
 	
 	public int getPos() {

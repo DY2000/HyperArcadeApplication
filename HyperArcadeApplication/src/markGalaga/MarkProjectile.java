@@ -70,6 +70,7 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 										e.printStackTrace();
 									}
 									game.remove(boom);
+									boom = null;
 								}
 							});
 							game.updateScore(m);
@@ -88,13 +89,14 @@ public class MarkProjectile extends AnimatedComponent implements Collidable{
 					}
 				}
 			} catch (Exception e) {
-					game.remove(this);
-					game.getPlayerShots().clear();
-					game.getPlayerShots().add(new MarkProjectile(1030,400,6,16,"player",game));
-					game.getPlayerShots().add(new MarkProjectile(1030,400,6,16,"player",game));
-					game.getPlayerShots().get(0).addSequence("resources/Galaga_spriteSheet.png", 1000, 374, 51, 3, 8, 1);
-					game.getPlayerShots().get(1).addSequence("resources/Galaga_spriteSheet.png", 1000, 374, 51, 3, 8, 1);
-					setRunning(false);
+				e.printStackTrace();
+				game.remove(this);
+				game.getPlayerShots().clear();
+				game.getPlayerShots().add(new MarkProjectile(1030,400,6,16,"player",game));
+				game.getPlayerShots().add(new MarkProjectile(1030,400,6,16,"player",game));
+				game.getPlayerShots().get(0).addSequence("resources/Galaga_spriteSheet.png", 1000, 374, 51, 3, 8, 1);
+				game.getPlayerShots().get(1).addSequence("resources/Galaga_spriteSheet.png", 1000, 374, 51, 3, 8, 1);
+				setRunning(false);
 			}
 		}else {
 			if(game.getShip().isEnabled() && game.getShip().detectCollision(this)) {
