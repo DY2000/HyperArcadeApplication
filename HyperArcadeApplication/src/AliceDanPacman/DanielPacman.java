@@ -21,7 +21,7 @@ public class DanielPacman extends MarkPlayerMovement implements Collidable{
 		 g.setColor(Color.yellow);
 		  g.fillArc(0,0,100,100,20,270);
 	}
-	@Override
+	
 	public boolean ateBlue() {
 		return false;
 	}
@@ -34,13 +34,11 @@ public class DanielPacman extends MarkPlayerMovement implements Collidable{
 	}
 	boolean wentOverPowerUp() {
 		//if went over poweruplocation
-		if() {
-		return true;
-		}
-		else {
-			
-			return false;
-		}
+      if() {
+        return true;
+      }	else {
+        return false;
+      }
 	}
 
 	public void checkBehaviors() {

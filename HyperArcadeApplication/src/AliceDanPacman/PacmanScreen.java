@@ -3,9 +3,9 @@ package AliceDanPacman;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import devin.Ticket;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
-import hyperArcade.Ticket;
 
 public class PacmanScreen extends FullFunctionScreen implements Ticket {
 	DanielPacman pac;
@@ -40,5 +40,23 @@ public class PacmanScreen extends FullFunctionScreen implements Ticket {
 	}
 	
 	
+
+	@Override
+	public void getScore() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void toTicket() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTickets() {
+		// TODO Auto-generated method stub
+		
+	}
 
 }
