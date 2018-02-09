@@ -21,6 +21,7 @@ import devin.Inventory;
 import devin.TicketShop;
 
 public class ArcadeMain extends FullFunctionScreen {
+	private Button back;
 
 
 	public ArcadeMain(int width, int height) {
@@ -141,8 +142,11 @@ public class ArcadeMain extends FullFunctionScreen {
 		inventory.setForeground(Color.white);
 		viewObjects.add(inventory);
 
-
 	}
+
+
+	
+
 	
 
 	public static void main(String[] args) {

@@ -9,6 +9,7 @@ import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class PacmanScreen extends FullFunctionScreen {
 
+
 	public PacmanScreen(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -18,7 +19,12 @@ public class PacmanScreen extends FullFunctionScreen {
 	public void initAllObjects(List<Visible> viewObjects) {
 		PacmanBackground Image = new PacmanBackground(0,0,getWidth(),getHeight());
 		viewObjects.add(Image);
+		
+		
 	}
+	
+	
+	
 
 	@Override
 	public void getScore() {

@@ -15,7 +15,6 @@ public class AliceGhostArrayList {
 		
 		//ghost speed
 		//ghost target
-		//ghost reaction to when pacman gets stronger and ghosts turn blue
 		//ghost turn stronger/faster
 		//ghosts leave ghost ghost at certain time 
 		//take away lives from pacman
