@@ -7,8 +7,9 @@ import devin.Ticket;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 
-public class PacmanScreen extends FullFunctionScreen implements Ticket {
+public class PacmanScreen extends FullFunctionScreen   {
 	DanielPacman pac;
+	AliceGhost ghost;
 
 	public PacmanScreen(int width, int height) {
 		super(width, height);
@@ -23,6 +24,10 @@ public class PacmanScreen extends FullFunctionScreen implements Ticket {
 		DanielPacman pac = new DanielPacman(100,100,200,20);
 		viewObjects.add(pac);
 		PacmanGrid movementGrid = new PacmanGrid(60,85,662,518,"move");
+		ghost = new AliceGhost(60,60, 180,160,"gohst1", this);
+		ghost.initAllObjects(viewObjects);
+		viewObjects.add(ghost);
+//		ghost.whenBlue(movementGrid, pac);
 	}
 	public void keyPressed(KeyEvent e)
 	{

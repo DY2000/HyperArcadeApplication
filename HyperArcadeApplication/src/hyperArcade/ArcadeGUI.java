@@ -50,8 +50,8 @@ public class ArcadeGUI extends GUIApplication {
 		galagaScreen = new MarkGalaga(getWidth(), getHeight());
 		snakeScreen = new TheoSnakeGUI(getWidth(), getHeight());
 		pacmanScreen = new PacmanScreen(getWidth(), getHeight());
-		ticketScreen  = new TicketShop(getWidth(), getHeight());
-		inventoryScreen = new Inventory(getWidth(), getHeight());
+//		ticketScreen  = new TicketShop(getWidth(), getHeight());
+//		inventoryScreen = new Inventory(getWidth(), getHeight());
 		setScreen(homeScreen);
 	}
 
