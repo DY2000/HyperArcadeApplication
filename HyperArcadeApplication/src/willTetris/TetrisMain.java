@@ -87,8 +87,7 @@ public class TetrisMain extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		board = new Block[10][20];
-		this.setBackground(Color.DARK_GRAY);
-		start = new Button(800, 100, 100, 50, "START", new Action() {
+		start = new Button(400, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
 				newPiece();
@@ -99,10 +98,11 @@ public class TetrisMain extends FullFunctionScreen {
 						lower();
 					}
 				}, 0, 500);
+				start.setEnabled(false);
 			}
 		});
-		start.setTextColor(Color.white);
 		start.setText("START");
+		start.setSize(20);
 		start.setVisible(true);
 		viewObjects.add(start);
 	}
@@ -202,9 +202,9 @@ public class TetrisMain extends FullFunctionScreen {
 	public void checkRows() {
 		boolean row = true;
 		int rowCount = 0;
-		for (int r = board[0].length - 1; r > 0; r--) {
+		for (int r = board[0].length - 1; r >= 0; r--) {
 			row = true;
-			for (int c = board.length - 1; c > 0; c--) {
+			for (int c = board.length - 1; c >= 0; c--) {
 				if (board[c][r] == null)
 					row = false;
 			}
@@ -264,7 +264,7 @@ public class TetrisMain extends FullFunctionScreen {
 				moveLeft();
 			break;
 		case KeyEvent.VK_UP:
-			if (!active.isEmpty())
+			if (!active.isEmpty() && shape != 1)
 				clockWise();
 			break;
 		case KeyEvent.VK_DOWN:
@@ -279,21 +279,30 @@ public class TetrisMain extends FullFunctionScreen {
 	}
 
 	private void clockWise() {
-
 		rotation++;
 		int transX = active.get(1).getX() - active.get(1).getY();
 		int transY = active.get(1).getX() + active.get(1).getY();
+		boolean canRotate = true;
+		for (int i = 0; i < 4; i++) {
+			if (active.get(i).getY() + transX < 0 || active.get(i).getY() + transX > 9
+					|| -active.get(i).getX() + transY > 19 || -active.get(i).getX() + transY < 0)
+				canRotate = false;
+			else if (board[active.get(i).getY() + transX][-active.get(i).getX() + transY] != null)
+				if (!board[active.get(i).getY() + transX][-active.get(i).getX() + transY].getActive())
+					canRotate = false;
 
-		for (int i = 0; i < 4; i++) {
-			board[active.get(i).getX()][active.get(i).getY()] = null;
 		}
-		for (int i = 0; i < 4; i++) {
-			active.set(i,
-					new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY, active.get(i).getColor()));
+		if (canRotate) {
+			for (int i = 0; i < 4; i++) {
+				board[active.get(i).getX()][active.get(i).getY()] = null;
+			}
+			for (int i = 0; i < 4; i++) {
+				active.set(i, new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY,
+						active.get(i).getColor()));
+			}
+			for (int i = 0; i < 4; i++) {
+				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+			}
 		}
-		for (int i = 0; i < 4; i++) {
-			board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
-		}
-
 	}
 }
