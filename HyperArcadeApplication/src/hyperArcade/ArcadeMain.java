@@ -63,7 +63,7 @@ public class ArcadeMain extends FullFunctionScreen {
 		}, new Action() {
 
 			public void act() {
-//				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.snakeScreen);
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.snakeScreen);
 			}
 		});
 		snake.setBackground(Color.black);
