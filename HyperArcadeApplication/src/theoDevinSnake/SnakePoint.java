@@ -4,32 +4,30 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 
+import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Component;
 import guiTeacher.components.Graphic;
 
-public class SnakePoint extends Component {
+public class SnakePoint extends AnimatedComponent {
 	private int x; 
 	private int y;
 	private int w;
 	private int h;
-	private BufferedImage point;
+	private TheoSnakeGUI beep;
 	
 
-	public SnakePoint(int x, int y, int w, int h) {
+	public SnakePoint(int x, int y, int w, int h,TheoSnakeGUI t) {
 		super(x, y, w, h);
-		point=new Graphic(0,0,50,50,"resources/snakePoint.png").getImage();
+		setX(x);
+		setY(y);
+		this.beep=t;
+		this.addSequence("resources/snakePoint.png",1000,0,0,50,50,1);
 		update();
 	}
-
-
-	@Override
-	public void update(Graphics2D g) {
-//		if(point!=null) {
-			g.drawImage(point,0,0,null);
-//		}
-		
+	public boolean checkColision(SnakePart p) {
+		return p.getX() < getX() + getWidth() && p.getX() + p.getWidth() > getX() &&
+				p.getY() < getY() + getHeight() && p.getHeight() + p.getY() > getY();
 	}
-
 
 
 }

@@ -5,6 +5,7 @@ import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 
+import guiTeacher.components.Action;
 import guiTeacher.components.Graphic;
 import guiTeacher.components.MovingComponent;
 import markGalaga.MarkPlayerMovement;
@@ -12,105 +13,137 @@ import willTetris.Collidable;
 
 public class SnakePart extends MarkPlayerMovement implements Collidable{
 	private int direction;
-	private BufferedImage img;
+	private boolean head;
+	private TheoSnakeGUI beep;
+	private Action detectColision;
 
-	public SnakePart(int x, int y, int w, int h) {
+	public SnakePart(int x, int y, int w, int h, boolean head,TheoSnakeGUI snake) {
 		super(x, y, w, h);
-		img=new Graphic(0,0,50,50,"resources/snakeBody.png").getImage();
-		update();
+		setX(x);
+		setY(y);
+		this.beep=snake;
 		Thread t = new Thread(this);
+		this.addSequence("resources/SnakeBody.png",1000,0, 0,50,50, 1);
+		this.head=head;
 		t.start();
+		update();
 	}
 
-
-	public void update(Graphics2D g) {
-//		if(point!=null) {
-			g.drawImage(img,0,0,null);
-//		}
+	public int getDirection() {
+		return direction;
 	}
-	
 
-	@Override
-	public void drawImage(Graphics2D g) {
-		//if(img!=null) {
-			g.drawImage(img,0,0,null);
-		//}
-		
+	public void setDirection(int direction) {
+		this.direction = direction;
 	}
+
 	public void moveUp() {
 		direction=1;
 		setVx(0);
-		setVy(15);
+		setVy(-5);
 	}
 	public void moveDown() {
 		direction=3;
 		setVx(0);
-		setVy(-15);
+		setVy(5);
 	}
 	public void moveLeft() {
 		direction=4;
 		setVy(0);
-		setVx(-15);
+		setVx(-5);
 	}
 	public void moveRight() {
 		direction =2;
 		setVy(0);
-		setVx(15);
+		setVx(5);
 	}
-	public void move(int dir) {
-		if(dir==1) {
-			moveUp();
+	public void turn(int x,int y,int dir) {
+		if(this.direction ==1) {
+		while(this.getY()>=y) {
+			direction=dir;
+			this.setY(y);
+			if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+				beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+			}
+			break;
 		}
-		if(dir==2) {
-			moveRight();
 		}
-		if(dir==3) {
-			moveDown();
+		if(this.direction ==3) {
+			while(this.getY()<=y) {
+			
+				direction=dir;
+				this.setY(y);
+				if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+					beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+				}
+				break;
+			}
 		}
-		if(dir==4) {
-			moveLeft();
+		if(this.direction ==2) {
+			while(this.getX()>=x) {
+				direction=dir;
+				this.setX(x);
+				if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+					beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+				}
+				break;
+			}
 		}
-	}
-
-
-	@Override
-	public void keyPressed(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyReleased(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public void keyTyped(KeyEvent e) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
-	@Override
-	public boolean isHovered(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
-	}
-
-
-	@Override
-	public void setFocus(boolean b) {
-		// TODO Auto-generated method stub
-		
-	}
-
-
+		if(this.direction ==4) {
+			while(this.getX()<=x) {
+				direction=dir;
+				this.setX(x);
+				if(beep.getSnakeBody().indexOf(this)!= beep.getSnakeBody().size()-1) {
+					beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)+1).turn(this.getX(),this.getY(),dir);
+				}
+				break;
+			}
+		}
+	
+} 
 	@Override
 	public void checkBehaviors() {
-		// TODO Auto-generated method stub
-		
+		if(direction==1) {
+			moveUp();
+		}
+		if(direction==2) {
+			moveRight();
+		}
+		if(direction==3) {
+			moveDown();
+		}
+		if(direction==4) {
+			moveLeft();
+		}
+		if(beep.getSnakeBody().get(0).checkColision(this)) {
+			beep.gameOver();
+		}
+		if(beep.getSnakeBody().get(0).checkColision(beep.getPoint())) {
+			beep.pointGet();
+		}
+		//if(!head) {
+		//if((beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() ) || (beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()<=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() )){
+		//	beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
+		//}
+		//if( (beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX()) ||(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getY()<=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getY() && beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()==beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX())){
+		//	beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).setDirection(beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getDirection());
+		//}
+	//}
+}
+	//private void act() {
+	//	detectColision.act();
+	//	
+	//}
+
+	public boolean checkColision(SnakePart p) {
+		return p.getX() < getX() + getWidth() && p.getX() + p.getWidth() > getX() &&
+				p.getY() < getY() + getHeight() && p.getHeight() + p.getY() > getY();
 	}
+	public boolean checkColision(SnakePoint p) {
+	 return p.getX() < getX() + getWidth() && p.getX() + p.getWidth() > getX() &&
+				p.getY() < getY() + getHeight() && p.getHeight() + p.getY() > getY();
+	}
+	//public void setAction(Action a) {
+		//this.detectColision= a;
+	//}
 }
