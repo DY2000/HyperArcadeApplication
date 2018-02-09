@@ -8,6 +8,7 @@ import hyperArcade.Ticket;
 
 public class PacmanScreen extends FullFunctionScreen implements Ticket {
 
+
 	public PacmanScreen(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -17,6 +18,11 @@ public class PacmanScreen extends FullFunctionScreen implements Ticket {
 	public void initAllObjects(List<Visible> viewObjects) {
 		PacmanBackground Image = new PacmanBackground(0,0,getWidth(),getHeight());
 		viewObjects.add(Image);
+		
+		
 	}
+	
+	
+	
 
 }

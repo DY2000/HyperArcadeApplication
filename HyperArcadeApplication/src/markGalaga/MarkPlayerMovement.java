@@ -14,8 +14,4 @@ public abstract class MarkPlayerMovement extends AnimatedComponent {
 	public abstract void moveUp();
 	public abstract void moveDown();
 	public abstract void moveStop();
-	
-	@Override
-	public abstract void checkBehaviors();
-
-}
+	}
