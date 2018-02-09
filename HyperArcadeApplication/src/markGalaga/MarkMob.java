@@ -77,7 +77,6 @@ public class MarkMob extends AnimatedComponent implements Collidable{
 	}
 	
 	public synchronized void checkBehaviors() {
-		System.out.println(hp);
 		if(hp == 0) {
 			setVy(0);
 			setVx(0);

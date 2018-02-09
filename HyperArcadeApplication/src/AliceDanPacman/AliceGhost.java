@@ -10,7 +10,7 @@ import willTetris.Collidable;
 public class AliceGhost extends AnimatedComponent implements Collidable{
 	static Thread counter = new Thread();
 	public boolean canBeEaten = true;
-
+	private PacmanScreen game;
 	
 	//there are 4 main ghosts named blinky (red), pinky, clyde (orange), inky (blue)
 	//scatter mode-each ghost has a predefined corner of the grid that they follow
@@ -35,7 +35,7 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 
 	public AliceGhost(int x, int y, int w, int h, String ghostType, PacmanScreen screen3) {
 		super(x, y, w, h);
-		
+		game = screen3;
 		ArrayList<String> active = new ArrayList<String>();
 		ArrayList<String> inactive = new ArrayList<String>();
 
@@ -94,7 +94,7 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 	
 	private boolean isBlue() {
 		
-		if(DanielPacman.wentOverPowerUp()) {
+		if(game.getPacman().wentOverPowerUp()) {
 			
 			return true;
 		}
@@ -103,11 +103,12 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 
 	}
 	
-	private boolean wentOverDots() {
-		
-		//no change!
-		
-	}
+//	private boolean wentOverDots() {
+//		
+//		//no change!
+//		return
+//		
+//	}
 	
 	
 	

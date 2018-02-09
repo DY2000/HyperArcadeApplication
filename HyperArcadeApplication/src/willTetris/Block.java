@@ -1,27 +1,70 @@
 package willTetris;
 
 import java.awt.Color;
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 
-public class Block {
+import guiTeacher.components.AnimatedComponent;
+import guiTeacher.components.Component;
+import guiTeacher.components.MovingComponent;
 
-	int xPosition;
-	int yPosition;
-	Color color;
-	
-	public Block(int xPos, int yPos, Color color2) {
-		this.xPosition = xPos;
-		this.yPosition = yPos;
-		this.color = color2;
+public class Block extends MovingComponent {
+
+	private int x;
+	private int y;
+	private boolean active; 
+	private Color color;
+	private BufferedImage appearance;
+
+	public Block(int x, int y, Color color) {
+		super(x, y, 5, 5);
+		this.x = x;
+		this.y = y;
+		active = true;
+		this.color = color;
+		appearance = new BufferedImage(5, 5, BufferedImage.TYPE_INT_ARGB);
 	}
-	
-	
-	public int xPos() {
-		return xPosition;
+
+	public void checkBehaviors() {
+
 	}
-	public int yPos() {
-		return yPosition;
+
+	@Override
+	public void update(Graphics2D g) {
+
 	}
-	public Color blockColor() {
+
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
+	public Color getColor() {
 		return color;
+	}
+
+	public boolean getActive() {
+		return active;
+	}
+	
+	public void setActive(boolean x) {
+		this.active = x;
+	}
+
+	@Override
+	public void drawImage(Graphics2D g) {
+		// TODO Auto-generated method stub
+		
 	}
 }

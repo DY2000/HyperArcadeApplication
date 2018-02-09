@@ -34,7 +34,7 @@ public class DanielPacman extends MarkPlayerMovement implements Collidable{
 	}
 	boolean wentOverPowerUp() {
 		//if went over poweruplocation
-      if() {
+      if(true) {
         return true;
       }	else {
         return false;
@@ -43,6 +43,31 @@ public class DanielPacman extends MarkPlayerMovement implements Collidable{
 
 	public void checkBehaviors() {
 		// calls on all the time
+		
+	}
+	@Override
+	public void moveLeft() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void moveRight() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void moveUp() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void moveDown() {
+		// TODO Auto-generated method stub
+		
+	}
+	@Override
+	public void moveStop() {
+		// TODO Auto-generated method stub
 		
 	}
 }

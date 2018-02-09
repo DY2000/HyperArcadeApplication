@@ -3,11 +3,12 @@ package AliceDanPacman;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
+import devin.DevTicket;
 import devin.Ticket;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 
-public class PacmanScreen extends FullFunctionScreen implements Ticket {
+public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	DanielPacman pac;
 
 	public PacmanScreen(int width, int height) {
