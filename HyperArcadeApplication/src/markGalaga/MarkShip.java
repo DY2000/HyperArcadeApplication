@@ -1,126 +1,115 @@
 package markGalaga;
 
 import java.awt.Graphics2D;
+import java.awt.Image;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
-import hyperArcade.ArcadeGUI;
 import willTetris.Collidable;
 
 public class MarkShip extends MarkPlayerMovement implements Collidable{
 	
-	private BufferedImage img;
-	private ArrayList<MarkProjectile> shots;
+	private MarkGalaga game;
+	private boolean enabled;
 	
-	public MarkShip(int x, int y, int w, int h) {
+	public MarkShip(int x, int y, int w, int h, MarkGalaga game) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
-		shots = new ArrayList<MarkProjectile>();
-		for(int i = 0; i < 3; i++) {
-			shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
-		}
-		img = new Graphic(0,0,.5,"resources/Galaga_ship.png").getImage();
+		this.enabled = false;
+		this.game = game;
+		this.addSequence("resources/Galaga_spriteSheet.png", 1000, 184, 55, 15, 16, 1);
 		update();
 		Thread t = new Thread(this);
 		t.start();
 	}
 	
-	@Override
-	public void keyPressed(KeyEvent e) {
-		switch(e.getKeyCode()) {
-			case KeyEvent.VK_SPACE :
-				if(shots.size() < 3) {
-					for(int i = shots.size(); i < 2; i++) {
-						shots.add(i, new MarkProjectile(1025,0,9,48,"player"));
-					}
-				}
-				fireShot(shots,getX()+(getWidth()/2)-(shots.get(0).getWidth()/2),getY());
-				break;
-			case KeyEvent.VK_LEFT :
-					moveLeft();
-				break;
-			case KeyEvent.VK_RIGHT : 
-					moveRight();
-				break;
-		}
-	}
-	
-	@Override
-	public void keyReleased(KeyEvent e) {
-		switch(e.getKeyCode()) {
-			case KeyEvent.VK_LEFT :
-				if(getVx() < 0)
-					moveStop();
-				else break;
-			case KeyEvent.VK_RIGHT : 
-				if(getVx() > 0)
-					moveStop();
-				else break;
-		}
-	}
-
-	@Override
-	public void keyTyped(KeyEvent arg0) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	public void drawImage(Graphics2D g) {
-		if(img != null) {
-			g.drawImage(img,0,0,null);
-		}
-	}
-
-	public void moveStop() {
-		setVx(0);
-	}
-	
-	public void moveRight() {
-		setVx(10);
-	}
-	
-	public void moveLeft() {
-		setVx(-10);
-	}
-
 	public void fireShot(ArrayList<MarkProjectile> arl, int x, int y) {
 		for(int i = 0; i<arl.size();i++) {
 			if(arl.get(i).getVy() == 0) {
 				arl.get(i).setX(x);
 				arl.get(i).setY(y);
-				arl.get(i).setVy(-25);			
+				arl.get(i).setVy(-14);			
 				break;
 			}
 		}	
 	}
 	
 	public void checkBehaviors() {
-		if(getVx() > 0 && getX() > 1024-(getWidth()*1.3)) {
+		if(getVx() > 0 && getX() > 712) {
 			moveStop();
 		}
-		if(getVx() < 0 && getX() < 8) {
+		if(getVx() < 0 && getX() < 330) {
 			moveStop();
 		}
 	}
 	
-	public ArrayList<MarkProjectile> getShots() {
-		return shots;
+	public boolean detectCollision(MarkProjectile shot) {
+		return (shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
+			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY() && enabled);
 	}
-
-	@Override
-	public boolean isHovered(int x, int y) {
-		// TODO Auto-generated method stub
-		return false;
+	
+	public boolean detectCollision(MarkMob mob) {
+		if((mob.getX() < getX() + getWidth() && mob.getX() + mob.getWidth() > getX() &&
+				mob.getY() < getY() + getHeight() && mob.getHeight() + mob.getY() > getY())){
+				mob.setHp(mob.getHp()-1);
+				return true; 
+			}else{
+				return false; 
+			}
 	}
-
-	@Override
-	public void setFocus(boolean b) {
-		// TODO Auto-generated method stub
 		
+	public void shipHit() {
+		if(enabled) {
+			enabled = false;
+			setVisible(false);
+			int newX = getX()-16;
+			int newY = getY()-16;
+			Thread b = new Thread(new Runnable() {
+				public void run() {
+					MarkDeathAnimation boom = new MarkDeathAnimation(newX,newY,64,64,"player",game);
+					game.addObject(boom);
+					try {
+						Thread.sleep(375);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					game.remove(boom);
+				}
+			});
+			b.start();
+		}
+	}
+	
+	public void moveStop() {
+		setVx(0);
+	}
+	
+	public void moveRight() {
+		setVx(5);
+	}
+	
+	public void moveLeft() {
+		setVx(-5);
+	}
+
+	public void moveUp() {
+		
+	}
+
+	public void moveDown() {
+	
+	}
+
+	public boolean isEnabled() {
+		return enabled;
+	}
+	
+	public void setEnabled(boolean b) {
+		this.enabled = b;
 	}
 	
 }
