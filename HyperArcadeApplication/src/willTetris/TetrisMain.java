@@ -19,6 +19,7 @@ import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class TetrisMain extends FullFunctionScreen {
 
+	private Button start;
 	private Block[][] board;
 	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
 	private ArrayList<Block> active = new ArrayList<Block>(4);
@@ -81,20 +82,29 @@ public class TetrisMain extends FullFunctionScreen {
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
 
-		newPiece();
-
-		Timer t = new Timer();
-		t.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				lower();
-			}
-		}, 0, 500);
 	}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		board = new Block[10][20];
+		start = new Button(100, 100, 100, 50, "START", Color.white, new Action() {
+			@Override
+			public void act() {
+				newPiece();
+				Timer t = new Timer();
+				t.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						lower();
+					}
+				}, 0, 500);
+			}
+		});
+		start.setTextColor(Color.white);
+		start.setCustomTextColor(Color.white);
+		start.setText("START");
+		start.setVisible(true);
+		viewObjects.add(start);
 	}
 
 	public void dropdown() {
@@ -210,10 +220,10 @@ public class TetrisMain extends FullFunctionScreen {
 	private void moveDownAbove(int r) {
 		for (int x = r - 1; x > 0; x--) {
 			for (int b = board.length - 1; b >= 0; b--) {
-//				if (board[b][x] != null) {
-//					board[b][x].setY(board[b][x].getY());
-//				}
-					board[b][x] = null;
+				// if (board[b][x] != null) {
+				// board[b][x].setY(board[b][x].getY());
+				// }
+				board[b][x] = null;
 			}
 		}
 	}
@@ -229,6 +239,8 @@ public class TetrisMain extends FullFunctionScreen {
 	}
 
 	public void paint(Graphics g) {
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 600);
 		for (int w = 0; w < board.length; w++) {
 			for (int h = 0; h < board[w].length; h++) {
 				if (board[w][h] != null)
