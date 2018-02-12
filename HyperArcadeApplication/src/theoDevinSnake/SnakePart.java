@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import guiTeacher.components.Action;
 import guiTeacher.components.Graphic;
@@ -16,8 +17,11 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 	private boolean head;
 	private TheoSnakeGUI beep;
 	private Action detectColision;
+	private SnakePart leader;
+	private ArrayList<Position> lastPositions;
+	
 
-	public SnakePart(int x, int y, int w, int h, boolean head,TheoSnakeGUI snake) {
+	public SnakePart(int x, int y, int w, int h, boolean head,TheoSnakeGUI snake, int lead) {
 		super(x, y, w, h);
 		setX(x);
 		setY(y);
@@ -25,7 +29,13 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 		Thread t = new Thread(this);
 		this.addSequence("resources/SnakeBody.png",1000,0, 0,50,50, 1);
 		this.head=head;
+		if(!head) {
+			System.out.print((beep.getSnakeBody().indexOf(this)-1));
+			this.leader=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1);
+		}
+		lastPositions= new ArrayList<Position>();
 		t.start();
+		
 		update();
 	}
 
@@ -103,17 +113,29 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 } 
 	@Override
 	public void checkBehaviors() {
-		if(direction==1) {
-			moveUp();
+		
+//		if(direction==1) {
+//			moveUp();
+//		}
+//		if(direction==2) {
+//			moveRight();
+//		}
+//		if(direction==3) {
+//			moveDown();
+//		}
+//		if(direction==4) {
+//			moveLeft();
+//		}
+
+		lastPositions.add(new Position(this.getX(),this.getY()));
+		if(lastPositions.size()>10) {
+			lastPositions.remove(10);
 		}
-		if(direction==2) {
-			moveRight();
-		}
-		if(direction==3) {
-			moveDown();
-		}
-		if(direction==4) {
-			moveLeft();
+		if(!head) {
+			if(leader.getLastPositions().size()==10) {
+				this.setX(leader.getLastPositions().get(10).getX());
+				this.setY(leader.getLastPositions().get(10).getY());
+			}
 		}
 		if(beep.getSnakeBody().get(0).checkColision(this)) {
 			beep.gameOver();
@@ -134,6 +156,10 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 	//	detectColision.act();
 	//	
 	//}
+
+	public ArrayList<Position> getLastPositions() {
+		return lastPositions;
+	}
 
 	public boolean checkColision(SnakePart p) {
 		return p.getX() < getX() + getWidth() && p.getX() + p.getWidth() > getX() &&

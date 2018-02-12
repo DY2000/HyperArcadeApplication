@@ -20,6 +20,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		private int userscore;
 		private SnakePoint point;
 		private boolean first;
+		private int count;
 	public TheoSnakeGUI(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -31,7 +32,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 	public void initAllObjects(List<Visible> viewObjects) {
 		first=true;
 		snakeBody = new ArrayList<SnakePart>();
-		snakeBody.add(new SnakePart(500,500,25,25,true,this));
+		snakeBody.add(new SnakePart(500,500,25,25,true,this,count));
 		
 		point = new SnakePoint(getRandomX(),getRandomY(),25,25,this);
 		viewObjects.add(point);
@@ -140,21 +141,21 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 			if(snakeBody.get(0).getVy() != 5) {
 				if(first) {
 					first=false;
-					snakeBody.get(0).setDirection(1);
+					snakeBody.get(0).moveUp();
 					break;
 				}else {
-			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),1);
+			snakeBody.get(0).moveUp();
 			break;
 				}
 			}
 		case KeyEvent.VK_DOWN :
-			if(snakeBody.get(0).getDirection() != 1) {
+			if(snakeBody.get(0).getVy() != -5) {
 				if(first) {
 					first=false;
-					snakeBody.get(0).setDirection(3);
+					snakeBody.get(0).moveDown();
 					break;
 				}else {
-			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),3);
+			snakeBody.get(0).moveDown();
 			break;
 				}
 			}
@@ -162,10 +163,10 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 			if(snakeBody.get(0).getVx() != 5) {
 				if(first) {
 					first=false;
-					snakeBody.get(0).setDirection(4);
+					snakeBody.get(0).moveLeft();
 					break;
 				}else {
-			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),4);
+			snakeBody.get(0).moveLeft();
 			break;
 			}
 		}
@@ -173,14 +174,15 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 			if(snakeBody.get(0).getVx() != -5) {
 				if(first) {
 					first=false;
-					snakeBody.get(0).setDirection(2);
+					snakeBody.get(0).moveRight();
 					break;
 				}else {
-			snakeBody.get(0).turn(snakeBody.get(0).getX(),snakeBody.get(0).getY(),2);
+			snakeBody.get(0).moveRight();
 			break;
 				}
 			}
 		}
 	}
 
+	
 }
