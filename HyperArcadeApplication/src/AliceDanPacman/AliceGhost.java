@@ -7,8 +7,8 @@ import guiTeacher.components.AnimatedComponent;
 import guiTeacher.interfaces.Visible;
 import willTetris.Collidable;
 
-public class AliceGhost extends AnimatedComponent implements Collidable{
-	static Thread counter = new Thread();
+public class AliceGhost extends AnimatedComponent{
+	
 	public boolean canBeEaten = true;
 	private PacmanScreen game;
 	
@@ -33,9 +33,9 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 	//arraylist of active and inactive ghost
 	
 
-	public AliceGhost(int x, int y, int w, int h, String ghostType, PacmanScreen screen3) {
+	public AliceGhost(int x, int y, int w, int h, String ghostType, PacmanScreen game) {
 		super(x, y, w, h);
-		game = screen3;
+		this.game = game;
 		ArrayList<String> active = new ArrayList<String>();
 		ArrayList<String> inactive = new ArrayList<String>();
 
@@ -93,23 +93,10 @@ public class AliceGhost extends AnimatedComponent implements Collidable{
 			
 	
 	private boolean isBlue() {
-		
-		if(game.getPacman().wentOverPowerUp()) {
-			
+		if(game.getPacman().canEatGhost()) {
 			return true;
 		}
 		return false;
-		//return DanielPacman.ateBlue();
-
 	}
-	
-//	private boolean wentOverDots() {
-//		
-//		//no change!
-//		return
-//		
-//	}
-	
-	
 	
 }

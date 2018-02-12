@@ -1,5 +1,6 @@
 package AliceDanPacman;
 
+import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.List;
 
@@ -9,22 +10,26 @@ import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class PacmanScreen extends FullFunctionScreen implements DevTicket {
+	
 	DanielPacman pac;
+	PacmanBackground bg;
+	PacmanGrid movementGrid;
+	PacmanGrid dotGrid;
 
 	public PacmanScreen(int width, int height) {
 		super(width, height);
-		// TODO Auto-generated constructor stub
-
 	}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		PacmanBackground Image = new PacmanBackground(0,0,getWidth(),getHeight());
-		viewObjects.add(Image);
-		DanielPacman pac = new DanielPacman(100,100,200,20);
+		setBackground(Color.DARK_GRAY);
+		bg = new PacmanBackground(325,50,480,650);
+		viewObjects.add(bg);
+		pac = new DanielPacman(100,100,200,20,this);
 		viewObjects.add(pac);
-		PacmanGrid movementGrid = new PacmanGrid(60,85,662,518,"move");
+		movementGrid = new PacmanGrid(60,85,662,518,"move");
 	}
+	
 	public void keyPressed(KeyEvent e)
 	{
 		switch(e.getKeyCode()) {
@@ -40,7 +45,10 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		}
 	}
 	
-	
+
+	public DanielPacman getPacman() {
+		return pac;
+	}
 
 	@Override
 	public void getScore() {
@@ -59,5 +67,6 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		// TODO Auto-generated method stub
 		
 	}
+
 
 }

@@ -4,22 +4,26 @@ import java.awt.Color;
 import java.awt.Graphics2D;
 import java.awt.event.KeyEvent;
 import java.awt.image.BufferedImage;
+import java.util.Timer;
 
 import guiTeacher.components.AnimatedComponent;
 import markGalaga.MarkPlayerMovement;
 import willTetris.Collidable;
 
-public class DanielPacman extends MarkPlayerMovement implements Collidable{
+public class DanielPacman extends MarkPlayerMovement{
 	
-	private boolean canEatGhost=false;
+	private PacmanScreen game;
+	private boolean canEatGhost;
+	private int direction;
+	// 0 = LEFT, 1 = UP, 2 = RIGHT, 3 = DOWN
 
-	public DanielPacman(int x, int y, int w, int h) {
+	public DanielPacman(int x, int y, int w, int h, PacmanScreen game) {
 		super(x, y, w, h);
-		 
+		 this.game = game;
+		 canEatGhost = false;
 	}
 	public void drawImage(Graphics2D g) {
-		 g.setColor(Color.yellow);
-		  g.fillArc(0,0,100,100,20,270);
+		
 	}
 	
 	public boolean ateBlue() {
@@ -27,27 +31,31 @@ public class DanielPacman extends MarkPlayerMovement implements Collidable{
 	}
 	
 	public void whenAtePowerup() {
-		if(wentOverPowerUp()) {
 		canEatGhost = true;
-		}
-		canEatGhost = false;
+		Timer cooldown = new Timer();
 	}
 	boolean wentOverPowerUp() {
 		//if went over poweruplocation
-      if(true) {
-        return true;
-      }	else {
-        return false;
-      }
+//      if() {
+//        return true;
+//      }	else {
+//        return false;
+//      }
+		return false;
 	}
 
 	public void checkBehaviors() {
 		// calls on all the time
 		
 	}
+	
+	public boolean canEatGhost() {
+		return canEatGhost;
+	}
+	
 	@Override
 	public void moveLeft() {
-		// TODO Auto-generated method stub
+		direction = 0;
 		
 	}
 	@Override
