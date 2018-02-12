@@ -146,4 +146,11 @@ public class SnakePart extends MarkPlayerMovement implements Collidable{
 	//public void setAction(Action a) {
 		//this.detectColision= a;
 	//}
+
+	@Override
+	public void moveStop() {
+		this.setVx(0);
+		this.setVy(0);
+		
+	}
 }
