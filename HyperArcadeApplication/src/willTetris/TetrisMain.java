@@ -27,11 +27,13 @@ public class TetrisMain extends FullFunctionScreen {
 	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
 	private int rotation;
 	private int shape;
+	private int delay;
 
 	public TetrisMain(int width, int height) {
 		super(width, height);
 		rotation = 0;
 		shape = 0;
+		delay = 2000;
 
 		// I PIECE 0
 		Tetramino.add(new Block(3, 0, Color.cyan));
@@ -85,6 +87,17 @@ public class TetrisMain extends FullFunctionScreen {
 
 	}
 
+	public void resetTimer() {
+		timer.cancel();
+		timer = new Timer();
+		timer.schedule(new TimerTask() {
+			@Override
+			public void run() {
+				lower();
+			}
+		}, delay, delay);
+	}
+
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		board = new Block[10][20];
@@ -98,7 +111,7 @@ public class TetrisMain extends FullFunctionScreen {
 					public void run() {
 						lower();
 					}
-				}, 0, 500);
+				}, 0, delay);
 				start.setEnabled(false);
 			}
 		});
@@ -142,7 +155,7 @@ public class TetrisMain extends FullFunctionScreen {
 			}
 			newPiece();
 		}
-
+		resetTimer();
 	}
 
 	public void moveLeft() {
@@ -198,7 +211,8 @@ public class TetrisMain extends FullFunctionScreen {
 		shape = (int) (Math.random() * Tetraminos.size());
 		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
 		rotation = 0;
-		if(gameOver());
+		if (gameOver())
+			;
 	}
 
 	public void checkRows() {
@@ -236,50 +250,10 @@ public class TetrisMain extends FullFunctionScreen {
 
 	public boolean gameOver() {
 		for (int i = 0; i < 4; i++) {
-			if(board[active.get(i).getX()][active.get(i).getY()] != null)
+			if (board[active.get(i).getX()][active.get(i).getY()] != null)
 				return true;
 		}
 		return false;
-	}
-
-	public void paint(Graphics g) {
-		super.paint(g);
-		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 600);
-		for (int w = 0; w < board.length; w++) {
-			for (int h = 0; h < board[w].length; h++) {
-				if (board[w][h] != null)
-					g.setColor(board[w][h].getColor());
-				else
-					g.setColor(Color.black);
-				g.fillRect(w * 30, h * 30, 25, 25);
-			}
-		}
-	}
-
-	public void keyPressed(KeyEvent e) {
-		switch (e.getKeyCode()) {
-		case KeyEvent.VK_RIGHT:
-			if (!active.isEmpty())
-				moveRight();
-			break;
-		case KeyEvent.VK_LEFT:
-			if (!active.isEmpty())
-				moveLeft();
-			break;
-		case KeyEvent.VK_UP:
-			if (!active.isEmpty() && shape != 1)
-				clockWise();
-			break;
-		case KeyEvent.VK_DOWN:
-			if (!active.isEmpty())
-				lower();
-			break;
-		case KeyEvent.VK_SPACE:
-			if (!active.isEmpty())
-				dropdown();
-			break;
-		}
 	}
 
 	private void clockWise() {
@@ -306,6 +280,50 @@ public class TetrisMain extends FullFunctionScreen {
 			}
 			for (int i = 0; i < 4; i++) {
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+			}
+		}
+	}
+
+	public void keyPressed(KeyEvent e) {
+		switch (e.getKeyCode()) {
+		case KeyEvent.VK_RIGHT:
+			if (!active.isEmpty())
+				moveRight();
+			break;
+		case KeyEvent.VK_LEFT:
+			if (!active.isEmpty())
+				moveLeft();
+			break;
+		case KeyEvent.VK_UP:
+			if (!active.isEmpty() && shape != 1)
+				clockWise();
+			break;
+		case KeyEvent.VK_DOWN:
+			if (!active.isEmpty())
+				lower();
+			break;
+		case KeyEvent.VK_SPACE:
+			if (!active.isEmpty())
+				dropdown();
+			lower();
+			break;
+		}
+	}
+
+	public void paint(Graphics g) {
+		super.paint(g);
+		g.setColor(Color.black);
+		g.fillRect(0, 0, 300, 600);
+
+		for (int w = 0; w < board.length; w++) {
+			for (int h = 0; h < board[w].length; h++) {
+				if (board[w][h] != null)
+					g.setColor(board[w][h].getColor());
+				else {
+					if(w % 2 == 0)
+						g.setColor(Color.gray);
+				}
+				g.fillRect(w * 30, h * 30, 28, 28);
 			}
 		}
 	}
