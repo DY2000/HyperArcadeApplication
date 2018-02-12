@@ -20,6 +20,7 @@ import guiTeacher.userInterfaces.FullFunctionScreen;
 public class TetrisMain extends FullFunctionScreen {
 
 	private Button start;
+	private Timer timer;
 	private Block[][] board;
 	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
 	private ArrayList<Block> active = new ArrayList<Block>(4);
@@ -91,8 +92,8 @@ public class TetrisMain extends FullFunctionScreen {
 			@Override
 			public void act() {
 				newPiece();
-				Timer t = new Timer();
-				t.schedule(new TimerTask() {
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
 					@Override
 					public void run() {
 						lower();
@@ -197,6 +198,7 @@ public class TetrisMain extends FullFunctionScreen {
 		shape = (int) (Math.random() * Tetraminos.size());
 		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
 		rotation = 0;
+		if(gameOver());
 	}
 
 	public void checkRows() {
@@ -210,9 +212,10 @@ public class TetrisMain extends FullFunctionScreen {
 			}
 			if (row) {
 				clearRow(r);
-				moveDownAbove(r);
+				moveDownAbove(r + 1);
 				rowCount++;
 				System.out.println("" + row + rowCount);
+				r++;
 			}
 		}
 	}
@@ -220,10 +223,7 @@ public class TetrisMain extends FullFunctionScreen {
 	private void moveDownAbove(int r) {
 		for (int x = r - 1; x > 0; x--) {
 			for (int b = board.length - 1; b >= 0; b--) {
-				// if (board[b][x] != null) {
-				// board[b][x].setY(board[b][x].getY());
-				// }
-				board[b][x] = null;
+				board[b][x] = board[b][x - 1];
 			}
 		}
 	}
@@ -234,8 +234,12 @@ public class TetrisMain extends FullFunctionScreen {
 		}
 	}
 
-	public void gameOver() {
-
+	public boolean gameOver() {
+		for (int i = 0; i < 4; i++) {
+			if(board[active.get(i).getX()][active.get(i).getY()] != null)
+				return true;
+		}
+		return false;
 	}
 
 	public void paint(Graphics g) {
