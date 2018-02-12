@@ -12,7 +12,7 @@ import hyperArcade.ArcadeGUI;
 
 public class Inventory extends FullFunctionScreen {
 	private Button back;
-	private ArrayList<DevinItem> Shopitemlist;
+	private ArrayList<DevinItem>itemlist;
 	public Inventory(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -20,7 +20,8 @@ public class Inventory extends FullFunctionScreen {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		Shopitemlist = new ArrayList<DevinItem>();
+		itemlist = new ArrayList<DevinItem>();
+		//itemlist.add("itemname");
 		viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/inventory.png"));
 		back = new Button (0,50,200,100,"GO Back",new Action() {
 			public void act() {

@@ -11,6 +11,7 @@ public class DevinItem extends Component{
 	private String itemName;
 	
 	
+	
 	public DevinItem(int x, int y, int w, int h, String itemName, int price) {
 		super(x, y, w, h);
 		this.itemName = itemName;
@@ -21,12 +22,16 @@ public class DevinItem extends Component{
 		
 	}
 
-//	public void drawImage(Graphics2D g) {
-//		if(itemName = "" )
-//			//skins for games could work, but that would be too much work. 
-//			//pikachu doll,
-//			
-//	}
+	public void drawImage(Graphics2D g) {
+		//if(itemName = "reward1.png") {
+		//ticketprice();
+		//itemName = "resources/reward1.png";
+			
+		//}
+			//skins for games could work, but that would be too much work. 
+			//pikachu doll,
+			
+	}
 //	public void buyItems(){
 //		int items = 5;
 //		for(int i = 0; i < items; i++) {
@@ -39,5 +44,6 @@ public class DevinItem extends Component{
 //			}
 //		}
 //	}
-	
+
+
 }
