@@ -1,16 +1,22 @@
 package AliceDanPacman;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import guiTeacher.components.AnimatedComponent;
+import guiTeacher.components.Graphic;
 import guiTeacher.interfaces.Visible;
 import willTetris.Collidable;
 
-public class AliceGhost extends AnimatedComponent{
-	
+public class AliceGhost extends AnimatedComponent implements Collidable{
+	static Thread counter = new Thread();
 	public boolean canBeEaten = true;
-	private PacmanScreen game;
+	private Random r = new Random();
+	
+	private BufferedImage img;
 	
 	//there are 4 main ghosts named blinky (red), pinky, clyde (orange), inky (blue)
 	//scatter mode-each ghost has a predefined corner of the grid that they follow
@@ -33,12 +39,15 @@ public class AliceGhost extends AnimatedComponent{
 	//arraylist of active and inactive ghost
 	
 
-	public AliceGhost(int x, int y, int w, int h, String ghostType, PacmanScreen game) {
+	public AliceGhost(int x, int y, int w, int h, String ghostType, PacmanScreen screen3) {
 		super(x, y, w, h);
-		this.game = game;
+		setX(x);
+		setY(y);
+		img = new Graphic(x,y,1000,900,"resources/pink ghost.png").getImage();
+		update();
 		ArrayList<String> active = new ArrayList<String>();
 		ArrayList<String> inactive = new ArrayList<String>();
-
+		
 
 		//first is speed, then is location
 	
@@ -48,32 +57,59 @@ public class AliceGhost extends AnimatedComponent{
 	
 
 	public void initAllObjects(List<Visible> viewObjects) {
-		PacmanBackground ghost = new PacmanBackground(0,0,getWidth(),getHeight());
-		viewObjects.add(ghost);
+//		ghost = new PacmanBackground(getX(),getY(),getWidth(),getHeight());
+//		
+		viewObjects.add(this);
+//		ghost.setVisible(true);
+		
+		
 	}
 	
-	
-
-	public void checkIfBlue() {
-		
-		while(isBlue()) {
-			canBeEaten=false;
-			
+	public void drawImage(Graphics2D g) {
+		if(img != null) {
+			g.drawImage(img,getX(),getY(),null);
 		}
+	}
+
+//	public void checkIfBlue() {
+//		
+//		while(isBlue()) {
+//			canBeEaten=false;
+//			
+//		}
 			
 			//make a blue ghost
-		}
+		//}
 		
-		public final void whenBlue() {
+	 public void move(PacmanGrid grid) {
+		 int x = grid.getWidth();
+		 int y = grid.getHeight();
+		 int nextX= r.nextInt(2)-1+getX();
+		 int nextY = r.nextInt(2)-1+getY();
+		 
+		 if (nextX >0 && nextX <x) {
+			 setX(nextX);
+		 }
+		 if (nextY >0 && nextY <y) {
+			 setY(nextY);
+		 }
+		 
+		 update();
+	 }
+		public final void whenBlue(PacmanGrid grid, DanielPacman pacman) {
 			
 			Thread timer = new Thread(new Runnable() {
 				
 				public void run() {
 					
-					while(isBlue()) {
-						
+//					while(isBlue(pacman)) {
+					while(true) {	
 						try {
-							
+							move(grid);
+							if (checkIfCanEatPackMan( pacman)) {
+								System.out.println("Ate pacman !!!");
+								return;
+							}
 							Thread.sleep(1000);
 						}
 						
@@ -88,15 +124,37 @@ public class AliceGhost extends AnimatedComponent{
 				
 				
 			});
-			
+			timer.start();
 		}
 			
 	
-	private boolean isBlue() {
-		if(game.getPacman().canEatGhost()) {
+	protected  boolean checkIfCanEatPackMan(DanielPacman pacman) {
+			if (pacman.getX() == getX() &&  pacman.getY() == getY()) {
+				return true;
+			}
+			return false;
+		}
+
+
+
+	private boolean isBlue(DanielPacman pacman) {
+		
+		
+		if(pacman.wentOverPowerUp()) {
+			
 			return true;
 		}
 		return false;
+		//return DanielPacman.ateBlue();
+
 	}
+	
+	private boolean wentOverDots() {
+		
+		return false;
+		
+	}
+	
+	
 	
 }
