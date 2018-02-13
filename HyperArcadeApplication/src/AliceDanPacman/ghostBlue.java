@@ -18,6 +18,7 @@ public ghostBlue(int x, int y, int w, int h, PacmanScreen game) {
 
 	public BufferedImage getImage() {
 		return this.getFrame().get(this.getCurrentFrame());
+		
 	}
 
 }
