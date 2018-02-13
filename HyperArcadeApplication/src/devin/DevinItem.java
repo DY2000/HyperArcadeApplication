@@ -11,7 +11,8 @@ public class DevinItem extends Component{
 
 	private BufferedImage img;
 	private String itemName;
-	
+	private ArrayList itemlist1;
+	private ArrayList itemlist2;
 	
 	
 	public DevinItem(int x, int y, int w, int h, String itemName, int price) {
@@ -25,9 +26,10 @@ public class DevinItem extends Component{
 	}
 
 	public void drawImage(Graphics2D g) {
-		itemlist1 = new ArrayList<DevinItem>();
-		itemlist2 = new ArrayList<DevinItem>();
-		if(itemName = ) {
+		ArrayList<DevinItem> itemlist1 = new ArrayList<DevinItem>();
+		ArrayList<DevinItem> itemlist2 = new ArrayList<DevinItem>();
+		itemlist1.add(itemName);
+		itemName = "resources/reward1.png"; 
 		//ticketprice();
 		Graphic arr1 = new Graphic(0, 0, 10, 100, itemName);
 			
@@ -50,4 +52,4 @@ public class DevinItem extends Component{
 //	}
 
 
-}
+//}
