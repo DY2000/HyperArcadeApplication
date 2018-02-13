@@ -36,7 +36,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		viewObjects.add(bg);
 		pac = new DanielPacman(400,100,30,30,this);
 		viewObjects.add(pac);
-		movementGrid = new PacmanGrid(60,85,662,518,"move");
+		movementGrid = new PacmanGrid(60,85,662,518,"move",this);
 	}
 	
 	public void keyPressed(KeyEvent e)
@@ -95,6 +95,10 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 
 	public PacmanRight getPacRight() {
 		return pacRight;
+	}
+
+	public PacmanGrid getMovementGrid() {
+		return movementGrid;
 	}
 
 }

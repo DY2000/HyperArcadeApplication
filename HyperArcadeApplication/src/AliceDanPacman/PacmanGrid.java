@@ -6,10 +6,12 @@ public class PacmanGrid extends AnimatedComponent {
 	private String type;
 	private boolean dotGrid[][];
 	private boolean movementGrid[][];
-		
-	public PacmanGrid(int x, int y, int w, int h, String type) {
+	private PacmanScreen game;	
+	
+	public PacmanGrid(int x, int y, int w, int h, String type, PacmanScreen game) {
 		super(x,y,w,h);
 		this.type = type;
+		this.game = game;
 		if(type == "dot") {
 			dotGrid = new boolean[13][14];
 			for(int row = 0; row < dotGrid.length; row++) {
@@ -19,28 +21,18 @@ public class PacmanGrid extends AnimatedComponent {
 			}
 		}
 		else {
-			movementGrid = new boolean[13][14];
+			movementGrid = new boolean[16][18];
 			for(int row = 0; row < movementGrid.length; row++) {
 				for(int col = 0; col < movementGrid[row].length; col++) {
 					movementGrid[row][col] = true;
 					
 				}
 			}
-			movementGrid[0][0] = false;
-			movementGrid[0][1] = false;
-			movementGrid[0][2] = false;
-			movementGrid[0][3] = false;
-			movementGrid[0][4] = false;
-			movementGrid[0][5] = false;
-			movementGrid[0][6] = false;
-			movementGrid[0][7] = false;
 		}
 
 	}
 	
 	public void checkBehaviors() {
-		
-		
 		
 	}
 	
@@ -51,4 +43,24 @@ public class PacmanGrid extends AnimatedComponent {
 			return movementGrid;
 	}
 	
+	public void moveLeft(int pacX, int pacY) {
+		if(movementGrid[pacX-1][pacY]) {
+			game.getPacman().setGridX(pacX-1);
+		}
+	}
+	public void moveRight(int pacX, int pacY) {
+		if(movementGrid[pacX+1][pacY]) {
+			game.getPacman().setGridX(pacX+1);
+		}
+	}
+	public void moveUp(int pacX, int pacY) {
+		if(movementGrid[pacX][pacY-1]) {
+			game.getPacman().setGridY(pacY-1);
+		}
+	}
+	public void moveDown(int pacX, int pacY) {
+		if(movementGrid[pacX][pacY+1]) {
+			game.getPacman().setGridY(pacY+1);
+		}
+	}
 }
