@@ -11,14 +11,11 @@ import guiTeacher.userInterfaces.FullFunctionScreen;
 
 public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	
-	PacmanUp pacUp;
-	PacmanDown pacDown;
-	PacmanLeft pacLeft;
-	PacmanRight pacRight;
 	DanielPacman pac;
 	PacmanBackground bg;
 	PacmanGrid movementGrid;
 	PacmanGrid dotGrid;
+	private int score;
 
 	public PacmanScreen(int width, int height) {
 		super(width, height);
@@ -27,16 +24,11 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		setBackground(Color.DARK_GRAY);
-		pacUp = new PacmanUp(0,0,16,16,this);
-		pacDown = new PacmanDown(0,0,16,16,this);
-		pacRight = new PacmanRight(0,0,16,16,this);
-		pacLeft = new PacmanLeft(0,0,16,16,this);
-		
 		bg = new PacmanBackground(325,50,480,650);
 		viewObjects.add(bg);
-		pac = new DanielPacman(400,100,30,30,this);
+		pac = new DanielPacman(100,100,200,20,this);
 		viewObjects.add(pac);
-		movementGrid = new PacmanGrid(60,85,662,518,"move");
+		movementGrid = new PacmanGrid(60,85,662,518,"move",this);
 	}
 	
 	public void keyPressed(KeyEvent e)
@@ -44,16 +36,12 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		switch(e.getKeyCode()) {
 		case KeyEvent.VK_UP :
 		pac.moveUp();
-		break;
 		case KeyEvent.VK_LEFT :
 		pac.moveLeft();
-		break;
 		case KeyEvent.VK_RIGHT :
 		pac.moveRight();
-		break;
 		case KeyEvent.VK_DOWN :
 		pac.moveDown();
-		break;
 		
 		}
 	}
@@ -65,36 +53,25 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 
 	@Override
 	public void getScore() {
-		// TODO Auto-generated method stub
+		//BASED ON NUMBER OF DOTS EATEN
+		getPacman();
 		
 	}
 
 	@Override
 	public void toTicket() {
-		// TODO Auto-generated method stub
+		//
 		
 	}
 
 	@Override
 	public void displayTickets() {
-		// TODO Auto-generated method stub
-		
+		//
 	}
 
-	public PacmanUp getPacUp() {
-		return pacUp;
-	}
 
-	public PacmanDown getPacDown() {
-		return pacDown;
-	}
-
-	public PacmanLeft getPacLeft() {
-		return pacLeft;
-	}
-
-	public PacmanRight getPacRight() {
-		return pacRight;
+	public PacmanGrid getMovementGrid() {
+		return movementGrid;
 	}
 
 }

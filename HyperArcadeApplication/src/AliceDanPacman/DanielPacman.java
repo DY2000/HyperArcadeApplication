@@ -14,6 +14,8 @@ public class DanielPacman extends MarkPlayerMovement{
 	
 	private PacmanScreen game;
 	private BufferedImage img;
+	private int gridY;
+	private int gridX;
 	private boolean canEatGhost;
 	private int direction;
 	// 0 = LEFT, 1 = UP, 2 = RIGHT, 3 = DOWN
@@ -23,6 +25,8 @@ public class DanielPacman extends MarkPlayerMovement{
 		 this.game = game;
 		 canEatGhost = false;
 		 direction = 0;
+		 gridX = 0;
+		 gridY = 0;
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -61,32 +65,41 @@ public class DanielPacman extends MarkPlayerMovement{
 	}
 
 	public void checkBehaviors() {
-		// calls on all the time
-		
+		setX((30*gridX)+320);
+		setY((30*gridY)+100);
 	}
 	
 	public boolean canEatGhost() {
 		return canEatGhost;
 	}
 	
+	public void setGridX(int n) {
+		this.gridX = n;
+	}
+	
+	public void setGridY(int n) {
+		this.gridY = n;
+	}
+	
 	@Override
 	public void moveLeft() {
 		direction = 0;
-		
+		game.getMovementGrid().moveLeft(gridX,gridY);
 	}
 	@Override
 	public void moveRight() {
 		direction = 2;
+		game.getMovementGrid().moveRight(gridX,gridY);
 	}
 	@Override
 	public void moveUp() {
 		direction = 1;
-		
+		game.getMovementGrid().moveUp(gridX,gridY);
 	}
 	@Override
 	public void moveDown() {
 		direction = 3;
-		
+		game.getMovementGrid().moveDown(gridX,gridY);
 	}
 	@Override
 	public void moveStop() {
