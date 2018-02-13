@@ -21,7 +21,7 @@ public class Inventory extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		itemlist = new ArrayList<DevinItem>();
-		//itemlist.add("itemname");
+		itemlist.add("resources/reward1.png");		
 		viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/inventory.png"));
 		back = new Button (0,50,200,100,"GO Back",new Action() {
 			public void act() {

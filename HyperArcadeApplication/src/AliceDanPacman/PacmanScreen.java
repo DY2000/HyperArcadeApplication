@@ -15,6 +15,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	PacmanBackground bg;
 	PacmanGrid movementGrid;
 	PacmanGrid dotGrid;
+	private int score;
 
 	public PacmanScreen(int width, int height) {
 		super(width, height);
@@ -27,7 +28,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		viewObjects.add(bg);
 		pac = new DanielPacman(100,100,200,20,this);
 		viewObjects.add(pac);
-		movementGrid = new PacmanGrid(60,85,662,518,"move");
+		movementGrid = new PacmanGrid(60,85,662,518,"move",this);
 	}
 	
 	public void keyPressed(KeyEvent e)
@@ -52,21 +53,25 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 
 	@Override
 	public void getScore() {
-		// TODO Auto-generated method stub
+		//BASED ON NUMBER OF DOTS EATEN
+		getPacman();
 		
 	}
 
 	@Override
 	public void toTicket() {
-		// TODO Auto-generated method stub
+		//
 		
 	}
 
 	@Override
 	public void displayTickets() {
-		// TODO Auto-generated method stub
-		
+		//
 	}
 
+
+	public PacmanGrid getMovementGrid() {
+		return movementGrid;
+	}
 
 }
