@@ -2,8 +2,10 @@ package devin;
 
 import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
+import java.util.ArrayList;
 
 import guiTeacher.components.Component;
+import guiTeacher.components.Graphic;
 
 public class DevinItem extends Component{
 
@@ -23,11 +25,13 @@ public class DevinItem extends Component{
 	}
 
 	public void drawImage(Graphics2D g) {
-		//if(itemName = "reward1.png") {
+		itemlist1 = new ArrayList<DevinItem>();
+		itemlist2 = new ArrayList<DevinItem>();
+		if(itemName = ) {
 		//ticketprice();
-		//itemName = "resources/reward1.png";
+		Graphic arr1 = new Graphic(0, 0, 10, 100, itemName);
 			
-		//}
+		}
 			//skins for games could work, but that would be too much work. 
 			//pikachu doll,
 			
