@@ -11,6 +11,7 @@ import java.util.List;
 import java.util.Timer;
 import java.util.TimerTask;
 
+import devin.DevTicket;
 import guiTeacher.components.Action;
 import guiTeacher.components.Button;
 import guiTeacher.components.Graphic;
@@ -18,11 +19,11 @@ import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 
-public class TetrisMain extends FullFunctionScreen {
+public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	private TextArea scoreBox;
 	private TextArea textBox;
-	private ArrayList<Block> stored = new ArrayList<Block>(4);
+	private ArrayList<Block> ghost = new ArrayList<Block>(4);
 	private Button start;
 	private Timer timer;
 	private Block[][] board;
@@ -31,14 +32,19 @@ public class TetrisMain extends FullFunctionScreen {
 	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
 	private int rotation;
 	private int shape;
+	private int lines;
 	private int delay;
 	private int score;
+	private TextArea linesBox;
+	private TextArea levelBox;
 
 	public TetrisMain(int width, int height) {
 		super(width, height);
 		rotation = 0;
 		shape = (int) (Math.random() * Tetraminos.size());
 		delay = 2000;
+		lines = 0;
+		score = 0;
 
 		// I PIECE 0
 		Tetramino.add(new Block(3, 0, Color.cyan));
@@ -76,35 +82,37 @@ public class TetrisMain extends FullFunctionScreen {
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
 		// J PIECE 5
+		Tetramino.add(new Block(4, 0, Color.blue));
+		Tetramino.add(new Block(5, 1, Color.blue));
 		Tetramino.add(new Block(4, 1, Color.blue));
-		Tetramino.add(new Block(5, 2, Color.blue));
-		Tetramino.add(new Block(4, 2, Color.blue));
-		Tetramino.add(new Block(6, 2, Color.blue));
+		Tetramino.add(new Block(6, 1, Color.blue));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
 		// L PIECE 6
+		Tetramino.add(new Block(6, 0, Color.orange));
+		Tetramino.add(new Block(5, 1, Color.orange));
 		Tetramino.add(new Block(6, 1, Color.orange));
-		Tetramino.add(new Block(5, 2, Color.orange));
-		Tetramino.add(new Block(6, 2, Color.orange));
-		Tetramino.add(new Block(4, 2, Color.orange));
+		Tetramino.add(new Block(4, 1, Color.orange));
 		Tetraminos.add(Tetramino);
 		Tetramino = new ArrayList<Block>(4);
-
 	}
 
 	public void resetTimer() {
-		timer.cancel();
-		timer = new Timer();
-		timer.schedule(new TimerTask() {
-			@Override
-			public void run() {
-				lower();
-			}
-		}, delay, delay);
+		if (!gameOver()) {
+			timer.cancel();
+			timer = new Timer();
+			timer.schedule(new TimerTask() {
+				@Override
+				public void run() {
+					lower();
+				}
+			}, delay, delay);
+		}
 	}
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
+		setBackground(Color.DARK_GRAY);
 		board = new Block[10][20];
 		start = new Button(400, 100, 100, 50, "START", new Action() {
 			@Override
@@ -125,11 +133,20 @@ public class TetrisMain extends FullFunctionScreen {
 		start.setVisible(true);
 		viewObjects.add(start);
 
-		scoreBox = new TextArea(400, 300, 100, 100, "SCORE: \n" + score);
+		scoreBox = new TextArea(400, 200, 100, 100, "SCORE \n" + score);
 		scoreBox.setVisible(true);
+		scoreBox.setCustomTextColor(Color.WHITE);
 		viewObjects.add(scoreBox);
+		
+		linesBox = new TextArea(400, 300, 100, 100, "LINES \n" + lines);
+		linesBox.setVisible(true);
+		viewObjects.add(linesBox);
 
-		textBox = new TextArea(400, 400, 100, 100, "TETRIS");
+		levelBox = new TextArea(400, 400, 100, 100, "LEVEL \n" + (int)(lines/10));
+		levelBox.setVisible(true);
+		viewObjects.add(levelBox);
+		
+		textBox = new TextArea(400, 500, 100, 100, "");
 		textBox.setVisible(true);
 		viewObjects.add(textBox);
 	}
@@ -137,6 +154,7 @@ public class TetrisMain extends FullFunctionScreen {
 	public void dropdown() {
 		while (canLower()) {
 			lower();
+			scoreUp(2);
 		}
 	}
 
@@ -162,14 +180,13 @@ public class TetrisMain extends FullFunctionScreen {
 				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 			}
+			resetTimer();
 		} else {
 			for (Block b : active) {
 				b.setActive(false);
 			}
 			newPiece();
 		}
-		if(!gameOver())
-		resetTimer();
 	}
 
 	public void moveLeft() {
@@ -229,6 +246,7 @@ public class TetrisMain extends FullFunctionScreen {
 			textBox.setText("GAME OVER");
 			timer.cancel();
 			timer = new Timer();
+			active = new ArrayList<Block>();
 		}
 	}
 
@@ -245,16 +263,19 @@ public class TetrisMain extends FullFunctionScreen {
 				clearRow(r);
 				moveDownAbove(r + 1);
 				rowCount++;
+				lines++;
 				r++;
-				scoreUp(rowCount * 100);
 			}
 		}
+		scoreUp((rowCount * 200 - 100) * (int)(lines/10));
 	}
 
 	private void scoreUp(int i) {
 		score += i;
-		scoreBox.setText("SCORE \n:" + score);
-		delay = 1000000 / (score+ 1000);
+		scoreBox.setText("SCORE \n" + score);
+		linesBox.setText("LINES \n" + lines);
+		levelBox.setText("LEVEL \n" + (int)(lines/10));
+		delay = (int) (2000*Math.pow(.7,(int)(lines/10)));
 	}
 
 	private void moveDownAbove(int r) {
@@ -322,8 +343,10 @@ public class TetrisMain extends FullFunctionScreen {
 				clockWise();
 			break;
 		case KeyEvent.VK_DOWN:
-			if (!active.isEmpty())
+			if (!active.isEmpty()) {
 				lower();
+				scoreUp(1);
+			}
 			break;
 		case KeyEvent.VK_SPACE:
 			if (!active.isEmpty()) {
@@ -354,5 +377,23 @@ public class TetrisMain extends FullFunctionScreen {
 			g.fillRect(Tetraminos.get(shape).get(x).getX() * 30 + 400, Tetraminos.get(shape).get(x).getY() * 30 + 100,
 					27, 27);
 		}
+	}
+
+	@Override
+	public void getScore() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void toTicket() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void displayTickets() {
+		// TODO Auto-generated method stub
+		
 	}
 }
