@@ -39,6 +39,7 @@ public class AliceGhost extends AnimatedComponent{
 	//orange acts stupid
 	private boolean canBeEaten;
 	private boolean eaten;
+	private boolean spawned;
 	private BufferedImage img;
 	private String ghostType;
 	private int direction;
@@ -51,17 +52,19 @@ public class AliceGhost extends AnimatedComponent{
 		super(x, y, w, h);
 		this.game = game;
 		this.ghostType = ghostType;
+		spawned = false;
 		if(ghostType == "red") {
 			gridX = 12;
 			gridY = 10;
+			spawned = true;
 		}else if(ghostType == "pink") {
 			gridX = 12;
 			gridY = 13;
 		}else if(ghostType == "cyan") {
-			gridX = 11;
+			gridX = 10;
 			gridY = 13;
 		}else if(ghostType == "orange") {
-			gridX = 13;
+			gridX = 14;
 			gridY = 13;
 		}
 		direction = 0;
@@ -119,20 +122,86 @@ public class AliceGhost extends AnimatedComponent{
 			img = game.getScaredGhost().getImage();
 		}
 		if(img != null) {
-			g.drawImage(img,getX(),getY(),null);
+			this.clear();
+			g.drawImage(img,0,0,getWidth(),getHeight(),null);
 		}
 	}
 	
 	public void checkBehaviors() {
 		setX((17*gridX) +325 + 18);
 		setY((17*gridY) +50  + 72);
+		if(spawned && !eaten && game.isRunning()) {
+			move();
+			try {
+				Thread.sleep(1500);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
 	}
 	
-	public void move(PacmanGrid grid) {
+	public void move() {
+		int[][] grid = game.getGrid().grid();
+		 direction = (int)(Math.random()*4);
+		
+		 if(direction == 0) {
+			 if(gridX != 0) {
+				 	System.out.println(grid[gridX-1][gridY]);
+					if(grid[gridX-1][gridY] != -1) {
+						setDirection(0);
+						setGridX(gridX-1);
+					}
+				}
+				if(gridX == 0 && gridY == 13) {
+					game.getPacman().setDirection(0);
+					game.getPacman().setGridX(grid.length-1);
+				}
+		 }
+		 if(direction == 1) {
+			 if(gridY != 0) {
+					if(grid[gridX][gridY-1] != -1) {
+						setDirection(1);
+						setGridY(gridY-1);
+					}
+				}
+		 }
+		 if(direction == 2) {
+			 if(gridX != grid.length-1) {
+					if(grid[gridX+1][gridY] != -1) {
+						setDirection(0);
+						setGridX(gridX+1);
+					}
+				}
+				if(gridX == grid.length-1 && gridY == 13) {
+					game.getPacman().setDirection(0);
+					game.getPacman().setGridX(grid.length-1);
+				}
+		 }
+		 if(direction == 3) {
+			 if(gridY != grid[gridX].length-1) {
+					if(grid[gridX][gridY+1] != -1) {
+						setDirection(0);
+						setGridX(gridX-1);
+					}
+				}
+		 }
 		 
 	}
 	 
 	
+	private void setGridY(int i) {
+		gridY = i;
+	}
+
+	private void setGridX(int i) {
+		gridX = i;
+	}
+
+	private void setDirection(int i) {
+		direction = i;
+	}
+
 	private boolean isBlue(DanielPacman pacman) {
 		if(pacman.wentOverPowerUp()) {
 			return true;
