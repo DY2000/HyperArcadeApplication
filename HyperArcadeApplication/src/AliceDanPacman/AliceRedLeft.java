@@ -10,6 +10,7 @@ public class AliceRedLeft extends AnimatedComponent{
 		super(x, y, w, h);
 		this.addSequence("resources/Pacman_spriteSheet.png", 200, 32, 65, 14, 13, 2);
 		Thread t = new Thread(this);
+		update();
 		t.start();
 	}
 

@@ -185,7 +185,7 @@ public class PacmanGrid extends AnimatedComponent {
 		for(int j = 0; j < grid.length; j++) {
 			for(int k = 0; k < grid[j].length; k++) {
 				if(grid[j][k] == 1) {
-					game.addObject(new DanielPacDot((17*j) +325 + 24,(17*k) +50  + 80,20,20,"",j+"_"+k,game));
+					game.addObject(new DanielPacDot((17*j) +325 + 24,(17*k) +50  + 80,20,20,"bit",j+"_"+k,game));
 				}
 				if(grid[j][k] == 2) {
 					game.addObject(new DanielPacDot((17*j) +325 + 24,(17*k) +50  + 80,20,20,"power",j+"_"+k,game));

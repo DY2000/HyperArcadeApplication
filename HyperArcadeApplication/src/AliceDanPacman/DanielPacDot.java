@@ -12,11 +12,13 @@ public class DanielPacDot extends AnimatedComponent{
 	private BufferedImage img;
 	private String pos;
 	private PacmanScreen game;
+	private String type;
 	
 	public DanielPacDot(int x, int y, int w, int h, String type, String pos, PacmanScreen game) {
 		super(x, y, w, h);
 		this.pos = pos;
 		this.game = game;
+		this.type = type;
 		try {
 			BufferedImage temp = ImageIO.read(new File("resources/Pacman_spriteSheet.png"));
 			if(type == "power") {
@@ -40,6 +42,7 @@ public class DanielPacDot extends AnimatedComponent{
 	public void checkBehaviors(){
 		String pacPos = game.getPacman().getGridX()+"_"+game.getPacman().getGridY();
 		if(pos.equals(pacPos)) {
+			game.updateScore(type);
 			game.remove(this);
 			setRunning(false);
 		}
