@@ -1,15 +1,21 @@
 package AliceDanPacman;
 
+import java.awt.Graphics2D;
+import java.awt.image.BufferedImage;
+import java.io.File;
+import java.io.IOException;
+
+import javax.imageio.ImageIO;
+
 import guiTeacher.components.AnimatedComponent;
 
 public class PacmanGrid extends AnimatedComponent {
-	private String type;
+	
 	private int grid[][];
 	private PacmanScreen game;	
 	
 	public PacmanGrid(int x, int y, int w, int h, PacmanScreen game) {
 		super(x,y,w,h);
-		this.type = type;
 		this.game = game;
 		grid = new int[26][29];
 		generateGrid();
@@ -17,6 +23,7 @@ public class PacmanGrid extends AnimatedComponent {
 		t.start();
 	}
 	
+	//Don't look in here
 	public void generateGrid() {
 		for(int x = 0; x < grid.length; x++) {
 			for(int y = 0; y < grid[x].length; y++) {
@@ -114,7 +121,77 @@ public class PacmanGrid extends AnimatedComponent {
 		grid[25][8] = -1; grid[25][12] = -1; grid[25][14] = -1; grid[25][18] = -1; grid[25][23] = -1; grid[25][24] = -1;
 		
 		//Now for the Dots
-		
+		grid[0][0] = 1;   grid[0][1] = 1;    grid[0][2] = 2;    grid[0][3] = 1;    grid[0][4] = 1;    grid[0][5] = 1;
+		grid[0][6] = 1;   grid[0][7] = 1;    grid[0][19] = 1;   grid[0][20] = 1;   grid[0][21] = 1;
+		grid[0][22] = 2;  grid[0][25] = 1;   grid[0][26] = 1;   grid[0][27] = 1;   grid[0][28] = 1;
+		grid[1][0] = 1;   grid[1][4] = 1;    grid[1][7] = 1;    grid[1][19] = 1;   grid[1][22] = 1;
+		grid[1][25] = 1;  grid[1][28] = 1;   
+		grid[2][0] = 1;   grid[2][4] = 1;    grid[2][7] = 1;    grid[2][19] = 1;   grid[2][22] = 1;
+		grid[2][23] = 1;  grid[2][24] = 1;   grid[2][25] = 1;   grid[2][28] = 1;   
+		grid[3][0] = 1;   grid[3][4] = 1;    grid[3][7] = 1;    grid[3][19] = 1;   grid[3][25] = 1;
+		grid[3][28] = 1;
+		grid[4][0] = 1;   grid[4][4] = 1;    grid[4][7] = 1;    grid[4][19] = 1;   grid[4][25] = 1;
+		grid[4][28] = 1;
+		grid[5][0] = 1;   grid[5][1] = 1;    grid[5][2] = 1;    grid[5][3] = 1;    grid[5][4] = 1;
+		grid[5][5] = 1;   grid[5][6] = 1;    grid[5][7] = 1;    grid[5][8] = 1;    grid[5][9] = 1;
+		grid[5][10] = 1;  grid[5][11] = 1;   grid[5][12] = 1;   grid[5][13] = 1;   grid[5][14] = 1;
+		grid[5][15] = 1;  grid[5][16] = 1;   grid[5][17] = 1;   grid[5][18] = 1;   grid[5][19] = 1;
+		grid[5][20] = 1;  grid[5][21] = 1;   grid[5][22] = 1;   grid[5][23] = 1;   grid[5][24] = 1;
+		grid[5][25] = 1;  grid[5][28] = 1;
+		grid[6][0] = 1;   grid[6][4] = 1;    grid[6][19] = 1;   grid[6][22] = 1;   grid[6][28] = 1;
+		grid[7][0] = 1;   grid[7][4] = 1;    grid[7][19] = 1;   grid[7][22] = 1;   grid[7][28] = 1;
+		grid[8][0] = 1;   grid[8][4] = 1;    grid[8][5] = 1;    grid[8][6] = 1;    grid[8][7] = 1;
+		grid[8][19] = 1;  grid[8][22] = 1;   grid[8][23] = 1;   grid[8][24] = 1;   grid[8][25] = 1;
+		grid[8][28] = 1;
+		grid[9][0] = 1;   grid[9][4] = 1;    grid[9][7] = 1;    grid[9][19] = 1;   grid[9][22] = 1;
+		grid[9][25] = 1;  grid[9][28] = 1;
+		grid[10][0] = 1;  grid[10][4] = 1;   grid[10][7] = 1;   grid[10][19] = 1;  grid[10][22] = 1;
+		grid[10][25] = 1; grid[10][28] = 1;
+		grid[11][0] = 1;  grid[11][1] = 1;   grid[11][2] = 1;   grid[11][3] = 1;   grid[11][4] = 1;
+		grid[11][7] = 1;  grid[11][19] = 1;  grid[11][20] = 1;  grid[11][21] = 1;  grid[11][22] = 1;
+		grid[11][25] = 1; grid[11][26] = 1;  grid[11][27] = 1;  grid[11][28] = 1;
+		grid[12][4] = 1;  grid[12][28] = 1;  
+		grid[13][4] = 1;  grid[13][28] = 1;
+		grid[14][0] = 1;  grid[14][1] = 1;   grid[14][2] = 1;   grid[14][3] = 1;   grid[14][4] = 1;
+		grid[14][7] = 1;  grid[14][19] = 1;  grid[14][20] = 1;  grid[14][21] = 1;  grid[14][22] = 1;
+		grid[14][25] = 1; grid[14][26] = 1;  grid[14][27] = 1;  grid[14][28] = 1;  
+		grid[15][0] = 1;  grid[15][4] = 1;   grid[15][7] = 1;   grid[15][19] = 1;  grid[15][22] = 1;
+		grid[15][25] = 1; grid[15][28] = 1;
+		grid[16][0] = 1;  grid[16][4] = 1;   grid[16][7] = 1;   grid[16][19] = 1;  grid[16][22] = 1;
+		grid[16][25] = 1; grid[16][28] = 1;
+		grid[17][0] = 1;  grid[17][4] = 1;   grid[17][5] = 1;   grid[17][6] = 1;   grid[17][7] = 1;
+		grid[17][19] = 1; grid[17][22] = 1;  grid[17][23] = 1;  grid[17][24] = 1;  grid[17][25] = 1;
+		grid[17][28] = 1;
+		grid[18][0] = 1;  grid[18][4] = 1;   grid[18][22] = 1;  grid[18][19] = 1;  grid[18][28] = 1;
+		grid[19][0] = 1;  grid[19][4] = 1;   grid[19][22] = 1;  grid[19][19] = 1;  grid[19][28] = 1;
+		grid[20][0] = 1;  grid[20][1] = 1;   grid[20][2] = 1;   grid[20][3] = 1;   grid[20][4] = 1;
+		grid[20][5] = 1;  grid[20][6] = 1;   grid[20][7] = 1;   grid[20][8] = 1;   grid[20][9] = 1;
+		grid[20][10] = 1; grid[20][11] = 1;  grid[20][12] = 1;  grid[20][13] = 1;  grid[20][14] = 1;
+		grid[20][15] = 1; grid[20][16] = 1;  grid[20][17] = 1;  grid[20][18] = 1;  grid[20][19] = 1;
+		grid[20][20] = 1; grid[20][21] = 1;  grid[20][22] = 1;  grid[20][23] = 1;  grid[20][24] = 1;
+		grid[20][25] = 1; grid[20][28] = 1;
+		grid[21][0] = 1;  grid[21][4] = 1;   grid[21][7] = 1;   grid[21][19] = 1;  grid[21][25] = 1;
+		grid[21][28] = 1; 
+		grid[22][0] = 1;  grid[22][4] = 1;   grid[22][7] = 1;   grid[22][19] = 1;  grid[22][25] = 1;
+		grid[22][28] = 1; 
+		grid[23][0] = 1;  grid[23][4] = 1;   grid[23][7] = 1;   grid[23][19] = 1;  grid[23][22] = 1;
+		grid[23][23] = 1; grid[23][24] = 1;  grid[23][25] = 1;  grid[23][28] = 1;
+		grid[24][0] = 1;  grid[24][4] = 1;   grid[24][7] = 1;   grid[24][19] = 1;  grid[24][22] = 1;
+		grid[24][25] = 1; grid[24][28] = 1;
+		grid[25][0] = 1;  grid[25][1] = 1;   grid[25][2] = 2;   grid[25][3] = 1;   grid[25][4] = 1;
+		grid[25][5] = 1;  grid[25][6] = 1;   grid[25][7] = 1;   grid[25][19] = 1;  grid[25][20] = 1;
+		grid[25][21] = 1; grid[25][22] = 2;  grid[25][25] = 1;  grid[25][26] = 1;  grid[25][27] = 1;
+		grid[25][28] = 1;
+		for(int j = 0; j < grid.length; j++) {
+			for(int k = 0; k < grid[j].length; k++) {
+				if(grid[j][k] == 1) {
+					game.addObject(new DanielPacDot((17*j) +325 + 24,(17*k) +50  + 80,20,20,"",j+"_"+k,game));
+				}
+				if(grid[j][k] == 2) {
+					game.addObject(new DanielPacDot((17*j) +325 + 24,(17*k) +50  + 80,20,20,"power",j+"_"+k,game));
+				}
+			}
+		}
 	}
 	
 	public void checkBehaviors() {
@@ -126,11 +203,12 @@ public class PacmanGrid extends AnimatedComponent {
 	}
 	
 	public void moveLeft(int pacX, int pacY) {
-		if(pacX != 0)
+		if(pacX != 0) {
 			if(grid[pacX-1][pacY] != -1) {
 				game.getPacman().setDirection(0);
 				game.getPacman().setGridX(pacX-1);
 			}
+		}
 		if(pacX == 0 && pacY == 13) {
 			game.getPacman().setDirection(0);
 			game.getPacman().setGridX(grid.length-1);

@@ -14,7 +14,7 @@ import guiTeacher.components.AnimatedComponent;
 import markGalaga.MarkPlayerMovement;
 import willTetris.Collidable;
 
-public class DanielPacman extends MarkPlayerMovement{
+public class DanielPacman extends MarkPlayerMovement implements AliceGhostInterface{
 	
 	private PacmanScreen game;
 	private BufferedImage img;
@@ -26,11 +26,11 @@ public class DanielPacman extends MarkPlayerMovement{
 
 	public DanielPacman(int x, int y, int w, int h, PacmanScreen game) {
 		super(x, y, w, h);
-		 this.game = game;
-		 canEatGhost = false;
-		 direction = -1;
-		 gridX = 12;
-		 gridY = 22;
+		this.game = game;
+		canEatGhost = false;
+		direction = -1;
+		gridX = 12;
+		gridY = 22;
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -70,12 +70,6 @@ public class DanielPacman extends MarkPlayerMovement{
 	}
 
 	public void checkBehaviors() {
-		try {
-			Thread.sleep(150);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		setX((17*gridX) +325 + 18);
 		setY((17*gridY) +50  + 72);
 		if(direction == 0)
@@ -86,6 +80,12 @@ public class DanielPacman extends MarkPlayerMovement{
 			game.getGrid().moveRight(gridX,gridY);
 		else if(direction == 3)
 			game.getGrid().moveDown(gridX,gridY);
+		try {
+			Thread.sleep(150);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean canEatGhost() {
@@ -111,6 +111,10 @@ public class DanielPacman extends MarkPlayerMovement{
 	public void setDirection(int n) {
 		direction = n;
 	}
+
+	public int getDirection() {
+		return direction;
+	}
 	
 	@Override
 	public void moveLeft() {
@@ -131,5 +135,9 @@ public class DanielPacman extends MarkPlayerMovement{
 	@Override
 	public void moveStop() {
 		//dsd
+	}
+	@Override
+	public boolean wentOverPowerUp() {
+		return false;
 	}
 }
