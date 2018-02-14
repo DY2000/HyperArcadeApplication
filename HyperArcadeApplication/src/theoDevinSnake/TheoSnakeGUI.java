@@ -21,6 +21,8 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		private SnakePoint point;
 		private boolean first;
 		private int count;
+		private TextArea text;
+		private int points;
 	public TheoSnakeGUI(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -30,6 +32,9 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 	}
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
+		points=0;
+		text= new TextArea(100,100,100,100,"");
+		text.setText("");
 		first=true;
 		snakeBody = new ArrayList<SnakePart>();
 		snakeBody.add(new SnakePart(500,500,25,25,true,this,count));
@@ -63,6 +68,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		System.out.println("feelsdabman");
 		point.setX(getRandomX());
 		point.setY(getRandomY());
+		points+=100;
 //		try {
 //			Thread.sleep(200);
 //		} catch (InterruptedException e) {
@@ -129,7 +135,7 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		return (int)(Math.random()*1024);
 	}
 	public int getRandomY() {
-		return (int)(Math.random()*764);
+		return (int)((Math.random()*764)+25);
 	}
 
 	@Override
@@ -138,7 +144,13 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		
 	}
 	public void gameOver() {
-		System.out.println("oof");
+		for(int i = 1; i < snakeBody.size(); i++) {
+			snakeBody.get(i).setRunning(false);
+			remove(snakeBody.get(i));
+		}
+		snakeBody.clear();
+		text.setText("Game Over");
+		
 	}
 	public void keyPressed(KeyEvent e) {
 		switch(e.getKeyCode()) {
@@ -147,45 +159,41 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 				if(first) {
 					first=false;
 					snakeBody.get(0).moveUp();
-					break;
 				}else {
-			snakeBody.get(0).moveUp();
-			break;
+					snakeBody.get(0).moveUp();
 				}
 			}
+			break;
 		case KeyEvent.VK_DOWN :
 			if(snakeBody.get(0).getVy() != -5) {
 				if(first) {
 					first=false;
 					snakeBody.get(0).moveDown();
-					break;
 				}else {
-			snakeBody.get(0).moveDown();
-			break;
+					snakeBody.get(0).moveDown();
 				}
 			}
+			break;
 		case KeyEvent.VK_LEFT :
 			if(snakeBody.get(0).getVx() != 5) {
 				if(first) {
 					first=false;
 					snakeBody.get(0).moveLeft();
-					break;
 				}else {
-			snakeBody.get(0).moveLeft();
-			break;
+					snakeBody.get(0).moveLeft();
 			}
 		}
+			break;
 		case KeyEvent.VK_RIGHT :
 			if(snakeBody.get(0).getVx() != -5) {
 				if(first) {
 					first=false;
 					snakeBody.get(0).moveRight();
-					break;
 				}else {
-			snakeBody.get(0).moveRight();
-			break;
+					snakeBody.get(0).moveRight();
 				}
 			}
+			break;
 		}
 	}
 

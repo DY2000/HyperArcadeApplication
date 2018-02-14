@@ -149,6 +149,9 @@ public class SnakePart extends MarkPlayerMovement implements Collidable {
 		if (beep.getSnakeBody().get(0).checkColision(beep.getPoint())) {
 			beep.pointGet();
 		}
+		if(head && outOfBounds()) {
+			beep.gameOver();
+		}
 		// if(!head) {
 		// if((beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)-1).getX()>=beep.getSnakeBody().get(beep.getSnakeBody().indexOf(this)).getX()
 		// &&
@@ -197,6 +200,15 @@ public class SnakePart extends MarkPlayerMovement implements Collidable {
 	public void moveStop() {
 		// TODO Auto-generated method stub
 
+	}
+	public boolean outOfBounds() {
+		if(this.getX()<0|| this.getX()>1024) {
+			return true;
+		}
+		if(this.getY()<0||this.getY()>764) {
+			return true;
+		}
+		return false;
 	}
 
 }
