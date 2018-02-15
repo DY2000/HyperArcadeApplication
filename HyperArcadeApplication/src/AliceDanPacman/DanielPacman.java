@@ -7,10 +7,12 @@ import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import java.util.Timer;
+import java.util.TimerTask;
 
 import javax.imageio.ImageIO;
 
 import guiTeacher.components.AnimatedComponent;
+import markGalaga.MarkDeathAnimation;
 import markGalaga.MarkPlayerMovement;
 import willTetris.Collidable;
 
@@ -31,6 +33,7 @@ public class DanielPacman extends MarkPlayerMovement implements AliceGhostInterf
 		direction = -1;
 		gridX = 12;
 		gridY = 22;
+		setVisible(false);
 		Thread t = new Thread(this);
 		t.start();
 	}
@@ -60,13 +63,16 @@ public class DanielPacman extends MarkPlayerMovement implements AliceGhostInterf
 		}
 	}
 	
-	public boolean ateBlue() {
-		return false;
-	}
-	
-	public void whenAtePowerup() {
+	public void atePowerup() {
 		canEatGhost = true;
 		Timer cooldown = new Timer();
+		cooldown.schedule(new TimerTask() {
+			
+			@Override
+			public void run() {
+				canEatGhost = false;
+			}
+		}, 8000);
 	}
 
 	public void checkBehaviors() {
@@ -80,12 +86,41 @@ public class DanielPacman extends MarkPlayerMovement implements AliceGhostInterf
 			game.getGrid().moveRight(gridX,gridY);
 		else if(direction == 3)
 			game.getGrid().moveDown(gridX,gridY);
-		try {
-			Thread.sleep(150);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		if(canEatGhost)
+			try {
+				Thread.sleep(125);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		else
+			try {
+				Thread.sleep(150);
+			} catch (InterruptedException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	}
+	
+
+	public void death() {
+			setVisible(false);
+			direction = -1;
+			Thread b = new Thread(new Runnable() {
+				public void run() {
+					DanDeathAnimation boom = new DanDeathAnimation(getX(),getY(),getWidth(),getHeight(),game);
+					game.addObject(boom);
+					try {
+						Thread.sleep(3000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+					game.remove(boom);
+					game.pacRespawn();
+				}
+			});
+			b.start();
+		
 	}
 	
 	public boolean canEatGhost() {
@@ -139,5 +174,12 @@ public class DanielPacman extends MarkPlayerMovement implements AliceGhostInterf
 	@Override
 	public boolean wentOverPowerUp() {
 		return false;
+	}
+	public void reset() {
+		canEatGhost = false;
+		direction = -1;
+		gridX = 12;
+		gridY = 22;
+		setVisible(true);
 	}
 }

@@ -2,7 +2,7 @@ package devin;
 
 public interface DevTicket {
 	
-	 void getScore();
+	 int getScore();
 	 void toTicket();
 	 void displayTickets();
 }

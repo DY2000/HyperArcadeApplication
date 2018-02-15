@@ -43,6 +43,9 @@ public class DanielPacDot extends AnimatedComponent{
 		String pacPos = game.getPacman().getGridX()+"_"+game.getPacman().getGridY();
 		if(pos.equals(pacPos)) {
 			game.updateScore(type);
+			if(type == "power")
+				game.getPacman().atePowerup();
+			game.getGrid().grid()[game.getPacman().getGridX()][game.getPacman().getGridY()] = 0;
 			game.remove(this);
 			setRunning(false);
 		}

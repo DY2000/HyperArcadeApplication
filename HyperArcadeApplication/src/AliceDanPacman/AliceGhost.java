@@ -26,7 +26,6 @@ public class AliceGhost extends AnimatedComponent{
 	//not joining the chase until Pac-Man has managed to consume at least 30 of the dots. 
 	//The orange ghost, â€œClydeâ€�, is the last to leave the ghost house, and does not exit 
 	//at all in the first level until over a third of the dots have been eaten. 
-	//The ghosts are always in one of three possible modes: Chase, Scatter, or Frightened. 
 	//chase-normal mode with ghosts chasing pacman
 	// While in Chase mode, all of the ghosts use Pac-Manâ€™s position as a factor in selecting their target tile, 
 	//though it is more significant to some ghosts than others.
@@ -52,7 +51,7 @@ public class AliceGhost extends AnimatedComponent{
 		super(x, y, w, h);
 		this.game = game;
 		this.ghostType = ghostType;
-		spawned = false;
+		spawned = true;
 		if(ghostType == "red") {
 			gridX = 12;
 			gridY = 10;
@@ -120,6 +119,15 @@ public class AliceGhost extends AnimatedComponent{
 			}
 		}else if(canBeEaten && !eaten) {
 			img = game.getScaredGhost().getImage();
+		}else if(eaten){
+			BufferedImage temp;
+			try {
+				temp = ImageIO.read(new File("resources/Pacman_spriteSheet.png"));
+				img = temp.getSubimage(16, 80, 14, 14);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		if(img != null) {
 			this.clear();
@@ -130,86 +138,158 @@ public class AliceGhost extends AnimatedComponent{
 	public void checkBehaviors() {
 		setX((17*gridX) +325 + 18);
 		setY((17*gridY) +50  + 72);
-		if(spawned && !eaten && game.isRunning()) {
-			move();
+		canBeEaten = game.getPacman().canEatGhost();
+		if(canBeEaten && game.isRunning() && spawned) {
+			if(gridX == game.getPacman().getGridX() && gridY == game.getPacman().getGridY()) {
+				eaten = true;
+			}
+		}else if(!canBeEaten && game.isRunning() && spawned){
+			if(gridX == game.getPacman().getGridX() && gridY == game.getPacman().getGridY()) {
+				game.getPacman().death();
+			}
+		}
+		if(eaten) {
+			update();
 			try {
-				Thread.sleep(1500);
+				Thread.sleep(6000);
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
+			eaten = false;
+			reset();
+		}
+		if(spawned && !eaten && game.isRunning()) {
+			move();
+			game.getGrid().moveGhost(this);
+			if(game.getGrid().getDotCount() > 20)
+				try {
+					Thread.sleep(200);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			else
+				try {
+					Thread.sleep(150);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 		}
 	}
 	
 	public void move() {
 		int[][] grid = game.getGrid().grid();
-		 direction = (int)(Math.random()*4);
-		
-		 if(direction == 0) {
-			 if(gridX != 0) {
-				 	System.out.println(grid[gridX-1][gridY]);
-					if(grid[gridX-1][gridY] != -1) {
-						setDirection(0);
-						setGridX(gridX-1);
-					}
-				}
-				if(gridX == 0 && gridY == 13) {
-					game.getPacman().setDirection(0);
-					game.getPacman().setGridX(grid.length-1);
-				}
-		 }
-		 if(direction == 1) {
-			 if(gridY != 0) {
-					if(grid[gridX][gridY-1] != -1) {
-						setDirection(1);
-						setGridY(gridY-1);
-					}
-				}
-		 }
-		 if(direction == 2) {
-			 if(gridX != grid.length-1) {
-					if(grid[gridX+1][gridY] != -1) {
-						setDirection(0);
-						setGridX(gridX+1);
-					}
-				}
-				if(gridX == grid.length-1 && gridY == 13) {
-					game.getPacman().setDirection(0);
-					game.getPacman().setGridX(grid.length-1);
-				}
-		 }
-		 if(direction == 3) {
-			 if(gridY != grid[gridX].length-1) {
-					if(grid[gridX][gridY+1] != -1) {
-						setDirection(0);
-						setGridX(gridX-1);
-					}
-				}
-		 }
-		 
+		int newD = direction;
+		boolean canLeft = false;
+		boolean canRight = false;
+		boolean canUp = false;
+		boolean canDown = false;
+		if(gridX != 0)
+			canLeft = (grid[gridX-1][gridY] != -1);
+		if(gridY != 0)
+			canUp = (grid[gridX][gridY-1] != -1);
+		if(gridX != grid.length-1)
+			canRight = (grid[gridX+1][gridY] != -1);
+		if(gridY != grid[gridX].length-1)
+			canDown = (grid[gridX][gridY+1] != -1);
+		String intersection = "_";
+		ArrayList<Integer> options = new ArrayList<Integer>();
+		if(canLeft) {
+			intersection += "L";
+		}
+		if(gridX != grid.length-1)
+		if(canRight) {
+			intersection += "R";
+		}
+		if(gridY != 0)
+		if(canUp) {
+			intersection += "U";
+		}
+		if(gridY != grid[gridX].length -1)
+		if(canDown) {
+			intersection += "D";
+		}
+		if(intersection.contains("L")) {
+			options.add(0);
+		}
+		if(intersection.contains("R")) {
+			options.add(2);
+		}
+		if(intersection.contains("U")) {
+			options.add(1);
+		}
+		if(intersection.contains("D")) {
+			options.add(3);
+		}
+		if(options.size() > 2) {
+			newD = options.get((int)(Math.random()*options.size()));
+			while(newD == (direction+2%4)) {
+				newD = options.get((int)(Math.random()*options.size()));
+			}
+			direction = newD;
+		}else if((canLeft && canRight) || (canUp && canDown)) {
+			direction = newD;
+		}else {
+			newD = options.get((int)(Math.random()*options.size()));
+			while(newD == (direction+2%4)) {
+				newD = options.get((int)(Math.random()*options.size()));
+			}
+			direction = newD;
+		}
+		options.clear();
+		intersection = "";
 	}
 	 
 	
-	private void setGridY(int i) {
+	public void setGridY(int i) {
 		gridY = i;
 	}
 
-	private void setGridX(int i) {
+	public void setGridX(int i) {
 		gridX = i;
 	}
 
-	private void setDirection(int i) {
+	public void setDirection(int i) {
 		direction = i;
 	}
 
-	private boolean isBlue(DanielPacman pacman) {
+	public boolean isBlue(DanielPacman pacman) {
 		if(pacman.wentOverPowerUp()) {
 			return true;
 		}
 		return false;
 	}
 	
-	private boolean wentOverDots() {
+	public boolean wentOverDots() {
 		return false;
 	}
+
+	public int getGridX() {
+		return gridX;
+	}
 	
+	public int getGridY() {
+		return gridY;
+	}
+
+	public int getDirection() {
+		return direction;
+	}
+
+	public void reset() {
+		if(ghostType == "red") {
+			gridX = 12;
+			gridY = 10;
+		}else if(ghostType == "pink") {
+			gridX = 12;
+			gridY = 13;
+		}else if(ghostType == "cyan") {
+			gridX = 10;
+			gridY = 13;
+		}else if(ghostType == "orange") {
+			gridX = 14;
+			gridY = 13;
+		}
+	}
 }
