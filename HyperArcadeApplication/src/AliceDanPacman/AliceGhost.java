@@ -51,7 +51,7 @@ public class AliceGhost extends AnimatedComponent{
 		super(x, y, w, h);
 		this.game = game;
 		this.ghostType = ghostType;
-		spawned = true;
+		spawned = false;
 		if(ghostType == "red") {
 			gridX = 12;
 			gridY = 10;
@@ -123,7 +123,7 @@ public class AliceGhost extends AnimatedComponent{
 			BufferedImage temp;
 			try {
 				temp = ImageIO.read(new File("resources/Pacman_spriteSheet.png"));
-				img = temp.getSubimage(16, 80, 14, 14);
+				img = temp.getSubimage(160, 80, 14, 14);
 			} catch (IOException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -142,23 +142,36 @@ public class AliceGhost extends AnimatedComponent{
 		if(canBeEaten && game.isRunning() && spawned) {
 			if(gridX == game.getPacman().getGridX() && gridY == game.getPacman().getGridY()) {
 				eaten = true;
+				canBeEaten = false;
+				game.updateScore(ghostType);
 			}
 		}else if(!canBeEaten && game.isRunning() && spawned){
 			if(gridX == game.getPacman().getGridX() && gridY == game.getPacman().getGridY()) {
-				game.getPacman().death();
+				if(game.getPacman().isVisible())
+					game.getPacman().death();
 			}
 		}
 		if(eaten) {
 			update();
-			try {
-				Thread.sleep(6000);
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			eaten = false;
-			reset();
+			Thread returnHome = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					reset();
+					try {
+						Thread.sleep(4010);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					eaten = false;
+					canBeEaten = false;
+					System.out.println(ghostType);
+				}
+			});
+			returnHome.start();
 		}
+		System.out.println(ghostType+"_"+spawned+"_"+!eaten+"_"+game.isRunning());
 		if(spawned && !eaten && game.isRunning()) {
 			move();
 			game.getGrid().moveGhost(this);
@@ -188,10 +201,16 @@ public class AliceGhost extends AnimatedComponent{
 		boolean canDown = false;
 		if(gridX != 0)
 			canLeft = (grid[gridX-1][gridY] != -1);
+		else if(gridX == 0 && gridY == 13) {
+			canLeft = true;
+		}
 		if(gridY != 0)
 			canUp = (grid[gridX][gridY-1] != -1);
 		if(gridX != grid.length-1)
 			canRight = (grid[gridX+1][gridY] != -1);
+		else if(gridX ==  grid.length-1 && gridY == 13) {
+			canRight = true;
+		}
 		if(gridY != grid[gridX].length-1)
 			canDown = (grid[gridX][gridY+1] != -1);
 		String intersection = "_";
@@ -242,6 +261,11 @@ public class AliceGhost extends AnimatedComponent{
 		intersection = "";
 	}
 	 
+	public void spawn() {
+		gridX = 12;
+		gridY = 10;
+		spawned = true;
+	}
 	
 	public void setGridY(int i) {
 		gridY = i;
@@ -279,9 +303,11 @@ public class AliceGhost extends AnimatedComponent{
 	}
 
 	public void reset() {
+		spawned = false;
 		if(ghostType == "red") {
 			gridX = 12;
 			gridY = 10;
+			spawned = true;
 		}else if(ghostType == "pink") {
 			gridX = 12;
 			gridY = 13;
@@ -292,5 +318,9 @@ public class AliceGhost extends AnimatedComponent{
 			gridX = 14;
 			gridY = 13;
 		}
+	}
+
+	public boolean isSpawned() {
+		return spawned;
 	}
 }

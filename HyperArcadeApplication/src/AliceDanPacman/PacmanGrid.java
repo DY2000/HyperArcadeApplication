@@ -206,12 +206,12 @@ public class PacmanGrid extends AnimatedComponent {
 			if(ghostX != 0 && grid[ghostX-1][ghostY] != -1)
 				ghost.setGridX(ghostX-1);
 			else if(ghostX == 0 && ghostY == 13) 
-				ghost.setGridX(ghostX-1);
+				ghost.setGridX(grid.length-1);
 		}else if(ghostD == 2) {
 			if(ghostX != grid.length-1 && grid[ghostX+1][ghostY] != -1)
 				ghost.setGridX(ghostX+1);
 			else if(ghostX == grid.length-1 && ghostY == 13)
-				ghost.setGridX(ghostX+1);
+				ghost.setGridX(0);
 		}else if(ghostD == 1) {
 			if(ghostY != 0 && grid[ghostX][ghostY-1] != -1)
 				ghost.setGridY(ghostY-1);
@@ -274,7 +274,6 @@ public class PacmanGrid extends AnimatedComponent {
 				}
 			}
 		}
-		System.out.println(dots);
 		return dots;
 	}
 }

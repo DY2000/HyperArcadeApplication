@@ -51,6 +51,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	private TextArea resultsBox;
 	private PacmanBackground bg;
 	private PacmanGrid grid;
+	private PacmanManager manager;
 	private boolean running;
 	private int score;
 	private int highscore;
@@ -119,6 +120,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		score = 0;
 		lives = 2;
 		highscore = 20000;
+		manager= new PacmanManager(0,0,1,1,this);
 		
 		labelBox = new TextArea(325, 55, 425, 40,"    1UP                                    HIGH SCORE");
 		labelBox.setCustomTextColor(Color.WHITE);
@@ -194,21 +196,25 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		switch(e.getKeyCode()) {
 			case KeyEvent.VK_UP :
 				if(running)
+				if(pac.isVisible())
 				if(pac.getDirection() != 1)
 				pac.moveUp();
 				break;
 			case KeyEvent.VK_LEFT :
 				if(running)
+				if(pac.isVisible())
 				if(pac.getDirection() != 0)
 				pac.moveLeft();
 				break;
 			case KeyEvent.VK_RIGHT :
 				if(running)
+				if(pac.isVisible())
 				if(pac.getDirection() != 2)
 				pac.moveRight();
 				break;
 			case KeyEvent.VK_DOWN :
 				if(running)
+				if(pac.isVisible())
 				if(pac.getDirection() != 3)
 				pac.moveDown();
 				break;
@@ -260,15 +266,6 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	
 	
 	private void gameOver() {
-		messageBox.setText("GAME  OVER");
-		messageBox.setVisible(true);
-		try {
-			Thread.sleep(1500);
-		} catch (InterruptedException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		messageBox.setVisible(false);
 		resultsBox.setVisible(true);
 		try {
 			Thread.sleep(5000);
@@ -280,24 +277,71 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		lives = 2;
 		lifeBox.setText("LIVES "+lives);
 		score = 0;
-		updateScore(null);
+		updateScore("0");
 		running = false;
+		for(AliceGhost g : ghosts) {
+			g.reset();
+		}
+		pac.reset();
+		grid.generateGrid();
 		messageBox.setText("   PRESS  ENTER ");
 		messageBox.setVisible(true);
 		update();
 	}
 
+
+	public void nextRound() {
+		stage++;
+		running = false;
+		for(AliceGhost g : ghosts) {
+			g.reset();
+		}
+		pac.reset();
+		Thread j = new Thread(new Runnable() {
+					
+			@Override
+			public void run() {
+				stageBox.setText("STAGE "+stage);
+				stageBox.setVisible(true);
+				update();
+				try {
+					Thread.sleep(2000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				stageBox.setVisible(false);
+				grid.generateGrid();
+				running = true;
+			}
+
+		});
+		j.start();
+	}
+	
 	public DanielPacman getPacman() {
 		return pac;
 	}
-
+	
 
 	public void updateScore(String type) {
 		if(type.equals("bit") ) {
-			score += 100;
+			score += 50;
 			scoreBox.setText(score+"");
 		}else if(type.equals("power")) {
-			score += 1000;
+			score += 100;
+			scoreBox.setText(score+"");
+		}else if(type.equals("red")) {
+			score += 200;
+			scoreBox.setText(score+"");
+		}else if(type.equals("pink")) {
+			score += 400;
+			scoreBox.setText(score+"");
+		}else if(type.equals("cyan")) {
+			score += 800;
+			scoreBox.setText(score+"");
+		}else if(type.equals("orange")) {
+			score += 1600;
 			scoreBox.setText(score+"");
 		}else {
 			scoreBox.setText(score+"");
@@ -415,6 +459,19 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	public boolean isRunning() {
 		return running;
 	}
+
+	public AliceGhost getPinky() {
+		return pinky;
+	}
+	
+	public AliceGhost getInky() {
+		return inky;
+	}
+	
+	public AliceGhost getClyde() {
+		return clyde;
+	}
+
 
 	
 }

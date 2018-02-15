@@ -14,13 +14,17 @@ public class PacmanManager extends AnimatedComponent{
 	}
 
 	public void checkBehaviors() {
-		if(game.isRunning()) {
-			if(game.getGrid().getDotCount() == 0 && game.isRunning()) {
+			if(game.getGrid().getDotCount() <= 3 && game.isRunning()) {
 				game.nextRound();
 			}
-			if(!game.getShip().isVisible() && game.getLives() >= 0 && !game.isSpawning()) {
-				game.shipRespawn();
+			if(game.getGrid().getDotCount() < 200 && game.isRunning() && !game.getPinky().isSpawned()) {
+				game.getPinky().spawn();
 			}
-		}
+			if(game.getGrid().getDotCount() < 150 && game.isRunning() && !game.getInky().isSpawned()) {
+				game.getInky().spawn();
+			}
+			if(game.getGrid().getDotCount() < 100 && game.isRunning() && !game.getClyde().isSpawned()) {
+				game.getClyde().spawn();
+			}
 	}
 }
