@@ -112,9 +112,9 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.black);
 		board = new Block[10][20];
-		start = new Button(400, 100, 100, 50, "START", new Action() {
+		start = new Button(235, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
 				newPiece();
@@ -126,27 +126,32 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 					}
 				}, delay, delay);
 				start.setEnabled(false);
+				start.setVisible(false);
 			}
 		});
 		start.setText("START");
-		start.setSize(20);
+		start.setSize(25);
+		start.setForeground(Color.white);
 		start.setVisible(true);
 		viewObjects.add(start);
 
-		scoreBox = new TextArea(400, 200, 100, 100, "SCORE \n" + score);
-		scoreBox.setVisible(true);
+		scoreBox = new TextArea(250, 175, 100, 100, "SCORE \n" + score);
 		scoreBox.setCustomTextColor(Color.WHITE);
+		scoreBox.setVisible(true);
 		viewObjects.add(scoreBox);
-		
-		linesBox = new TextArea(400, 300, 100, 100, "LINES \n" + lines);
+
+		linesBox = new TextArea(250, 250, 100, 100, "LINES \n" + lines);
+		linesBox.setCustomTextColor(Color.WHITE);
 		linesBox.setVisible(true);
 		viewObjects.add(linesBox);
 
-		levelBox = new TextArea(400, 400, 100, 100, "LEVEL \n" + (int)(lines/10));
+		levelBox = new TextArea(250, 325, 100, 100, "LEVEL \n" + (int) (lines / 10));
+		levelBox.setCustomTextColor(Color.WHITE);
 		levelBox.setVisible(true);
 		viewObjects.add(levelBox);
-		
-		textBox = new TextArea(400, 500, 100, 100, "");
+
+		textBox = new TextArea(250, 400, 100, 100, "");
+		textBox.setCustomTextColor(Color.WHITE);
 		textBox.setVisible(true);
 		viewObjects.add(textBox);
 	}
@@ -247,6 +252,8 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			timer.cancel();
 			timer = new Timer();
 			active = new ArrayList<Block>();
+		}else {
+			lower();
 		}
 	}
 
@@ -267,15 +274,15 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 				r++;
 			}
 		}
-		scoreUp((rowCount * 200 - 100) * (int)(lines/10));
+		scoreUp((rowCount * 200 - 100) * (int) (lines / 10));
 	}
 
 	private void scoreUp(int i) {
 		score += i;
 		scoreBox.setText("SCORE \n" + score);
 		linesBox.setText("LINES \n" + lines);
-		levelBox.setText("LEVEL \n" + (int)(lines/10));
-		delay = (int) (2000*Math.pow(.7,(int)(lines/10)));
+		levelBox.setText("LEVEL \n" + (int) (lines / 10));
+		delay = (int) (2000 * Math.pow(.7, (int) (lines / 10)));
 	}
 
 	private void moveDownAbove(int r) {
@@ -359,8 +366,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public void paint(Graphics g) {
 		super.paint(g);
+		g.setColor(Color.white);
+		g.fillRect(357, 79, 310, 610);
 		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 600);
+		g.fillRect(362, 84, 300, 600);
 
 		for (int w = 0; w < board.length; w++) {
 			for (int h = 0; h < board[w].length; h++) {
@@ -368,13 +377,13 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 					g.setColor(board[w][h].getColor());
 				else
 					g.setColor(Color.black);
-				g.fillRect(w * 30, h * 30, 27, 27);
+				g.fillRect(362 + w * 30, 84 + h * 30, 27, 27);
 			}
 		}
 
 		for (int x = 0; x < 4; x++) {
 			g.setColor(Tetraminos.get(shape).get(x).getColor());
-			g.fillRect(Tetraminos.get(shape).get(x).getX() * 30 + 400, Tetraminos.get(shape).get(x).getY() * 30 + 100,
+			g.fillRect(Tetraminos.get(shape).get(x).getX() * 30 + 600, Tetraminos.get(shape).get(x).getY() * 30 + 100,
 					27, 27);
 		}
 	}
@@ -382,18 +391,18 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	@Override
 	public void getScore() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void toTicket() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void displayTickets() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
