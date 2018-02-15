@@ -198,8 +198,27 @@ public class PacmanGrid extends AnimatedComponent {
 		
 	}
 	
-	public int[][] grid(){
-		return grid;
+	public void moveGhost(AliceGhost ghost) {
+		int ghostX = ghost.getGridX();
+		int ghostY = ghost.getGridY();
+		int ghostD = ghost.getDirection();
+		if(ghostD == 0) {
+			if(ghostX != 0 && grid[ghostX-1][ghostY] != -1)
+				ghost.setGridX(ghostX-1);
+			else if(ghostX == 0 && ghostY == 13) 
+				ghost.setGridX(ghostX-1);
+		}else if(ghostD == 2) {
+			if(ghostX != grid.length-1 && grid[ghostX+1][ghostY] != -1)
+				ghost.setGridX(ghostX+1);
+			else if(ghostX == grid.length-1 && ghostY == 13)
+				ghost.setGridX(ghostX+1);
+		}else if(ghostD == 1) {
+			if(ghostY != 0 && grid[ghostX][ghostY-1] != -1)
+				ghost.setGridY(ghostY-1);
+		}else if(ghostD == 3) {
+			if(ghostY != grid[ghostX].length-1 && grid[ghostX][ghostY+1] != -1)
+				ghost.setGridY(ghostY+1);
+		}
 	}
 	
 	public void moveLeft(int pacX, int pacY) {
@@ -238,5 +257,24 @@ public class PacmanGrid extends AnimatedComponent {
 				game.getPacman().setDirection(3);
 				game.getPacman().setGridY(pacY+1);
 			}
+	}
+	public int[][] grid(){
+		return grid;
+	}
+
+	public int getDotCount() {
+		int dots = 0;
+		for(int j = 0; j < grid.length; j++) {
+			for(int k = 0; k < grid[j].length; k++) {
+				if(grid[j][k] == 1) {
+					dots++;
+				}
+				if(grid[j][k] == 2) {
+					dots++;
+				}
+			}
+		}
+		System.out.println(dots);
+		return dots;
 	}
 }

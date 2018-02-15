@@ -2,6 +2,7 @@ package AliceDanPacman;
 
 import java.awt.Color;
 import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.List;
 
 import devin.DevTicket;
@@ -9,6 +10,8 @@ import devin.Ticket;
 import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import markGalaga.MarkMob;
+import markGalaga.MarkProjectile;
 
 public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	
@@ -38,6 +41,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	private AliceOrangeRight orangeRight;
 	private AliceOrangeLeft orangeLeft;
 	private AliceScaredGhost scaredGhost;
+	private ArrayList<AliceGhost> ghosts;
 	private TextArea labelBox;
 	private TextArea scoreBox;
 	private TextArea highscoreBox;	
@@ -92,10 +96,19 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		
 		grid = new PacmanGrid(60,85,662,518,this);
 		
+		
+		
 		blinky = new AliceGhost(0,0,20,20,"red",this);
 		pinky = new AliceGhost(0,0,20,20,"pink",this);
 		inky = new AliceGhost(0,0,20,20,"cyan",this);
 		clyde = new AliceGhost(0,0,20,20,"orange",this);
+		
+		ghosts = new ArrayList<AliceGhost>();
+		
+		ghosts.add(blinky);
+		ghosts.add(pinky);
+		ghosts.add(inky);
+		ghosts.add(clyde);
 		viewObjects.add(blinky);
 		viewObjects.add(pinky);
 		viewObjects.add(inky);
@@ -122,14 +135,14 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 		scoreBox.setSize(25);
 		viewObjects.add(scoreBox);
 		
-		messageBox = new TextArea(getWidth()/2-100, getHeight()/2-60, 300, 40, "PRESS  ENTER  TO  START  GAME");
-		messageBox.setCustomTextColor(Color.CYAN);
+		messageBox = new TextArea(getWidth()/2-20, getHeight()/2+5, 300, 40, "   PRESS  ENTER ");
+		messageBox.setCustomTextColor(Color.YELLOW);
 		messageBox.setSize(22);
 		addObject(messageBox);
 		
-		stageBox = new TextArea(getWidth()/2-20, getHeight()/2, 200, 40, "STAGE "+stage);
-		stageBox.setCustomTextColor(Color.CYAN);
-		stageBox.setSize(32);
+		stageBox = new TextArea(getWidth()/2-20, getHeight()/2+5, 200, 40, "       STAGE "+stage);
+		stageBox.setCustomTextColor(Color.YELLOW);
+		stageBox.setSize(22);
 		stageBox.setVisible(false);
 		addObject(stageBox);
 		
@@ -147,31 +160,20 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	
 
 	private void startGame() {
-		running = true;
 		Thread intro = new Thread(new Runnable() {
 			
 			@Override
 			public void run() {
-				messageBox.setX(getWidth()/2-20);
-				messageBox.setSize(32);
-				messageBox.setText("PLAYER 1");
-				for(int i = 0; i < 7; i++) {
-					messageBox.setVisible(!messageBox.isVisible());
-					try {
-						Thread.sleep(500);
-					} catch (InterruptedException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
-					}
-				}
+				messageBox.setText("         READY");
+				messageBox.setVisible(true);
 				try {
-					Thread.sleep(100);
+					Thread.sleep(2000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
-				stageBox.setText("STAGE "+stage);
+				messageBox.setVisible(false);
+				stageBox.setText("       STAGE "+stage);
 				stageBox.setVisible(true);
-				messageBox.setVisible(true);
 				pac.setVisible(true);
 				try {
 					Thread.sleep(1000);
@@ -181,6 +183,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 				}
 				messageBox.setVisible(false);
 				stageBox.setVisible(false);
+				running = true;
 			}
 		});
 		intro.start();
@@ -217,6 +220,72 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	}
 	
 
+	public void pacRespawn() {
+		if(lives > 0) {
+			Thread k = new Thread(new Runnable() {
+				
+				@Override
+				public void run() {
+					running = false;
+					lives--;
+					lifeBox.setText("LIVES "+lives);
+					for(AliceGhost g : ghosts) {
+						g.reset();
+						try {
+							Thread.sleep(10);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+					messageBox.setText("READY");
+					messageBox.setCustomTextColor(Color.YELLOW);
+					messageBox.setVisible(true);
+					try {
+						Thread.sleep(3500);
+					} catch (InterruptedException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+					messageBox.setVisible(false);
+					pac.reset();
+					running = true;
+				}
+			});
+			k.start();
+		}else {
+			gameOver();
+		}
+	}
+	
+	
+	private void gameOver() {
+		messageBox.setText("GAME  OVER");
+		messageBox.setVisible(true);
+		try {
+			Thread.sleep(1500);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		messageBox.setVisible(false);
+		resultsBox.setVisible(true);
+		try {
+			Thread.sleep(5000);
+		} catch (InterruptedException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		resultsBox.setVisible(false);
+		lives = 2;
+		lifeBox.setText("LIVES "+lives);
+		score = 0;
+		updateScore(null);
+		running = false;
+		messageBox.setText("   PRESS  ENTER ");
+		messageBox.setVisible(true);
+		update();
+	}
 
 	public DanielPacman getPacman() {
 		return pac;
@@ -228,6 +297,9 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 			score += 100;
 			scoreBox.setText(score+"");
 		}else if(type.equals("power")) {
+			score += 1000;
+			scoreBox.setText(score+"");
+		}else {
 			scoreBox.setText(score+"");
 		}
 		update();
@@ -235,10 +307,8 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 
 	
 	@Override
-	public void getScore() {
-		//BASED ON NUMBER OF DOTS EATEN
-		getPacman();
-		
+	public int getScore() {
+		return score;
 	}
 
 	@Override
@@ -345,4 +415,6 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	public boolean isRunning() {
 		return running;
 	}
+
+	
 }
