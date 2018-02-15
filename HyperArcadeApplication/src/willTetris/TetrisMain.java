@@ -150,6 +150,13 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		textBox = new TextArea(400, 500, 100, 100, "");
 		textBox.setVisible(true);
 		viewObjects.add(textBox);
+		
+		Button back = new Button (550,50,200,100,"GO Back",Color.white,new Action() {
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
+			}
+		});
+		viewObjects.add(back);
 	}
 
 	public void dropdown() {
