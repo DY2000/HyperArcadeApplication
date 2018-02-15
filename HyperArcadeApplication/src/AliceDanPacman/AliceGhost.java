@@ -13,7 +13,6 @@ import javax.imageio.ImageIO;
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
 import guiTeacher.interfaces.Visible;
-import willTetris.Collidable;
 
 public class AliceGhost extends AnimatedComponent{
 	
