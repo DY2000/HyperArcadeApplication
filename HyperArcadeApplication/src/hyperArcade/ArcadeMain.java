@@ -22,7 +22,8 @@ import devin.TicketShop;
 
 public class ArcadeMain extends FullFunctionScreen {
 	private Button back;
-
+	private TextArea ticketCount;
+	private int tickets;
 
 	public ArcadeMain(int width, int height) {
 		super(width, height);
@@ -31,7 +32,7 @@ public class ArcadeMain extends FullFunctionScreen {
 
 	public void initAllObjects(List<Visible> viewObjects) {
 		viewObjects.add(new Graphic(0, 0, getWidth(), getHeight(), "resources/homescreen.png"));
-
+		
 		CustomImageButton tetris = new CustomImageButton(110, 400, 120, 75, new DrawInstructions() {
 			public void draw(Graphics2D g, boolean highlight) {
 				if (!highlight) {
@@ -142,16 +143,24 @@ public class ArcadeMain extends FullFunctionScreen {
 		inventory.setForeground(Color.white);
 		viewObjects.add(inventory);
 
+		tickets = 0;
+
+		ticketCount.setTextColor(Color.YELLOW);
+		ticketCount = new TextArea(20,20,100,100,"TICKETS "+tickets);
+		ticketCount.setVisible(true);
+		ticketCount.setSize(30);
+		viewObjects.add(ticketCount);
+		
 	}
 
-
-	
-
-	
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+	public void updateTickets(int n) {
+		tickets += n;
+		ticketCount.setText("TICKETS "+tickets);
+		update();
 	}
 
+	public TextArea getTicketCount() {
+		return ticketCount;
+	}
+	
 }

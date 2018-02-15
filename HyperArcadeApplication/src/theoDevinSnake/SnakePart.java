@@ -10,9 +10,8 @@ import guiTeacher.components.Action;
 import guiTeacher.components.Graphic;
 import guiTeacher.components.MovingComponent;
 import markGalaga.MarkPlayerMovement;
-import willTetris.Collidable;
 
-public class SnakePart extends MarkPlayerMovement implements Collidable {
+public class SnakePart extends MarkPlayerMovement {
 	private int direction;
 	private boolean head;
 	private TheoSnakeGUI beep;

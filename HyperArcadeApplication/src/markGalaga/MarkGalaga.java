@@ -4,12 +4,17 @@ import java.awt.Color;
 import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
+
+import devin.DevTicket;
+import guiTeacher.components.Action;
+import guiTeacher.components.Button;
 import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import hyperArcade.ArcadeGUI;
 import markGalaga.MarkGalagaBackground;
 
-public class MarkGalaga extends FullFunctionScreen{
+public class MarkGalaga extends FullFunctionScreen implements DevTicket{
 	
 	private String galagaSpriteSheet;
 	private MarkGalagaBackground background;
@@ -50,6 +55,13 @@ public class MarkGalaga extends FullFunctionScreen{
 	public void initAllObjects(List<Visible> viewObjects) {
 		
 		setBackground(Color.DARK_GRAY);
+		
+		Button back = new Button (0,50,200,100,"GO Back",new Action() {
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
+			}
+		});
+		viewObjects.add(back);
 		
 		score = 0;
 		highscore = 10000;
@@ -476,6 +488,7 @@ public class MarkGalaga extends FullFunctionScreen{
 		playerShip.setEnabled(false);
 		lives = 2;
 		lifeBox.setText("LIVES "+lives);
+		toTicket();
 		score = 0;
 		updateScore(null);
 		running = false;
@@ -655,6 +668,19 @@ public class MarkGalaga extends FullFunctionScreen{
 
 	public void setSpawning(boolean b) {
 		this.spawning = b;
+	}
+
+
+	@Override
+	public void toTicket() {
+		ArcadeGUI.homeScreen.updateTickets((int)score/20);
+	}
+
+
+	@Override
+	public void displayTickets() {
+		// TODO Auto-generated method stub
+		
 	}
 	
 }

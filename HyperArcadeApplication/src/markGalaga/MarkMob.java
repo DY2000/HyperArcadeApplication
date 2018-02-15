@@ -8,9 +8,8 @@ import java.util.TimerTask;
 
 import guiTeacher.components.Action;
 import guiTeacher.components.AnimatedComponent;
-import willTetris.Collidable;
 
-public class MarkMob extends AnimatedComponent implements Collidable{
+public class MarkMob extends AnimatedComponent {
 	
 	private int hp;
 	private int pos;

@@ -18,6 +18,7 @@ import guiTeacher.components.Graphic;
 import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import hyperArcade.ArcadeGUI;
 
 public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
@@ -380,15 +381,13 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	}
 
 	@Override
-	public void getScore() {
-		// TODO Auto-generated method stub
-		
+	public int getScore() {
+		return score;
 	}
 
 	@Override
 	public void toTicket() {
-		// TODO Auto-generated method stub
-		
+		ArcadeGUI.homeScreen.updateTickets((int)score/20);
 	}
 
 	@Override

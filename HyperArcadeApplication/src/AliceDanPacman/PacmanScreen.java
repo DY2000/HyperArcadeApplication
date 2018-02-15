@@ -7,9 +7,12 @@ import java.util.List;
 
 import devin.DevTicket;
 import devin.Ticket;
+import guiTeacher.components.Action;
+import guiTeacher.components.Button;
 import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import hyperArcade.ArcadeGUI;
 import markGalaga.MarkMob;
 import markGalaga.MarkProjectile;
 
@@ -66,6 +69,13 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		setBackground(Color.DARK_GRAY);
+		
+		Button back = new Button (0,50,200,100,"GO Back",new Action() {
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
+			}
+		});
+		viewObjects.add(back);
 		
 		bg = new PacmanBackground(325,50,480,650);
 		viewObjects.add(bg);

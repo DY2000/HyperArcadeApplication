@@ -4,25 +4,28 @@ import java.awt.Graphics2D;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import guiTeacher.components.Action;
+import guiTeacher.components.Button;
 import guiTeacher.components.Component;
 import guiTeacher.components.Graphic;
 
-public class DevinItem extends Component{
+public class DevinItem extends Button{
 
-	//private BufferedImage img;
+	private BufferedImage img;
 	private String itemName;
-	private ArrayList itemlist1;
-	//private ArrayList itemlist2;
+	private int price;
 	
-	
-	public DevinItem(int x, int y, int w, int h, String itemName, int price) {
-		super(x, y, w, h);
+	public DevinItem(int x, int y, int w, int h, Action action, String itemName, int price) {
+		super(x, y, w, h, itemName, action);
 		this.itemName = itemName;
+		img = new Graphic(0, 0, 10, 100, "resources/"+itemName+".png").getImage();
+		this.price = price;
+		update();
 	}
 
 	@Override
 	public void update(Graphics2D g) {
-		
+		g.drawImage(img,0,0,getWidth(),getHeight(),null);
 	}
 
 	public void drawImage(Graphics2D g) {

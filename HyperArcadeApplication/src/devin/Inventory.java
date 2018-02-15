@@ -1,11 +1,13 @@
 package devin;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
 import guiTeacher.components.Action;
 import guiTeacher.components.Button;
 import guiTeacher.components.Graphic;
+import guiTeacher.components.TextArea;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 import hyperArcade.ArcadeGUI;
@@ -13,9 +15,8 @@ import hyperArcade.ArcadeGUI;
 public class Inventory extends FullFunctionScreen {
 	private Button back;
 	private ArrayList<DevinItem>itemlist; 
-	private ArrayList<DevinItem> Shopitemlist;
+	private TextArea ticketCount;
 	//private ArrayList<String>itemlist1;
-	private String[] itemName;
 	public Inventory(int width, int height) {
 		super(width, height);
 		// TODO Auto-generated constructor stub
@@ -24,20 +25,13 @@ public class Inventory extends FullFunctionScreen {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		itemlist = new ArrayList<DevinItem>();
-		Shopitemlist = new ArrayList<DevinItem>();
 		//ArrayList<String> itemlist1 = new ArrayList<String>();
-		itemName = new String[] { "resources/reward1.png","resources/reward2.png"}; 
-		for (int i = 0; i < itemName.length; i++) {
-			itemlist.add(new DevinItem(200, 200, 100, 300, itemName[i],0));
-		}
+		
+		ticketCount = ArcadeGUI.homeScreen.getTicketCount();
+		viewObjects.add(ticketCount);
 			
-		
-		
-
-		
-		
-		//viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/inventory.png"));
-		back = new Button (0,50,200,100,"GO Back",new Action() {
+		viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/inventory.png"));
+		back = new Button (0,50,200,100,"GO Back",Color.white,new Action() {
 			public void act() {
 				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
 			}

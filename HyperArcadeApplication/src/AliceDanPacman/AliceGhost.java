@@ -171,7 +171,6 @@ public class AliceGhost extends AnimatedComponent{
 			});
 			returnHome.start();
 		}
-		System.out.println(ghostType+"_"+spawned+"_"+!eaten+"_"+game.isRunning());
 		if(spawned && !eaten && game.isRunning()) {
 			move();
 			game.getGrid().moveGhost(this);

@@ -7,9 +7,8 @@ import java.util.ArrayList;
 import guiTeacher.components.Action;
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
-import willTetris.Collidable;
 
-public class MarkProjectile extends AnimatedComponent implements Collidable{
+public class MarkProjectile extends AnimatedComponent {
 	
 	private MarkGalaga game;
 	private String shooter;

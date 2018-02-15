@@ -4,17 +4,19 @@ import java.awt.event.KeyEvent;
 import java.util.ArrayList;
 import java.util.List;
 
+import devin.DevTicket;
 import guiTeacher.components.Action;
 import guiTeacher.components.Button;
 import guiTeacher.components.TextArea;
 import guiTeacher.components.TextLabel;
 import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
+import hyperArcade.ArcadeGUI;
 
-public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
+public class TheoSnakeGUI extends FullFunctionScreen implements DevTicket {
 	
 		private Button back;
-		private TextArea score;
+		private int score;
 		private TextArea time;
 		private ArrayList<SnakePart> snakeBody;
 		private int userscore;
@@ -38,6 +40,13 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		first=true;
 		snakeBody = new ArrayList<SnakePart>();
 		snakeBody.add(new SnakePart(500,500,25,25,true,this,count));
+		
+		Button back = new Button (0,50,200,100,"GO Back",new Action() {
+			public void act() {
+				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
+			}
+		});
+		viewObjects.add(back);
 		
 		point = new SnakePoint(getRandomX(),getRandomY(),25,25,this);
 		viewObjects.add(point);
@@ -138,18 +147,16 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 		return (int)((Math.random()*764)+25);
 	}
 
-	@Override
-	public void run() {
-		// TODO Auto-generated method stub
-		
-	}
 	public void gameOver() {
-		for(int i = 1; i < snakeBody.size(); i++) {
-			snakeBody.get(i).setRunning(false);
-			remove(snakeBody.get(i));
-		}
-		snakeBody.clear();
+		score = snakeBody.size()*1000;
 		text.setText("Game Over");
+		toTicket();
+		update();
+		for(int i = 1; i < snakeBody.size(); i++) {
+			remove(snakeBody.get(i));
+			snakeBody.get(i).setRunning(false);
+			snakeBody.remove(i);
+		}
 		
 	}
 	public void keyPressed(KeyEvent e) {
@@ -195,6 +202,20 @@ public class TheoSnakeGUI extends FullFunctionScreen implements Runnable {
 			}
 			break;
 		}
+	}
+	@Override
+	public int getScore() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+	@Override
+	public void toTicket() {
+		ArcadeGUI.homeScreen.updateTickets((int)score/20);
+	}
+	@Override
+	public void displayTickets() {
+		// TODO Auto-generated method stub
+		
 	}
 
 	

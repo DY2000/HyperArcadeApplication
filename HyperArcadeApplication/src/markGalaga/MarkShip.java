@@ -8,9 +8,8 @@ import java.util.ArrayList;
 
 import guiTeacher.components.AnimatedComponent;
 import guiTeacher.components.Graphic;
-import willTetris.Collidable;
 
-public class MarkShip extends MarkPlayerMovement implements Collidable{
+public class MarkShip extends MarkPlayerMovement {
 	
 	private MarkGalaga game;
 	private boolean enabled;
