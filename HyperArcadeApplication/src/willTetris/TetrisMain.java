@@ -26,6 +26,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	private TextArea textBox;
 	private ArrayList<Block> ghost = new ArrayList<Block>(4);
 	private Button start;
+	private Button back;
 	private Timer timer;
 	private Block[][] board;
 	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
@@ -113,9 +114,9 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
-		setBackground(Color.DARK_GRAY);
+		setBackground(Color.black);
 		board = new Block[10][20];
-		start = new Button(400, 100, 100, 50, "START", new Action() {
+		start = new Button(235, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
 				newPiece();
@@ -127,31 +128,38 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 					}
 				}, delay, delay);
 				start.setEnabled(false);
+				start.setVisible(false);
+				back.setEnabled(false);
+				back.setVisible(false);
 			}
 		});
 		start.setText("START");
-		start.setSize(20);
+		start.setSize(25);
+		start.setForeground(Color.white);
 		start.setVisible(true);
 		viewObjects.add(start);
 
-		scoreBox = new TextArea(400, 200, 100, 100, "SCORE \n" + score);
-		scoreBox.setVisible(true);
+		scoreBox = new TextArea(250, 175, 100, 100, "SCORE \n" + score);
 		scoreBox.setCustomTextColor(Color.WHITE);
+		scoreBox.setVisible(true);
 		viewObjects.add(scoreBox);
-		
-		linesBox = new TextArea(400, 300, 100, 100, "LINES \n" + lines);
+
+		linesBox = new TextArea(250, 250, 100, 100, "LINES \n" + lines);
+		linesBox.setCustomTextColor(Color.WHITE);
 		linesBox.setVisible(true);
 		viewObjects.add(linesBox);
 
-		levelBox = new TextArea(400, 400, 100, 100, "LEVEL \n" + (int)(lines/10));
+		levelBox = new TextArea(250, 325, 100, 100, "LEVEL \n" + (int) (lines / 10));
+		levelBox.setCustomTextColor(Color.WHITE);
 		levelBox.setVisible(true);
 		viewObjects.add(levelBox);
-		
-		textBox = new TextArea(400, 500, 100, 100, "");
+
+		textBox = new TextArea(250, 400, 100, 100, "");
+		textBox.setCustomTextColor(Color.WHITE);
 		textBox.setVisible(true);
 		viewObjects.add(textBox);
 		
-		Button back = new Button (550,50,200,100,"GO Back",Color.white,new Action() {
+		back = new Button (550,50,200,100,"BACK",new Action() {
 			public void act() {
 				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
 			}
@@ -255,6 +263,8 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			timer.cancel();
 			timer = new Timer();
 			active = new ArrayList<Block>();
+			back.setEnabled(true);
+			back.setVisible(true);
 		}
 	}
 
