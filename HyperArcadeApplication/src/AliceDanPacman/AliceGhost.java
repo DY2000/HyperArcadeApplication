@@ -17,12 +17,12 @@ import willTetris.Collidable;
 
 public class AliceGhost extends AnimatedComponent{
 	
-	//there are 4 main ghosts named blinky (red), pinky, clyde (orange), inky (blue)
+	//there are 4 main ghosts named blinky (red), pinky, clyde (orange), inky (cyan)
 	//scatter mode-each ghost has a predefined corner of the grid that they follow
 	//The red ghost starts outside of the ghost house, and is usually the first one to be seen as a threat
 	//http://gameinternals.com/post/2072558330/understanding-pac-man-ghost-behavior	
 	//The pink ghost starts inside the ghost house, but always exits immediately, even in the first level. 
-	//The blue ghost is nicknamed Inky, and remains inside the ghost house for a short time on the first level, 
+	//The cyan ghost is nicknamed Inky, and remains inside the ghost house for a short time on the first level, 
 	//not joining the chase until Pac-Man has managed to consume at least 30 of the dots. 
 	//The orange ghost, â€œClydeâ€�, is the last to leave the ghost house, and does not exit 
 	//at all in the first level until over a third of the dots have been eaten. 
@@ -135,7 +135,6 @@ public class AliceGhost extends AnimatedComponent{
 			try {
 				Thread.sleep(1500);
 			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
