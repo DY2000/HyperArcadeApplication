@@ -191,7 +191,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			} else if (board[b.getX()][b.getY() + 1] != null) {
 				if (!board[b.getX()][b.getY() + 1].getActive())
 					return false;
-
 			}
 		}
 		return true;
@@ -199,7 +198,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public void lower() {
 		if (canLower()) {
-			deleteActiveBoard();
+			deleteActiveOnBoard();
 			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
@@ -227,7 +226,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 
 		if (canMove) {
-			deleteActiveBoard();
+			deleteActiveOnBoard();
 			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX() - 1, active.get(i).getY(), active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
@@ -249,7 +248,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 
 		if (canMove) {
-			deleteActiveBoard();
+			deleteActiveOnBoard();
 			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX() + 1, active.get(i).getY(), active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
@@ -260,7 +259,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	public void newPiece() {
 		checkRows();
 		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
-		shape = (int) (Math.random() * Tetraminos.size());
 		if (gameOver()) {
 			textBox.setText("GAME OVER");
 			timer.cancel();
@@ -269,6 +267,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			back.setEnabled(true);
 			back.setVisible(true);
 		} else {
+			shape = (int) (Math.random() * Tetraminos.size());
 			lower();
 		}
 	}
@@ -283,10 +282,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 					row = false;
 			}
 			if (row) {
-				clearRow(r);
-				moveDownAbove(r + 1);
-				rowCount++;
 				lines++;
+				moveDownAbove(r + 1);
+				clearRow(r);
+				rowCount++;
 				r++;
 			}
 		}
@@ -350,7 +349,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 	}
 
-	public void deleteActiveBoard() {
+	public void deleteActiveOnBoard() {
 		for (Block b : active) {
 			board[b.getX()][b.getY()] = null;
 		}
