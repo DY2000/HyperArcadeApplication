@@ -324,7 +324,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		return false;
 	}
 
-	private void clockWise() {
+	public void rotate() {
 		int transX = active.get(1).getX() - active.get(1).getY();
 		int transY = active.get(1).getX() + active.get(1).getY();
 		boolean canRotate = true;
@@ -368,7 +368,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			break;
 		case KeyEvent.VK_UP:
 			if (!active.isEmpty() && active.get(0).getColor() != Color.yellow)
-				clockWise();
+				rotate();
 			break;
 		case KeyEvent.VK_DOWN:
 			if (!active.isEmpty()) {
