@@ -14,7 +14,6 @@ import javax.imageio.ImageIO;
 import guiTeacher.components.AnimatedComponent;
 import markGalaga.MarkDeathAnimation;
 import markGalaga.MarkPlayerMovement;
-import willTetris.Collidable;
 
 public class DanielPacman extends MarkPlayerMovement implements AliceGhostInterface{
 	

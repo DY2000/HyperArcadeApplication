@@ -31,8 +31,9 @@ public class PacmanGrid extends AnimatedComponent {
 			}
 		}
 		
+		//THERE IS NO WAY TO DO IT IN AN ELEGANT MATH WAY SO IT IS HARD CODED
+		
 		//The Walls of the grid
-		//My Eyes have seen hell
 		grid[0][8] = -1;  grid[0][12] = -1;  grid[0][14] = -1;  grid[0][18] = -1;  grid[0][23] = -1;  grid[0][24] = -1;
 		grid[1][1] = -1;  grid[1][2] = -1;   grid[1][3] = -1;   grid[1][5] = -1;   grid[1][6] = -1;
 		grid[1][8] = -1;  grid[1][12] = -1;  grid[1][14] = -1;  grid[1][18] = -1;  grid[1][20] = -1;

@@ -48,7 +48,7 @@ public class MarkShip extends MarkPlayerMovement {
 	
 	public boolean detectCollision(MarkProjectile shot) {
 		return (shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
-			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY() && enabled);
+				shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY() && enabled);
 	}
 	
 	public boolean detectCollision(MarkMob mob) {
