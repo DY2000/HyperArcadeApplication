@@ -32,7 +32,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
 	private ArrayList<Block> active = new ArrayList<Block>(4);
 	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
-	private int rotation;
 	private int shape;
 	private int lines;
 	private int delay;
@@ -43,7 +42,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	public TetrisMain(int width, int height) {
 		super(width, height);
 		board = new Block[10][20];
-		rotation = 0;
 		delay = 2000;
 		lines = 0;
 		score = 0;
@@ -115,7 +113,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		setBackground(Color.black);
-		
+
 		start = new Button(235, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
@@ -163,7 +161,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			public void act() {
 				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
 				board = new Block[10][20];
-				rotation = 0;
 				delay = 2000;
 				lines = 0;
 				score = 0;
@@ -202,9 +199,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public void lower() {
 		if (canLower()) {
-			for (int i = 0; i < active.size(); i++) {
-				board[active.get(i).getX()][active.get(i).getY()] = null;
-			}
+			deleteActiveBoard();
 			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
@@ -232,9 +227,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 
 		if (canMove) {
-			for (int i = 0; i < active.size(); i++) {
-				board[active.get(i).getX()][active.get(i).getY()] = null;
-			}
+			deleteActiveBoard();
 			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX() - 1, active.get(i).getY(), active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
@@ -256,9 +249,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 
 		if (canMove) {
-			for (int i = 0; i < active.size(); i++) {
-				board[active.get(i).getX()][active.get(i).getY()] = null;
-			}
+			deleteActiveBoard();
 			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX() + 1, active.get(i).getY(), active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
@@ -268,7 +259,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public void newPiece() {
 		checkRows();
-		rotation = 0;
 		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
 		shape = (int) (Math.random() * Tetraminos.size());
 		if (gameOver()) {
@@ -327,38 +317,42 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	}
 
 	public boolean gameOver() {
-		for (int i = 0; i < active.size(); i++) {
-			if (board[active.get(i).getX()][active.get(i).getY()] != null)
+		for (Block b : active) {
+			if (board[b.getX()][b.getY()] != null)
 				return true;
 		}
 		return false;
 	}
 
 	private void clockWise() {
-		rotation++;
 		int transX = active.get(1).getX() - active.get(1).getY();
 		int transY = active.get(1).getX() + active.get(1).getY();
 		boolean canRotate = true;
-		for (int i = 0; i < active.size(); i++) {
-			if (active.get(i).getY() + transX < 0 || active.get(i).getY() + transX > 9
-					|| -active.get(i).getX() + transY > 19 || -active.get(i).getX() + transY < 0)
+		for (Block b : active) {
+			if (b.getY() + transX < 0 || b.getY() + transX > 9 || -b.getX() + transY > 19 || -b.getX() + transY < 0)
 				canRotate = false;
-			else if (board[active.get(i).getY() + transX][-active.get(i).getX() + transY] != null)
-				if (!board[active.get(i).getY() + transX][-active.get(i).getX() + transY].getActive())
+			else if (board[b.getY() + transX][-b.getX() + transY] != null)
+				if (!board[b.getY() + transX][-b.getX() + transY].getActive())
 					canRotate = false;
 
 		}
 		if (canRotate) {
-			for (int i = 0; i < active.size(); i++) {
-				board[active.get(i).getX()][active.get(i).getY()] = null;
+			for (Block b : active) {
+				board[b.getX()][b.getY()] = null;
 			}
 			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY,
 						active.get(i).getColor()));
 			}
-			for (int i = 0; i < active.size(); i++) {
-				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+			for (Block b : active) {
+				board[b.getX()][b.getY()] = b;
 			}
+		}
+	}
+
+	public void deleteActiveBoard() {
+		for (Block b : active) {
+			board[b.getX()][b.getY()] = null;
 		}
 	}
 
