@@ -116,7 +116,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	public void initAllObjects(List<Visible> viewObjects) {
 		setBackground(Color.black);
 		board = new Block[10][20];
-		start = new Button(335, 100, 100, 50, "START", new Action() {
+		start = new Button(235, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
 				newPiece();
@@ -139,31 +139,34 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		start.setVisible(true);
 		viewObjects.add(start);
 
-		scoreBox = new TextArea(350, 175, 100, 100, "SCORE \n" + score);
+		scoreBox = new TextArea(250, 175, 100, 100, "SCORE \n" + score);
 		scoreBox.setCustomTextColor(Color.WHITE);
 		scoreBox.setVisible(true);
 		viewObjects.add(scoreBox);
 
-		linesBox = new TextArea(350, 250, 100, 100, "LINES \n" + lines);
+		linesBox = new TextArea(250, 250, 100, 100, "LINES \n" + lines);
 		linesBox.setCustomTextColor(Color.WHITE);
 		linesBox.setVisible(true);
 		viewObjects.add(linesBox);
 
-		levelBox = new TextArea(350, 325, 100, 100, "LEVEL \n" + (int) (lines / 10));
+		levelBox = new TextArea(250, 325, 100, 100, "LEVEL \n" + (int) (lines / 10));
 		levelBox.setCustomTextColor(Color.WHITE);
 		levelBox.setVisible(true);
 		viewObjects.add(levelBox);
 
-		textBox = new TextArea(350, 400, 100, 100, "");
+		textBox = new TextArea(250, 400, 100, 100, "");
 		textBox.setCustomTextColor(Color.WHITE);
 		textBox.setVisible(true);
 		viewObjects.add(textBox);
-		
-		back = new Button (335,475,100,50,"BACK",Color.white,new Action() {
+
+		back = new Button(230, 475, 100, 50, "BACK", new Action() {
 			public void act() {
 				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
 			}
 		});
+		back.setSize(25);
+		back.setForeground(Color.WHITE);
+		back.setVisible(true);
 		viewObjects.add(back);
 	}
 
@@ -265,6 +268,8 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			active = new ArrayList<Block>();
 			back.setEnabled(true);
 			back.setVisible(true);
+		} else {
+			lower();
 		}
 	}
 
@@ -285,15 +290,16 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 				r++;
 			}
 		}
-		scoreUp((rowCount * 200 - 100) * (int)(lines/10));
+		if (rowCount > 0)
+			scoreUp((rowCount * 200 - 100) * (int) (lines / 10));
 	}
 
 	private void scoreUp(int i) {
 		score += i;
 		scoreBox.setText("SCORE \n" + score);
 		linesBox.setText("LINES \n" + lines);
-		levelBox.setText("LEVEL \n" + (int)(lines/10));
-		delay = (int) (2000*Math.pow(.7,(int)(lines/10)));
+		levelBox.setText("LEVEL \n" + (int) (lines / 10));
+		delay = (int) (2000 * Math.pow(.7, (int) (lines / 10)));
 	}
 
 	private void moveDownAbove(int r) {
@@ -377,8 +383,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public void paint(Graphics g) {
 		super.paint(g);
+		g.setColor(Color.white);
+		g.fillRect(357, 79, 310, 610);
 		g.setColor(Color.black);
-		g.fillRect(0, 0, 300, 600);
+		g.fillRect(362, 84, 300, 600);
 
 		for (int w = 0; w < board.length; w++) {
 			for (int h = 0; h < board[w].length; h++) {
@@ -386,13 +394,13 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 					g.setColor(board[w][h].getColor());
 				else
 					g.setColor(Color.black);
-				g.fillRect(w * 30, h * 30, 27, 27);
+				g.fillRect(w * 30 + 362, h * 30 + 84, 27, 27);
 			}
 		}
 
 		for (int x = 0; x < 4; x++) {
 			g.setColor(Tetraminos.get(shape).get(x).getColor());
-			g.fillRect(Tetraminos.get(shape).get(x).getX() * 30 + 400, Tetraminos.get(shape).get(x).getY() * 30 + 100,
+			g.fillRect(Tetraminos.get(shape).get(x).getX() * 30 + 600, Tetraminos.get(shape).get(x).getY() * 30 + 100,
 					27, 27);
 		}
 	}
@@ -404,12 +412,12 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	@Override
 	public void toTicket() {
-		ArcadeGUI.homeScreen.updateTickets((int)score/20);
+		ArcadeGUI.homeScreen.updateTickets((int) score / 20);
 	}
 
 	@Override
 	public void displayTickets() {
 		// TODO Auto-generated method stub
-		
+
 	}
 }
