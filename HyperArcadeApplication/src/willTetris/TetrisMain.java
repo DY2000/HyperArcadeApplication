@@ -42,12 +42,12 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public TetrisMain(int width, int height) {
 		super(width, height);
+		board = new Block[10][20];
 		rotation = 0;
-		shape = (int) (Math.random() * Tetraminos.size());
 		delay = 2000;
 		lines = 0;
 		score = 0;
-
+		shape = (int) (Math.random() * Tetraminos.size());
 		// I PIECE 0
 		Tetramino.add(new Block(3, 0, Color.cyan));
 		Tetramino.add(new Block(5, 0, Color.cyan));
@@ -115,7 +115,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	@Override
 	public void initAllObjects(List<Visible> viewObjects) {
 		setBackground(Color.black);
-		board = new Block[10][20];
+		
 		start = new Button(235, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
@@ -162,6 +162,16 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		back = new Button(230, 475, 100, 50, "BACK", new Action() {
 			public void act() {
 				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
+				board = new Block[10][20];
+				rotation = 0;
+				delay = 2000;
+				lines = 0;
+				score = 0;
+				shape = (int) (Math.random() * Tetraminos.size());
+				start.setVisible(true);
+				start.setEnabled(true);
+				textBox.setText("");
+				scoreUp(0);
 			}
 		});
 		back.setSize(25);
@@ -192,10 +202,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public void lower() {
 		if (canLower()) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				board[active.get(i).getX()][active.get(i).getY()] = null;
 			}
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 			}
@@ -222,10 +232,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 
 		if (canMove) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				board[active.get(i).getX()][active.get(i).getY()] = null;
 			}
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX() - 1, active.get(i).getY(), active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 			}
@@ -246,10 +256,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 
 		if (canMove) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				board[active.get(i).getX()][active.get(i).getY()] = null;
 			}
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getX() + 1, active.get(i).getY(), active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 			}
@@ -258,8 +268,8 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 	public void newPiece() {
 		checkRows();
-		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
 		rotation = 0;
+		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
 		shape = (int) (Math.random() * Tetraminos.size());
 		if (gameOver()) {
 			textBox.setText("GAME OVER");
@@ -317,7 +327,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	}
 
 	public boolean gameOver() {
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < active.size(); i++) {
 			if (board[active.get(i).getX()][active.get(i).getY()] != null)
 				return true;
 		}
@@ -329,7 +339,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		int transX = active.get(1).getX() - active.get(1).getY();
 		int transY = active.get(1).getX() + active.get(1).getY();
 		boolean canRotate = true;
-		for (int i = 0; i < 4; i++) {
+		for (int i = 0; i < active.size(); i++) {
 			if (active.get(i).getY() + transX < 0 || active.get(i).getY() + transX > 9
 					|| -active.get(i).getX() + transY > 19 || -active.get(i).getX() + transY < 0)
 				canRotate = false;
@@ -339,14 +349,14 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 
 		}
 		if (canRotate) {
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				board[active.get(i).getX()][active.get(i).getY()] = null;
 			}
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				active.set(i, new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY,
 						active.get(i).getColor()));
 			}
-			for (int i = 0; i < 4; i++) {
+			for (int i = 0; i < active.size(); i++) {
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 			}
 		}
@@ -398,7 +408,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			}
 		}
 
-		for (int x = 0; x < 4; x++) {
+		for (int x = 0; x < active.size(); x++) {
 			g.setColor(Tetraminos.get(shape).get(x).getColor());
 			g.fillRect(Tetraminos.get(shape).get(x).getX() * 30 + 600, Tetraminos.get(shape).get(x).getY() * 30 + 100,
 					27, 27);
