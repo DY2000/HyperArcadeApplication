@@ -13,8 +13,9 @@ import guiTeacher.interfaces.Visible;
 import guiTeacher.userInterfaces.FullFunctionScreen;
 import hyperArcade.ArcadeGUI;
 import markGalaga.MarkGalagaBackground;
+import willTetris.WillGameStart;
 
-public class MarkGalaga extends FullFunctionScreen implements DevTicket{
+public class MarkGalaga extends FullFunctionScreen implements WillGameStart, DevTicket {
 	
 	private String galagaSpriteSheet;
 	private MarkGalagaBackground background;
@@ -165,7 +166,7 @@ public class MarkGalaga extends FullFunctionScreen implements DevTicket{
 		updateScore(null);
 	}
 	
-	private void startGame() {
+	public void startGame() {
 		running = true;
 		spawning = true;
 		Thread intro = new Thread(new Runnable() {

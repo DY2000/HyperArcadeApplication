@@ -15,8 +15,9 @@ import guiTeacher.userInterfaces.FullFunctionScreen;
 import hyperArcade.ArcadeGUI;
 import markGalaga.MarkMob;
 import markGalaga.MarkProjectile;
+import willTetris.WillGameStart;
 
-public class PacmanScreen extends FullFunctionScreen implements DevTicket {
+public class PacmanScreen extends FullFunctionScreen implements WillGameStart, DevTicket {
 	
 	private DanielPacmanUp pacUp;
 	private DanielPacmanLeft pacLeft;
@@ -171,7 +172,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	}
 	
 
-	private void startGame() {
+	public void startGame() {
 		Thread intro = new Thread(new Runnable() {
 			
 			@Override
@@ -275,7 +276,7 @@ public class PacmanScreen extends FullFunctionScreen implements DevTicket {
 	}
 	
 	
-	private void gameOver() {
+	public void gameOver() {
 		resultsBox.setVisible(true);
 		try {
 			Thread.sleep(5000);
