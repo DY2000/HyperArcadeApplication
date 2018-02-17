@@ -29,10 +29,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	private Button back;
 	private Timer timer;
 	private Block[][] board;
-	private ArrayList<Block> Tetramino = new ArrayList<Block>(4);
-	private ArrayList<Block> active = new ArrayList<Block>(4);
-	private ArrayList<ArrayList<Block>> Tetraminos = new ArrayList<ArrayList<Block>>(7);
-	private int shape;
+	private ArrayList<Block> tetramino = new ArrayList<Block>();
+	private ArrayList<Block> active = new ArrayList<Block>();
+	private ArrayList<ArrayList<Block>> tetraminos = new ArrayList<ArrayList<Block>>();
+	private ArrayList<ArrayList<Block>> shapes = new ArrayList<ArrayList<Block>>();
 	private int lines;
 	private int delay;
 	private int score;
@@ -45,69 +45,55 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		delay = 2000;
 		lines = 0;
 		score = 0;
-		shape = (int) (Math.random() * Tetraminos.size());
 		// I PIECE 0
-		Tetramino.add(new Block(3, 0, Color.cyan));
-		Tetramino.add(new Block(5, 0, Color.cyan));
-		Tetramino.add(new Block(4, 0, Color.cyan));
-		Tetramino.add(new Block(6, 0, Color.cyan));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
+		tetramino.add(new Block(3, 0, Color.cyan));
+		tetramino.add(new Block(5, 0, Color.cyan));
+		tetramino.add(new Block(4, 0, Color.cyan));
+		tetramino.add(new Block(6, 0, Color.cyan));
+		tetraminos.add(tetramino);
+		tetramino = new ArrayList<Block>();
 		// O PIECE 1
-		Tetramino.add(new Block(4, 0, Color.yellow));
-		Tetramino.add(new Block(5, 0, Color.yellow));
-		Tetramino.add(new Block(4, 1, Color.yellow));
-		Tetramino.add(new Block(5, 1, Color.yellow));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
+		tetramino.add(new Block(4, 0, Color.yellow));
+		tetramino.add(new Block(5, 0, Color.yellow));
+		tetramino.add(new Block(4, 1, Color.yellow));
+		tetramino.add(new Block(5, 1, Color.yellow));
+		tetraminos.add(tetramino);
+		tetramino = new ArrayList<Block>();
 		// T PIECE 2
-		Tetramino.add(new Block(3, 1, Color.white));
-		Tetramino.add(new Block(4, 1, Color.white));
-		Tetramino.add(new Block(5, 1, Color.white));
-		Tetramino.add(new Block(4, 0, Color.white));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
+		tetramino.add(new Block(3, 1, Color.white));
+		tetramino.add(new Block(4, 1, Color.white));
+		tetramino.add(new Block(5, 1, Color.white));
+		tetramino.add(new Block(4, 0, Color.white));
+		tetraminos.add(tetramino);
+		tetramino = new ArrayList<Block>();
 		// S PIECE 3
-		Tetramino.add(new Block(3, 1, Color.green));
-		Tetramino.add(new Block(4, 1, Color.green));
-		Tetramino.add(new Block(4, 0, Color.green));
-		Tetramino.add(new Block(5, 0, Color.green));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
+		tetramino.add(new Block(3, 1, Color.green));
+		tetramino.add(new Block(4, 1, Color.green));
+		tetramino.add(new Block(4, 0, Color.green));
+		tetramino.add(new Block(5, 0, Color.green));
+		tetraminos.add(tetramino);
+		tetramino = new ArrayList<Block>();
 		// Z PIECE 4
-		Tetramino.add(new Block(5, 1, Color.red));
-		Tetramino.add(new Block(4, 1, Color.red));
-		Tetramino.add(new Block(3, 0, Color.red));
-		Tetramino.add(new Block(4, 0, Color.red));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
+		tetramino.add(new Block(5, 1, Color.red));
+		tetramino.add(new Block(4, 1, Color.red));
+		tetramino.add(new Block(3, 0, Color.red));
+		tetramino.add(new Block(4, 0, Color.red));
+		tetraminos.add(tetramino);
+		tetramino = new ArrayList<Block>();
 		// J PIECE 5
-		Tetramino.add(new Block(4, 0, Color.blue));
-		Tetramino.add(new Block(5, 1, Color.blue));
-		Tetramino.add(new Block(4, 1, Color.blue));
-		Tetramino.add(new Block(6, 1, Color.blue));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
+		tetramino.add(new Block(4, 0, Color.blue));
+		tetramino.add(new Block(5, 1, Color.blue));
+		tetramino.add(new Block(4, 1, Color.blue));
+		tetramino.add(new Block(6, 1, Color.blue));
+		tetraminos.add(tetramino);
+		tetramino = new ArrayList<Block>();
 		// L PIECE 6
-		Tetramino.add(new Block(6, 0, Color.orange));
-		Tetramino.add(new Block(5, 1, Color.orange));
-		Tetramino.add(new Block(6, 1, Color.orange));
-		Tetramino.add(new Block(4, 1, Color.orange));
-		Tetraminos.add(Tetramino);
-		Tetramino = new ArrayList<Block>(4);
-	}
-
-	public void resetTimer() {
-		if (!gameOver()) {
-			timer.cancel();
-			timer = new Timer();
-			timer.schedule(new TimerTask() {
-				@Override
-				public void run() {
-					lower();
-				}
-			}, delay, delay);
-		}
+		tetramino.add(new Block(6, 0, Color.orange));
+		tetramino.add(new Block(5, 1, Color.orange));
+		tetramino.add(new Block(6, 1, Color.orange));
+		tetramino.add(new Block(4, 1, Color.orange));
+		tetraminos.add(tetramino);
+		tetramino = new ArrayList<Block>();
 	}
 
 	@Override
@@ -117,7 +103,11 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		start = new Button(235, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
-				newPiece();
+				shapes.clear();
+				for (int i = 0; i < 6; i++) {
+					shapes.add((ArrayList<Block>) tetraminos.get((int) (Math.random() * tetraminos.size())).clone());
+				}
+				active = (ArrayList<Block>) shapes.get(0).clone();
 				timer = new Timer();
 				timer.schedule(new TimerTask() {
 					@Override
@@ -164,7 +154,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 				delay = 2000;
 				lines = 0;
 				score = 0;
-				shape = (int) (Math.random() * Tetraminos.size());
 				start.setVisible(true);
 				start.setEnabled(true);
 				textBox.setText("");
@@ -203,7 +192,6 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
 				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 			}
-			resetTimer();
 		} else {
 			for (Block b : active) {
 				b.setActive(false);
@@ -257,24 +245,9 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	}
 
 	public void newPiece() {
-		checkRows();
-		active = (ArrayList<Block>) Tetraminos.get(shape).clone();
-		if (gameOver()) {
-			textBox.setText("GAME OVER");
-			timer.cancel();
-			timer = new Timer();
-			active = new ArrayList<Block>();
-			back.setEnabled(true);
-			back.setVisible(true);
-		} else {
-			shape = (int) (Math.random() * Tetraminos.size());
-			lower();
-		}
-	}
-
-	public void checkRows() {
 		boolean row = true;
 		int rowCount = 0;
+
 		for (int r = board[0].length - 1; r >= 0; r--) {
 			row = true;
 			for (int c = board.length - 1; c >= 0; c--) {
@@ -283,14 +256,28 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			}
 			if (row) {
 				lines++;
-				moveDownAbove(r + 1);
 				clearRow(r);
+				moveDownAbove(r + 1);
 				rowCount++;
 				r++;
 			}
 		}
 		if (rowCount > 0)
 			scoreUp((rowCount * 200 - 100) * (int) (lines / 10));
+
+		active = (ArrayList<Block>) shapes.get(0).clone();
+		shapes.remove(0);
+		shapes.add((ArrayList<Block>) tetraminos.get((int) (Math.random() * tetraminos.size())).clone());
+
+		if (gameOver()) {
+			textBox.setText("GAME OVER");
+			timer.cancel();
+			active.clear();
+			back.setEnabled(true);
+			back.setVisible(true);
+		} else
+			lower();
+
 	}
 
 	private void scoreUp(int i) {
@@ -339,9 +326,8 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			for (Block b : active) {
 				board[b.getX()][b.getY()] = null;
 			}
-			for (int i = 0; i < active.size(); i++) {
-				active.set(i, new Block(active.get(i).getY() + transX, -active.get(i).getX() + transY,
-						active.get(i).getColor()));
+			for (Block b : active) {
+				active.set(active.indexOf(b), new Block(b.getY() + transX, -b.getX() + transY, b.getColor()));
 			}
 			for (Block b : active) {
 				board[b.getX()][b.getY()] = b;
@@ -401,10 +387,12 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			}
 		}
 
-		for (int x = 0; x < active.size(); x++) {
-			g.setColor(Tetraminos.get(shape).get(x).getColor());
-			g.fillRect(Tetraminos.get(shape).get(x).getX() * 30 + 600, Tetraminos.get(shape).get(x).getY() * 30 + 100,
-					27, 27);
+		for (int i = 0; i < shapes.size(); i++) {
+			for (int j = 0; j < 4; j++) {
+				g.setColor(shapes.get(i).get(j).getColor());
+				g.fillRect(shapes.get(i).get(j).getX() * 30 + 600, shapes.get(i).get(j).getY() * 30 + 105 + 100 * i, 27,
+						27);
+			}
 		}
 	}
 
