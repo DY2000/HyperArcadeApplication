@@ -188,14 +188,11 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	public void lower() {
 		if (canLower()) {
 			deleteActiveOnBoard();
-//			for (int i = 0; i < active.size(); i++) {
-//				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
-//				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
-//			}
-			for (Block b: active) {
-				active.add(new Block(b.getX(),b.getY()+1,b.getColor()));
-				active.remove(b);
+			for (int i = 0; i < active.size(); i++) {
+				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
+				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
 			}
+
 		} else {
 			for (Block b : active) {
 				b.setActive(false);
