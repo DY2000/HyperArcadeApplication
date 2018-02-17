@@ -654,7 +654,7 @@ public class MarkGalaga extends FullFunctionScreen implements WillGameStart, Dev
 		return stage;
 	}
 
-	public boolean getRunning() {
+	public boolean isRunning() {
 		return running;
 	}
 

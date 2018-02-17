@@ -32,7 +32,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	private ArrayList<Block> tetramino = new ArrayList<Block>();
 	private ArrayList<Block> active = new ArrayList<Block>();
 	private ArrayList<ArrayList<Block>> tetraminos = new ArrayList<ArrayList<Block>>();
-	private ArrayList<ArrayList<Block>> shapes = new ArrayList<ArrayList<Block>>();
+	private ArrayList<ArrayList<Block>> nextTetraminos = new ArrayList<ArrayList<Block>>();
 	private int lines;
 	private int delay;
 	private int score;
@@ -103,11 +103,11 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		start = new Button(235, 100, 100, 50, "START", new Action() {
 			@Override
 			public void act() {
-				shapes.clear();
+				nextTetraminos.clear();
 				for (int i = 0; i < 6; i++) {
-					shapes.add((ArrayList<Block>) tetraminos.get((int) (Math.random() * tetraminos.size())).clone());
+					nextTetraminos.add((ArrayList<Block>) tetraminos.get((int) (Math.random() * tetraminos.size())).clone());
 				}
-				active = (ArrayList<Block>) shapes.get(0).clone();
+				active = (ArrayList<Block>) nextTetraminos.get(0).clone();
 				timer = new Timer();
 				timer.schedule(new TimerTask() {
 					@Override
@@ -188,14 +188,19 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 	public void lower() {
 		if (canLower()) {
 			deleteActiveOnBoard();
-			for (int i = 0; i < active.size(); i++) {
-				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
-				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+//			for (int i = 0; i < active.size(); i++) {
+//				active.set(i, new Block(active.get(i).getX(), active.get(i).getY() + 1, active.get(i).getColor()));
+//				board[active.get(i).getX()][active.get(i).getY()] = active.get(i);
+//			}
+			for (Block b: active) {
+				active.add(new Block(b.getX(),b.getY()+1,b.getColor()));
+				active.remove(b);
 			}
 		} else {
 			for (Block b : active) {
 				b.setActive(false);
 			}
+			checkRows();
 			newPiece();
 		}
 	}
@@ -244,7 +249,7 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 	}
 
-	public void newPiece() {
+	public void checkRows() {
 		boolean row = true;
 		int rowCount = 0;
 
@@ -264,10 +269,12 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 		}
 		if (rowCount > 0)
 			scoreUp((rowCount * 200 - 100) * (int) (lines / 10));
+	}
 
-		active = (ArrayList<Block>) shapes.get(0).clone();
-		shapes.remove(0);
-		shapes.add((ArrayList<Block>) tetraminos.get((int) (Math.random() * tetraminos.size())).clone());
+	public void newPiece() {
+		active = (ArrayList<Block>) nextTetraminos.get(0).clone();
+		nextTetraminos.remove(0);
+		nextTetraminos.add((ArrayList<Block>) tetraminos.get((int) (Math.random() * tetraminos.size())).clone());
 
 		if (gameOver()) {
 			textBox.setText("GAME OVER");
@@ -387,10 +394,10 @@ public class TetrisMain extends FullFunctionScreen implements DevTicket {
 			}
 		}
 
-		for (int i = 0; i < shapes.size(); i++) {
+		for (int i = 0; i < nextTetraminos.size(); i++) {
 			for (int j = 0; j < 4; j++) {
-				g.setColor(shapes.get(i).get(j).getColor());
-				g.fillRect(shapes.get(i).get(j).getX() * 30 + 600, shapes.get(i).get(j).getY() * 30 + 105 + 100 * i, 27,
+				g.setColor(nextTetraminos.get(i).get(j).getColor());
+				g.fillRect(nextTetraminos.get(i).get(j).getX() * 30 + 600, nextTetraminos.get(i).get(j).getY() * 30 + 105 + 100 * i, 27,
 						27);
 			}
 		}
