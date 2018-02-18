@@ -9,7 +9,7 @@ import guiTeacher.components.Button;
 import guiTeacher.components.Component;
 import guiTeacher.components.Graphic;
 
-public class DevinItem extends Button{
+public class DevinItem extends Button {
 
 	private BufferedImage img;
 	private String itemName;
@@ -33,8 +33,8 @@ public class DevinItem extends Button{
 		//ArrayList<String> itemlist2 = new ArrayList<String>();
 		itemlist1.add(itemName);
 		itemName = "resources/reward1.png"; 
+		
 		//ticketprice();
-		//Graphic arr1 = new Graphic(0, 0, 10, 100, itemName);
 			
 		}
 

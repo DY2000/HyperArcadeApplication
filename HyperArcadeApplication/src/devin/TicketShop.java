@@ -32,10 +32,10 @@ public class TicketShop extends FullFunctionScreen {
 		viewObjects.add(ticketCount);
 		
 		Shopitemlist = new ArrayList<DevinItem>();
-		itemName = new String[] { "reward1","reward2"}; 
+		itemName = new String[] {"reward1","reward2","reward3","reward4","reward5","reward6"}; 
 		for (int i = 0; i < itemName.length; i++) {
 			int n = i;
-			Shopitemlist.add(new DevinItem(125, 555, 40, 40, new Action() {
+			Shopitemlist.add(new DevinItem(125 + 50 * i, 555 , 40 , 40 , new Action() {
 				
 				@Override
 				public void act() {
@@ -50,7 +50,6 @@ public class TicketShop extends FullFunctionScreen {
 			viewObjects.add(Shopitemlist.get(i));
 		}
 		
-		//viewObjects.add(new Graphic(0, 0, getWidth(),getHeight(),"resources/Ticket_Shop.png"));
 		back = new Button (0,50,200,100,"GO Back",Color.WHITE,new Action() {
 			public void act() {
 				ArcadeGUI.hyperArcade.setScreen(ArcadeGUI.homeScreen);
@@ -59,23 +58,7 @@ public class TicketShop extends FullFunctionScreen {
 		viewObjects.add(back);
 		
 	}
-//	private void addItems() {
-//		int numitems = 4;
-//		items = new ItemInterface[numitems];
-//		for(int i = 0; i < numitems; i++) {
-//			//custom image?
-//		}
-//	}
-//	public void buy(Item item) {
-//		String name = item.getName();
-//		ArrayList<item> itemlist = items.get(name);
-//		if(itemlist == null) {
-//			itemlist = new ArrayList<item>();
-//			items.put(name,itemlist);
-//		}
-//		itemlist.add(item);
-//	}
-		
+	
 }
 
 
