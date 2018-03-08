@@ -15,7 +15,8 @@ public class MarkGameManager extends AnimatedComponent{
 	}
 
 	public void checkBehaviors() {
-		if(game.getRunning()) {
+		if(game.isRunning()) {
+			//System.out.println(game.getMobs().size() +" "+ !game.isSpawning() + " " + game.getShip().isEnabled());
 			if(game.getMobs().size() == 0 && !game.isSpawning() && game.getShip().isEnabled()) {
 				game.nextRound();
 			}
