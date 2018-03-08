@@ -470,7 +470,7 @@ public class MarkMob extends AnimatedComponent {
 	public boolean detectCollision(MarkProjectile shot) {
 		if((shot.getX() < getX() + getWidth() && shot.getX() + shot.getWidth() > getX() &&
 			shot.getY() < getY() + getHeight() && shot.getHeight() + shot.getY() > getY())){
-			if(hp != 0)hp--;
+			if(hp > 0)hp--;
 			return true; 
 		}else{
 			return false; 
