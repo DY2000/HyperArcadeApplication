@@ -11,8 +11,10 @@ public class PacmanBackground extends AnimatedComponent{
 	private BufferedImage img;
 	public PacmanBackground(int x, int y, int w, int h) {
 		super(x, y, w, h);
+		setX(x);
+		setY(y);
 		img = new Graphic(0,0,w,h,"resources/Pacman_bg.png").getImage();
-		update();
+		update();			
 		Thread t = new Thread(this);
 		t.start();
 	}

@@ -570,6 +570,7 @@ public class MarkGalaga extends FullFunctionScreen implements WillGameStart, Dev
 					playerShip.fireShot(playerShots,playerShip.getX()+(playerShip.getWidth()/2)-(playerShots.get(0).getWidth()/2),playerShip.getY());
 					break;
 				}
+				break;
 			case KeyEvent.VK_LEFT :
 				if(playerShip.isEnabled())
 					playerShip.moveLeft();

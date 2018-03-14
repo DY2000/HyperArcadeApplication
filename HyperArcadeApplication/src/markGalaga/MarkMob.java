@@ -81,11 +81,12 @@ public class MarkMob extends AnimatedComponent {
 			setVx(0);
 			setVisible(false);
 			enabled = false;
-			if(!game.isSpawning() && !enabled && !isVisible()) {
-				game.remove(this);
-				game.getMobs().remove(this);
-				setRunning(false);
-			}
+			
+		}
+		if(!game.isSpawning() && !enabled && !isVisible()) {
+			game.remove(this);
+			game.getMobs().remove(this);
+			setRunning(false);
 		}
 		if(hp == 1 && mobType == "green") {
 			mobType = "purple";
